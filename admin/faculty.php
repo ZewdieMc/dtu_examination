@@ -75,8 +75,8 @@ if (!isset($_SESSION['user'])) {
                         <th>Faculty Name</th>
                         <th>Descrition</th>
                         <th>Location</th>
-                        <th >Action</th>
-                        <th >Action</th>
+                        <th>Action</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -84,29 +84,28 @@ if (!isset($_SESSION['user'])) {
                       $tbl_name = "faculty";
                       $query = $obj->select_data($tbl_name);
                       $res = $obj->execute_query($conn, $query);
-                      $count_rows=$obj->num_rows($res);
-                      if($count_rows>0)
-                      {
-                      while ($row = $obj->fetch_data($res)) {
+                      $count_rows = $obj->num_rows($res);
+                      if ($count_rows > 0) {
+                        while ($row = $obj->fetch_data($res)) {
                       ?>
-                        <tr class="gradeX">
+                          <tr class="gradeX">
 
-                          <td>
-                            <?php echo $row['id']?>
-                          </td>
-                          <td>
-                            <?php echo $row['faculty_name']?>
-                          </td>
-                          <td>Descrition</td>
-                          <td>Descrition</td>
-                          <td class="center"><button class="btn btn-sm btn-primary"><span class="fa fa-pencil"></span> Update</button></td>
-                          <td class="center"><button class="btn btn-sm btn-danger"><span class="fa fa-trash"></span> Delete</button></td>
+                            <td>
+                              <?php echo $row['id'] ?>
+                            </td>
+                            <td>
+                              <?php echo $row['faculty_name'] ?>
+                            </td>
+                            <td>Descrition</td>
+                            <td>Descrition</td>
+                            <td class="center"><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal5"><span class="fa fa-pencil"></span> Update</button></td>
+                            <td class="center"><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal5"><span class="fa fa-trash"></span> Delete</button></td>
 
-                        </tr>
+                          </tr>
 
-                      <?php }}
-                      else
-                      echo "no data";
+                      <?php }
+                      } else
+                        echo "no data";
                       ?>
 
 
@@ -243,3 +242,28 @@ if (!isset($_SESSION['user'])) {
 
   });
 </script>
+
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title">Modal title</h4>
+                                            <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                                                remaining essentially unchanged.</p>
+                                            <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                                printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                                                remaining essentially unchanged.</p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+ </div>

@@ -38,22 +38,22 @@
 
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-lg-10">
-          <h2>Admin</h2>
-          <ol class="breadcrumb">
-            <li>
-              <a href="index.php">Home</a>
-            </li>
+                <div class="col-lg-10">
+                    <h2>Admin</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.php">Home</a>
+                        </li>
 
-            <li class="active">
-              <strong>Change Password</strong>
-            </li>
-          </ol>
-        </div>
-        <div class="col-lg-2">
+                        <li class="active">
+                            <strong>Change Password</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
 
-        </div>
-      </div>
+                </div>
+            </div>
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="row" style="margin-left:75px;margin-top:30px" ;>
                     <div class="col-md-9">

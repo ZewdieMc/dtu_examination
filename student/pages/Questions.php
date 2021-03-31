@@ -19,44 +19,49 @@ if (!isset($_SESSION['next'])) {
 }
 
 #end of global variables
-$table_name = "tbl_student";
-$where = "username='tadese'";
-$result = $obj->execute_query($conn, $obj->select_data($table_name, $where));
-if ($result) {
-    $row = $obj->fetch_data($result);
-    $student_id = $row['student_id'];
-    $full_name = $row['first_name'] . " " . $row['last_name'];
-    $_SESSION['department'] = $row['faculty'];
-    $faculty = $row['faculty'];
-}
-
-//get the questions and questions numbers department wise. 
-$tbl_name_qns = 'tbl_faculty';
-$where_qns = "faculty_id='$_SESSION[department]'";
-$query_qns = $obj->select_data($tbl_name_qns, $where_qns);
-$res_qns = $obj->execute_query($conn, $query_qns);
-if ($res_qns == true) {
-    $row_qns = $obj->fetch_data($res_qns);
-    $faculty_name = $row_qns['faculty_name'];
-    $_SESSION['facultyName'] = $faculty_name;
-    $time_duration = $row_qns['time_duration'];
-    $totalTime = $time_duration * 60;
-    $qns_per_page = $row_qns['qns_per_set'];
-    $total_english = $row_qns['total_english'];
-
-    //echo $total_english;die();
-}
-if (!isset($_SESSION['strt_time'])) {
-    $_SESSION['strt_time'] = date('h:i:s A');
-}
-if (!isset($_SESSION['end_time'])) {
-    $_SESSION['end_time'] = date('h:i:s A', strtotime("+" . $time_duration . " minutes"));
-}
 
 ?>
 <!-- Body starts here -->
 <div class="container">
     <!-- upper part..which contains information about the exam and time -->
+    <?php
+
+    $table_name = "tbl_student";
+    $where = "username='tadese'";
+    $result = $obj->execute_query($conn, $obj->select_data($table_name, $where));
+    if ($result) {
+        $row = $obj->fetch_data($result);
+        $student_id = $row['student_id'];
+        $full_name = $row['first_name'] . " " . $row['last_name'];
+        $_SESSION['department'] = $row['faculty'];
+        $faculty = $row['faculty'];
+    }
+
+    //get the questions and questions numbers department wise. 
+    $tbl_name_qns = 'tbl_faculty';
+    $where_qns = "faculty_id='$_SESSION[department]'";
+    $query_qns = $obj->select_data($tbl_name_qns, $where_qns);
+    $res_qns = $obj->execute_query($conn, $query_qns);
+    if ($res_qns == true) {
+        $row_qns = $obj->fetch_data($res_qns);
+        $faculty_name = $row_qns['faculty_name'];
+        $_SESSION['facultyName'] = $faculty_name;
+        $time_duration = $row_qns['time_duration'];
+        $totalTime = $time_duration * 60;
+        $qns_per_page = $row_qns['qns_per_set'];
+        $total_english = $row_qns['total_english'];
+
+        //echo $total_english;die();
+    }
+    if (!isset($_SESSION['strt_time'])) {
+        $_SESSION['strt_time'] = date('h:i:s A');
+    }
+    if (!isset($_SESSION['end_time'])) {
+        $_SESSION['end_time'] = date('h:i:s A', strtotime("+" . $time_duration . " minutes"));
+    }
+
+    ?>
+
     <div class="row well alert alert-primary" style="margin-top: 10px">
         Examinee: <span class="heavy"><?php echo $full_name; ?></span>&nbsp;&nbsp;
         Department: <span class="heavy"><?php echo $faculty_name; ?></span>&nbsp;&nbsp;
@@ -69,7 +74,7 @@ if (!isset($_SESSION['end_time'])) {
         $timeDifference = $startTime - $currentTime;
 
         ?>
-        <span class='badge-warning timer' style="border-radius: 5px;" data-seconds-left=<?php echo $timeDifference; ?>></span>
+        Time left:<span class='badge-warning timer' style="border-radius: 5px;" data-seconds-left=<?php echo $timeDifference; ?>></span>
     </div>
     <!-- The question and its answer options -->
     <form method="post" action="">
@@ -82,11 +87,11 @@ if (!isset($_SESSION['end_time'])) {
                 }
 
                 $tbl_name = "tbl_question";
-                if ($_SESSION['next'] == "ON") {
-                    $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id NOT IN (" . $_SESSION['all_qns'] . ")";
-                } else {
-                    $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id < '" . $_SESSION['question_id'] . "'order by question_id desc";
-                }
+                // if ($_SESSION['next'] == "ON") {
+                $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id NOT IN (" . $_SESSION['all_qns'] . ")";
+                // } else {
+                //     $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id < '" . $_SESSION['question_id'] . "'order by question_id desc";
+                // }
 
                 $limit = 1;
                 $query = $obj->select_random_row($tbl_name, $where, $limit);
@@ -113,7 +118,7 @@ if (!isset($_SESSION['end_time'])) {
 
                 ?>
                 <!-- question number -->
-                <span class="badge badge-primary" style="border-radius: 5%; padding: 8px;">Question <?php echo $_SESSION['question_id'] ?></span>
+                <span class='badge badge-primary' style="padding:10px;">Question <font color='yellow' , size=10px;><?php echo $row['question_id'] ?></font></span>
                 <!-- the question -->
                 <?php echo $question; ?><br />
 
@@ -137,7 +142,7 @@ if (!isset($_SESSION['end_time'])) {
                 <hr /><br />
                 <input type="radio" name="answer" value="5" required="true" /> <span class="radio-ans"><?php echo $fifth_answer; ?>
                     <hr /><br />&nbsp;
-                    <input type="hidden" name="question_id" id='id' value="<?php echo $_SESSION['question_id']; ?>" />
+                    <input type="hidden" name="question_id" id='q_id' value="<?php echo $_SESSION['question_id']; ?>" />
                     <input type="hidden" name="right_answer" value="<?php echo $answer; ?>" />
                     <input type="hidden" name="marks" value="<?php echo $marks; ?>" />
             </div>
@@ -145,7 +150,7 @@ if (!isset($_SESSION['end_time'])) {
         </div>
 
         <div class="row" style="margin-bottom: 10px">
-            <div class="col"><button id="prev" <?php echo $_SESSION['prev_disabled']; ?> onclick='getPrevious((' #id').value)' name="previous" class="btn btn-lg btn-success" formnovalidate>&laquo; Previous</button></div>
+            <div class="col"><button id="prev" <?php echo $_SESSION['prev_disabled']; ?> name="previous" class="btn btn-lg btn-success" formnovalidate>&laquo; Previous</button></div>
             <div class="col"><button <?php echo $_SESSION['next_disabled']; ?> name="next" class="btn btn-lg btn-success">&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp; &raquo; </button></div>
             <div class="col">
                 <a href="<?php echo SITEURL; ?>index.php?page=logout">
@@ -233,11 +238,35 @@ if (!isset($_SESSION['end_time'])) {
         } else {
             echo "Error";
         }
-    } elseif (isset($_POST['previous'])) {
-        if ($_SESSION['next'] != 'OFF') {
-            $_SESSION['next'] = 'OFF';
-        }
-        header('location:' . SITEURL . 'index.php?page=Questions');
     }
     ?>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+            $(document).on('click', '#prev', function(e) {
+                var id = document.getElementById('q_id').value;
+                e.preventDefault();
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>student/pages/view_question.php?id=" + id + "&direction=Previous",
+                    //data: {id:id,direction:"Next"},
+                    type: 'GET',
+                    cache: false,
+                    beforeSend: function() {
+                        // message..
+                    },
+                    complete: function(response, status) {
+                        if (status != "error" && status != "timeout") {
+                            $('#question').html(response.responseText);
+                            //alert(response.responseText);
+                        }
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            });
+        })
+    </script>
+
 </div>

@@ -48,10 +48,10 @@
                         if ($count_rows > 0) {
                             $_SESSION['student'] = $username;
                             $_SESSION['login'] = "<div class='alert alert-success'>Login Successful.</div>";
-                            header('location:' . SITEURL . 'index.php?page=welcome');
+                            header('location:' . SITEURL . 'student/index.php?page=welcome');
                         } else {
                             $_SESSION['invalid'] = "<div class='alert alert-danger'>Username or Password is invalid.<br>Or Account not active</div>";
-                            header('location:' . SITEURL . 'index.php?page=login');
+                            header('location:' . SITEURL . 'student/index.php?page=login');
                         }
                     }
                     ?>

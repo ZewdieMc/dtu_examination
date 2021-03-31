@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<?php
-if (!isset($_SESSION['user'])) {
-  header('location:' . SITEURL . 'admin/index.php?page=login');
-}
-?>
+
 <html>
 
 <head>
@@ -51,7 +47,7 @@ if (!isset($_SESSION['user'])) {
             <div class="ibox float-e-margins">
               <div class="ibox-title">
                 &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary"  data-toggle="modal" data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty</button>
+                <button class="btn  btn-sm btn-primary" data-toggle="modal" data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty</button>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -75,8 +71,8 @@ if (!isset($_SESSION['user'])) {
                         <th>Faculty Name</th>
                         <th>Descrition</th>
                         <th>Location</th>
-                        <th>Action</th>
-                        <th>Action</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -96,12 +92,42 @@ if (!isset($_SESSION['user'])) {
                             <td>
                               <?php echo $row['faculty_name'] ?>
                             </td>
-                            <td>Descrition</td>
-                            <td>Descrition</td>
-                            <td class="center"><button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#update_faculty"><span class="fa fa-pencil"></span> Update</button></td>
-                            <td class="center"><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModal5"><span class="fa fa-trash"></span> Delete</button></td>
+                            <td>
+                              <?php echo $row['Description'] ?>
+                            </td>
+                            <td><?php echo $row['Location'] ?></td>
+                            <td class="center"><a data-toggle="modal" data-target="#update_faculty-<?php echo $row['id'] ?>"><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
+                            <td class="center"><a data-toggle="modal" data-target="#myModal5"><i class="glyphicon glyphicon-remove text-red"></i> </a></td>
+                            <div class="modal inmodal fade" id="update_faculty-<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                              <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">Update Faculty</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="form-group"><label>Faculty Name</label>
+                                      <input class="form-control input-sm validate[required]" value="<?php echo $row['faculty_name'] ?>" name="faculty_name" id="oldpassword" type="text" placeholder=" EnterFaculty Name">
+                                    </div>
 
+                                    <div class="form-group"><label>Description</label>
+                                      <input class="input-sm validate[required] form-control" value="<?php echo $row['Description'] ?>" name="faculty_description" id="newpassword" type="text" placeholder=" Enter Faculty Description">
+                                    </div>
+
+                                    <div class="form-group"><label>Location</label>
+                                      <input class="input-sm form-control" name="location" value="<?php echo $row['Location'] ?>" id="confirmpassword" type="text" placeholder="Enter Faculty Location">
+                                    </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                                    <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Update</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </tr>
+
 
                       <?php }
                       } else
@@ -116,7 +142,8 @@ if (!isset($_SESSION['user'])) {
                         <th>Faculty Name</th>
                         <th>Descrition</th>
                         <th>Location</th>
-                        <th colspan="2">Action</th>
+                        <th>Update</th>
+                        <th>Delete</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -195,83 +222,23 @@ if (!isset($_SESSION['user'])) {
         "width": "90%",
         "height": "100%"
       });
-
-
     });
 
-    function fnClickAddRow() {
-      $('#editable').dataTable().fnAddData([
-        "Custom row",
-        "New row",
-        "New row",
-        "New row",
-        "New row"
-      ]);
+    // function fnClickAddRow() {
+    //   $('#editable').dataTable().fnAddData([
+    //     "Custom row",
+    //     "New row",
+    //     "New row",
+    //     "New row",
+    //     "New row"
+    //   ]);
 
-    }
+    // }
   </script>
 
 </body>
 
-
-<!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/table_data_tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 May 2016 04:00:12 GMT -->
-
 </html>
-<script>
-  $(document).ready(function() {
-    $('.demo4').click(function() {
-      swal({
-          title: "Are you sure?",
-          text: "You will not be able to recover this imaginary file!",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#DD6B55",
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel plx!",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        },
-        function(isConfirm) {
-          if (isConfirm) {
-            swal("Deleted!", "Your imaginary file has been deleted.", "success");
-          } else {
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
-          }
-        });
-    });
-
-  });
-</script>
-
-<div class="modal inmodal fade" id="update_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Update Faculty</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group"><label>Faculty Name</label>
-          <input class="form-control input-sm validate[required]" name="faculty_name" id="oldpassword" type="text" placeholder=" EnterFaculty Name">
-        </div>
-
-        <div class="form-group"><label>Description</label>
-          <input class="input-sm validate[required] form-control" name="faculty_description" id="newpassword" type="password" placeholder=" Enter Faculty Description">
-        </div>
-
-        <div class="form-group"><label>Location</label>
-          <input class="input-sm form-control" name="location" id="confirmpassword" type="password" placeholder="Enter Faculty Location">
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-        <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Update</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">

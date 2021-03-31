@@ -88,8 +88,8 @@ att:
 	id
 	course_code
 	course_name
-	department_id
-	teacher_id
+	department_id .......This is the department which gives the course.
+	teacher_id...........This is the teacher which teaches the course that may or not be from the same department the course is registered./common courses have d/t value for course.department_id and teacher.department_id
 
 EXAM(TABLE)===================================>
 att:

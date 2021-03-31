@@ -26,24 +26,77 @@
         </nav>
       </div>
       <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Admin</h2>
-                    <ol class="breadcrumb">
-                        <li>
-                            <a href="index.php">Home</a>
-                        </li>
+        <div class="col-lg-10">
+          <h2>Admin</h2>
+          <ol class="breadcrumb">
+            <li>
+              <a href="index.php">Home</a>
+            </li>
 
-                    </ol>
-                </div>
-                <div class="col-lg-2">
+          </ol>
+        </div>
+        <div class="col-lg-2">
 
-                </div>
-            </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-12">
           <div class="wrapper wrapper-content">
 
-            Add Main content here.
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="widget style1 red-bg">
+                  <div class="row">
+                    <div class="col-4 text-center">
+                      <i class="fa fa-building fa-5x"></i>
+                    </div>
+                    <div class="col-8 text-right">
+                      <span> Faculties </span>
+                      <h2 class="font-bold">7</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                  <div class="row">
+                    <div class="col-4">
+                      <i class="fa fa-pencil fa-5x"></i>
+                    </div>
+                    <div class="col-8 text-right">
+                      <span> Exams </span>
+                      <h2 class="font-bold">12</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="widget style1 lazur-bg">
+                  <div class="row">
+                    <div class="col-4">
+                      <i class="fa fa-users fa-5x"></i>
+                    </div>
+                    <div class="col-8 text-right">
+                      <span> Users </span>
+                      <h2 class="font-bold">7</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="widget style1 yellow-bg">
+                  <div class="row">
+                    <div class="col-4">
+                      <i class="fa fa-file-text fa-5x"></i>
+                    </div>
+                    <div class="col-8 text-right">
+                      <span> Reports</span>
+                      <h2 class="font-bold">12</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <?php //include('footer.php');   
           ?>

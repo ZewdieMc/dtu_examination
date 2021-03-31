@@ -42,13 +42,13 @@ switch ($page) {
             include('./login.php');
         }
         break;
-    case "students": {
-            include('./students.php');
+    case "exams": {
+            include('./exams.php');
         }
         break;
 
-    case "add_student": {
-            include('./add_student.php');
+    case "deans": {
+            include('./faculty_deans.php');
         }
         break;
 

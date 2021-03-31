@@ -55,14 +55,16 @@
                             $_SESSION['validation']="<div class='alert alert-danger'>Username or Password is Empty</div>";
                             header('location:'.SITEURL.'admin/index.php?page=login');
                         }
-                        $tbl_name="tbl_app";
+                        $tbl_name="tbl_admin";
                         $where="username='$username' AND password='$password_db'";
                         $query=$obj->select_data($tbl_name,$where);
                         $res=$obj->execute_query($conn,$query);
+                        $row = $obj->fetch_data($res);
                         $count_rows=$obj->num_rows($res);
                         if($count_rows==1)
                         {
                             $_SESSION['user']=$username;
+                            $_SESSION['user_id'] = $row['id'];
                             $_SESSION['success']="<div class='alert alert-success'>Login Successful. Welcome ".$username." to dashboard.</div>";
                             header('location:'.SITEURL.'admin/index.php?page=dashboard');
                         }

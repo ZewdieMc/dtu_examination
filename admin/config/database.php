@@ -5,13 +5,13 @@
     {
         public function db_connect()
         {
-            $conn=mysqli_connect(LOCALHOST,USERNAME,PASSWORD) or die(mysqli_error());
+            $conn=mysqli_connect(LOCALHOST,USERNAME,PASSWORD) or die(mysqli_error($conn));
             return $conn;
         }
         
         public function db_select($conn)
         {
-            $db_select=mysqli_select_db($conn,DBNAME) or die(mysqli_error());
+            $db_select=mysqli_select_db($conn,DBNAME) or die(mysqli_error($conn));
             return $db_select;
         }
         public function select_data($tbl_name,$where="",$other="")
@@ -147,4 +147,3 @@
             return $faculty_name;
         }
     }
-?>

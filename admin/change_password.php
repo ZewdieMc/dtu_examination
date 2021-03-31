@@ -63,40 +63,51 @@
                                 <h5>Change Password</h5>
                             </div>
                             <div class="ibox-content">
-
-
                                 <div class="table-responsive">
                                     <form role="form" class="form-validation-2" method="post" enctype="multipart/form-data">
                                         <?php
                                         if (isset($_POST['Change_password'])) {
-                                            $run = mysql_query("select * from userinformation where username = '$session_id'");
-                                            $row = mysql_fetch_array($run);
-                                            $oldpassword = $_POST['oldpassword'];
-                                            $newpassword = $_POST['newpassword'];
-                                            if ($oldpassword != $row['password']) {
+                                            $tbl_name = "tbl_admin";
+                                            $user_id = $_SESSION['user_id'];
+                                            $where = "id='$user_id'" ;
+                                            $query = $obj->select_data($tbl_name, $where);
+                                            $res = $obj->execute_query($conn, $query);
+                                            $row = $obj->fetch_data($res);
+                                            $oldpassword_db = $row['password'];
+
+                                            $newpassword = md5($obj->sanitize($conn, $_POST['newpassword']));
+                                            $data = "password='$newpassword'";
+
+                                            if ($oldpassword_db != md5($obj->sanitize($conn, $_POST['oldpassword']))) {
                                                 echo '<div class="alert alert-dismissable alert-danger">';
                                                 echo '<strong>' . '<center>' . "You have inserted incorrect old password!" . '</center>' . '<strong>';
                                                 echo '</div>';
                                             } else {
-                                                mysql_query("update userinformation set password = '$newpassword' where username = '$session_id'");
-
-                                                echo '<div class="alert alert-dismissable alert-success">';
-                                                echo '<strong>' . '<center>' . "You have changed your password successfully!!!" . '</center>' . '<strong>';
-                                                echo '</div>';
+                                                $query = $obj->update_data($tbl_name, $data, $where);
+                                                $res = $obj->execute_query($conn, $query);
+                                                if ($res) {
+                                                    echo '<div class="alert alert-dismissable alert-success">';
+                                                    echo '<strong>' . '<center>' . "You have changed your password successfully!!!" . '</center>' . '<strong>';
+                                                    echo '</div>';
+                                                } else {
+                                                    echo '<div class="alert alert-dismissable alert-danger">';
+                                                    echo '<strong>' . '<center>' . "Something went wrong! Password not updated" . '</center>' . '<strong>';
+                                                    echo '</div>';
+                                                }
                                             }
                                         }
                                         ?>
                                         <!--<form role="form" id="form">-->
                                         <div class="form-group"><label>Current Password</label>
-                                            <input class="form-control input-sm validate[required]" name="oldpassword" id="oldpassword" type="text" placeholder="Please Enter Current Password">
+                                            <input class="form-control input-sm validate[required]" name="oldpassword" id="oldpassword" type="text" placeholder=" Enter Current Password">
                                         </div>
 
                                         <div class="form-group"><label>New Password</label>
-                                            <input class="input-sm validate[required] form-control" name="newpassword" id="newpassword" type="password" placeholder="Please Enter New Password">
+                                            <input class="input-sm validate[required] form-control" name="newpassword" id="newpassword" type="password" placeholder=" Enter New Password">
                                         </div>
 
                                         <div class="form-group"><label>Confirm Password</label>
-                                            <input class="input-sm validate[required,equals[newpassword]] form-control" name="confirmpassword" id="confirmpassword" type="password" placeholder="Please Enter New Password Again">
+                                            <input class="input-sm validate[required,equals[newpassword]] form-control" name="confirmpassword" id="confirmpassword" type="password" placeholder="Confirm password">
                                         </div>
                                 </div>
                                 <div>

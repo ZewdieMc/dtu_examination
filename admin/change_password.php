@@ -69,7 +69,7 @@
                                         if (isset($_POST['Change_password'])) {
                                             $tbl_name = "tbl_admin";
                                             $user_id = $_SESSION['user_id'];
-                                            $where = "id='$user_id'" ;
+                                            $where = "id='$user_id'";
                                             $query = $obj->select_data($tbl_name, $where);
                                             $res = $obj->execute_query($conn, $query);
                                             $row = $obj->fetch_data($res);
@@ -111,7 +111,7 @@
                                         </div>
                                 </div>
                                 <div>
-                                    <button class="btn btn-sm btn-primary m-t-n-xs" name="Change_password" type="submit" style="margin-left:635px" ;><strong>Change</strong></button>
+                                    <button class="btn btn-sm btn-primary m-t-n-xs btn-outline btn-rounded" name="Change_password" type="submit" style="margin-left:635px" ;><strong>Change</strong></button>
                                 </div>
                                 </form>
                             </div>

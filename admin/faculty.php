@@ -47,7 +47,7 @@
             <div class="ibox float-e-margins">
               <div class="ibox-title">
                 &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary" data-toggle="modal" data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty</button>
+                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_fa' data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty</button>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -96,44 +96,13 @@
                               <?php echo $row['Description'] ?>
                             </td>
                             <td><?php echo $row['Location'] ?></td>
-                            <td class="center"><a data-toggle="modal" data-target="#update_faculty-<?php echo $row['id'] ?>"><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                            <td class="center"><a data-toggle="modal" data-target="#myModal5"><i class="glyphicon glyphicon-remove text-red"></i> </a></td>
-                            <div class="modal inmodal fade" id="update_faculty-<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                              <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">Update Faculty</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    <div class="form-group"><label>Faculty Name</label>
-                                      <input class="form-control input-sm validate[required]" value="<?php echo $row['faculty_name'] ?>" name="faculty_name" id="oldpassword" type="text" placeholder=" EnterFaculty Name">
-                                    </div>
-
-                                    <div class="form-group"><label>Description</label>
-                                      <input class="input-sm validate[required] form-control" value="<?php echo $row['Description'] ?>" name="faculty_description" id="newpassword" type="text" placeholder=" Enter Faculty Description">
-                                    </div>
-
-                                    <div class="form-group"><label>Location</label>
-                                      <input class="input-sm form-control" name="location" value="<?php echo $row['Location'] ?>" id="confirmpassword" type="text" placeholder="Enter Faculty Location">
-                                    </div>
-                                  </div>
-
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                    <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Update</a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            <td class="center"><a class="edit-data" id='<?php echo $row['id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
+                            <td class="center"><a id="delete_faculty" data-id="<?php echo $row['id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
                           </tr>
-
-
                       <?php }
                       } else
                         echo "no data";
                       ?>
-
 
                     </tbody>
                     <tfoot>
@@ -157,13 +126,40 @@
         </div>
       </div>
     </div>
-
-
   </div>
+  <div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Add Faculty</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" id="insert_form">
+            <div class="form-group"><label>Faculty Name</label>
+              <input class="form-control input-sm validate[required]" name="insert_faculty_name" id="insert_name" type="text" placeholder=" Enter Faculty Name">
+            </div>
 
+            <div class="form-group"><label>Description</label>
+              <input class="input-sm validate[required] form-control" name="insert_faculty_description" id="insert_descritpion" type="text" placeholder=" Enter Faculty Description">
+            </div>
 
+            <div class="form-group"><label>Location</label>
+              <input class="input-sm form-control" name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location">
+            </div>
+            <div id="add_information" class="form-group"></div>
+            <input type="hidden" name="faculty_id" id="faculty_id" value="" />
+            <input type="submit" name="insert" value="Insert Faculty" id="insert" class="btn  btn-outline btn-lg btn-success btn-rounded" />
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
-
   </div>
   <?php include("./includes/scripts2.php") ?>
 
@@ -222,6 +218,67 @@
         "width": "90%",
         "height": "100%"
       });
+      $('#insert').on("click", function(event) {
+        event.preventDefault();
+        $.ajax({
+          url: "<?php echo SITEURL; ?>admin/faculty_add.php",
+          data: $('#insert_form').serialize(),
+          type: 'POST',
+          cache: false,
+          beforeSend: function() {
+            //$("#insert").val("Inserting");
+          },
+          complete: function(response, status) {
+            if (status != "error" && status != "timeout") {
+              //$("#insert").val("Inserted");
+              $('#add_information').html(response.responseText);
+              //$("#add_faculty").modal('toggle');
+
+            }
+          },
+          error: function(responseObj) {
+            alert("Something went wrong while processing your request.\n\nError => " +
+              responseObj.responseText);
+          }
+        });
+
+      });
+
+      $('#add_fa').on('click', function() {
+        $("#insert").val("Insert Faculty");
+        $('#insert_form')[0].reset();
+
+      });
+      $(document).on('click', '#delete_faculty', function() {
+        var faculty_id = $(this).data('id');
+        confirmDelete(faculty_id);
+        e.preventDefault();
+
+      });
+      $(document).on('click', '.edit-data', function() {
+        var id = $(this).attr("id");
+        $.ajax({
+          url: "<?php echo SITEURL; ?>admin/faculty_fetch.php",
+          method: "POST",
+          data: {
+            dean_id: id
+          },
+          dataType: "json",
+          success: function(data) {
+            $('#insert_name').val(data.faculty_name);
+            $('#insert_descritpion').val(data.Description);
+            $('#insert_location').val(data.Location);
+            $('#faculty_id').val(data.id);
+            $('#insert').val("Update Faculty");
+            // alert($('#deanid').attr("value"));
+            $('#add_faculty').modal('show');
+          },
+          error: function(responseObj) {
+            alert("Something went wrong while processing your request.\n\nError => " +
+              responseObj.responseText);
+          }
+        });
+      });
     });
 
     // function fnClickAddRow() {
@@ -234,36 +291,38 @@
     //   ]);
 
     // }
+    function confirmDelete(userid) {
+      swal({
+          title: "Are you sure?",
+          text: "You will not be able to undo this.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "green",
+          cancelButtonColor: "red",
+          confirmButtonText: "Delete!",
+          closeOnConfirm: false,
+          closeOnCancel: false
+        },
+        function(isConfirm) {
+          if (isConfirm) {
+            $.ajax({
+              url: '<?php echo SITEURL ?>admin/faculty_delete.php',
+              type: "POST",
+              data: {
+                id: userid
+              },
+              dataType: "json",
+              success: function() {
+                swal("Done!", "Operation successful!", "success");
+              }
+            });
+          } else {
+            swal("Cancelled", "Operation cancelled! :)", "error");
+          }
+        })
+    }
   </script>
 
 </body>
 
 </html>
-<div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Add Faculty</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group"><label>Faculty Name</label>
-          <input class="form-control input-sm validate[required]" name="faculty_name" id="oldpassword" type="text" placeholder=" EnterFaculty Name">
-        </div>
-
-        <div class="form-group"><label>Description</label>
-          <input class="input-sm validate[required] form-control" name="faculty_description" id="newpassword" type="password" placeholder=" Enter Faculty Description">
-        </div>
-
-        <div class="form-group"><label>Location</label>
-          <input class="input-sm form-control" name="location" id="confirmpassword" type="password" placeholder="Enter Faculty Location">
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-        <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Add</a>
-      </div>
-    </div>
-  </div>
-</div>

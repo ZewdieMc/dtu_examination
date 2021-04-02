@@ -112,7 +112,7 @@ if (!isset($_SESSION['next'])) {
                         $image_name = $row['image_name'];
                     } else {
                         //echo "Error";
-                        header('location:' . SITEURL . 'index.php?page=endSession');
+                        header('location:' . SITEURL . 'student/index.php?page=endSession');
                     }
                 }
 
@@ -234,7 +234,7 @@ if (!isset($_SESSION['next'])) {
                 $_SESSION['next'] = "ON";
             }
             //Redirect to the question page
-            header('location:' . SITEURL . 'index.php?page=Questions');
+            header('location:' . SITEURL . 'student/index.php?page=Questions');
         } else {
             echo "Error";
         }

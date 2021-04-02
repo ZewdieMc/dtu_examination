@@ -47,6 +47,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 &nbsp;&nbsp;&nbsp;
+                                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_dean' data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty Dean</button>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -61,8 +62,6 @@
                                 </div>
                             </div>
                             <div class="ibox-content">
-                                &nbsp;&nbsp;&nbsp;
-                                <button class="btn  btn-sm btn-primary" data-toggle="modal" data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Dean</button>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTables-example">
                                         <thead>
@@ -72,13 +71,14 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Username</th>
+                                                <th>Faculty</th>
                                                 <th>Update</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tbl_name = "tbl_faculty_dean";
+                                            $tbl_name = "tbl_faculty_dean join faculty on tbl_faculty_dean.faculty_id=faculty.id";
                                             $query = $obj->select_data($tbl_name);
                                             $res = $obj->execute_query($conn, $query);
                                             $count_rows = $obj->num_rows($res);
@@ -88,7 +88,7 @@
                                                     <tr class="gradeX">
 
                                                         <td>
-                                                            <?php echo $row['id'] ?>
+                                                            <?php echo $row['dean_id'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $row['first_name'] ?>
@@ -98,39 +98,9 @@
                                                         </td>
                                                         <td><?php echo $row['email'] ?></td>
                                                         <td><?php echo $row['username'] ?></td>
-                                                        <td class="center"><a data-toggle="modal" data-target="#update_faculty-<?php echo $row['id'] ?>"><span class="fa fa-pencil fa-lg text-primary"></span></a></td>
-                                                        <td class="center"><a data-toggle="modal" data-target="#myModal5"><span class="fa fa-trash fa-lg text-red"></span> </a></td>
-                                                        <div class="modal inmodal fade" id="update_faculty-<?php echo $row['id'] ?>" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                                                        <h4 class="modal-title">Update Deans</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="form-group"><label>First Name</label>
-                                                                            <input class="form-control input-sm validate[required]" value="<?php echo $row['first_name'] ?>" name="first_name" type="text" placeholder=" Enter First Name">
-                                                                        </div>
-
-                                                                        <div class="form-group"><label>Last Name</label>
-                                                                            <input class="input-sm validate[required] form-control" value="<?php echo $row['last_name'] ?>" name="last_name" type="text" placeholder=" Enter Last Name">
-                                                                        </div>
-
-                                                                        <div class="form-group"><label>Email</label>
-                                                                            <input class="input-sm form-control" name="email" value="<?php echo $row['email'] ?>" type="text" placeholder="Enter Email">
-                                                                        </div>
-                                                                        <div class="form-group"><label>Username</label>
-                                                                            <input class="input-sm form-control" name="username" value="<?php echo $row['username'] ?>" type="text" placeholder="Enter Username">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                                                                        <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Update</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <td><?php echo $row['faculty_name'] ?></td>
+                                                        <td><a class="edit-data" id='<?php echo $row['dean_id'] ?>'><span class="fa fa-pencil fa-lg "></span></a></td>
+                                                        <td><a id="delete_dean" data-id="<?php echo $row['dean_id']; ?>"><span class="fa fa-trash fa-lg "></span> </a></td>
                                                     </tr>
 
 
@@ -148,6 +118,7 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Username</th>
+                                                <th>Faculty</th>
                                                 <th>Update</th>
                                                 <th>Delete</th>
                                             </tr>
@@ -173,7 +144,63 @@
     </div>
     <?php include("./includes/scripts2.php") ?>
 
+    <div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add Dean</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" id="dean_form">
+                        <div class="form-group"><label>First Name</label>
+                            <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+                        </div>
+                        <div class="form-group"><label>Last Name</label>
+                            <input class="form-control input-sm validate[required]" name="last_name" id="last_name" type="text" placeholder=" Enter Last Name">
+                        </div>
 
+                        <div class="form-group"><label>Email</label>
+                            <input class="input-sm validate[required] form-control" name="email" id="email" type="email" placeholder=" Enter Email">
+                        </div>
+
+                        <div class="form-group"><label>Username</label>
+                            <input class="input-sm form-control" name="username" id="username" type="text" placeholder=" Enter Username">
+                        </div>
+
+                        <div class="form-group"><label>Faculty</label>
+                            <select class="form-control select2 validate[required]" name="faculty">
+                                <option></option>
+                                <?php
+                                $tbl_name = "faculty";
+                                $query = $obj->select_data($tbl_name);
+                                $res = $obj->execute_query($conn, $query);
+                                $count_rows = $obj->num_rows($res);
+                                if ($count_rows > 0) {
+                                    while ($row = $obj->fetch_data($res)) {
+                                ?>
+                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['faculty_name'] ?></option>
+                                <?php }
+                                } ?>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Password</label>
+                            <input class="input-sm form-control" name="password" id="password" type="password" value="dtu1234" placeholder=" Enter Username">
+                        </div>
+                        <div id="add_information">
+                        </div>
+                        <input type="hidden" name="deanid" id="deanid" value="" />
+
+                        <input type="submit" name="insert_dean" value="Insert dean" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
@@ -228,55 +255,139 @@
                 "width": "90%",
                 "height": "100%"
             });
+            $('#add_dean').on('click', function() {
+                $("#insert").val("Insert Dean");
+                $('#dean_form')[0].reset();
+
+            });
+            $(document).on('click', '#delete_dean', function() {
+                var userId = $(this).data('id');
+                confirmDelete(userId);
+                e.preventDefault();
+
+            });
+            $('#insert').on('click', function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>admin/faculty_dean_add.php",
+                    data: $('#dean_form').serialize(),
+                    type: 'POST',
+                    cache: false,
+                    beforeSend: function() {
+                        // $("#insert").val("Inserting");
+                    },
+                    complete: function(response, status) {
+                        if (status != "error" && status != "timeout") {
+                            // $("#insert").val("Inserted");
+                            $('#add_information').html(response.responseText);
+                            //$("#add_faculty").modal('toggle');
+                            // $('.dataTables-example').DataTable().ajax.reload();
+
+
+                        }
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            });
+
+
+            $(document).on('click', '.edit-data', function() {
+                var id = $(this).attr("id");
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>admin/faculty_dean_fetch.php",
+                    method: "POST",
+                    data: {
+                        dean_id: id
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        $('#first_name').val(data.first_name);
+                        $('#last_name').val(data.last_name);
+                        $('#email').val(data.email);
+                        $('#faculty').val(data.faculty_id);
+                        $('#username').val(data.username);
+                        $('#deanid').val(data.dean_id);
+                        $('#insert').val("Update");
+                        // alert($('#deanid').attr("value"));
+                        $('#add_faculty').modal('show');
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            });
         });
 
-        // function fnClickAddRow() {
-        //   $('#editable').dataTable().fnAddData([
-        //     "Custom row",
-        //     "New row",
-        //     "New row",
-        //     "New row",
-        //     "New row"
-        //   ]);
+        function SwalDelete(productId) {
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                showLoaderOnConfirm: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                preConfirm: function() {
+                    return new Promise(function(resolve) {
+                        $.ajax({
+                                url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                                type: 'POST',
+                                data: 'delete=' + productId,
+                                dataType: 'json'
+                            })
+                            .done(function(response) {
+                                swal('Deleted!', response.message, response.status);
+                            })
+                            .fail(function() {
+                                swal('Oops...', 'Something went wrong with ajax !', 'error');
+                            });
+                    });
+                },
+                allowOutsideClick: false
+            });
+        }
 
-        // }
+
+
+        function confirmDelete(userid) {
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to undo this.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "green",
+                    cancelButtonColor: "red",
+                    confirmButtonText: "Delete!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                            type: "POST",
+                            data: {
+                                id: userid
+                            },
+                            dataType: "json",
+                            success: function() {
+                                swal("Done!", "User succesfully deleted!", "success");
+                            }
+                        });
+                    } else {
+                        swal("Cancelled", "Operation cancelled! :)", "error");
+                    }
+                })
+        }
     </script>
 
 </body>
 
 </html>
-<div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Add Dean</h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group"><label>First Name</label>
-                    <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-                </div>
-                <div class="form-group"><label>Last Name</label>
-                    <input class="form-control input-sm validate[required]" name="last_name" id="last_name" type="text" placeholder=" Enter Last Name">
-                </div>
-
-                <div class="form-group"><label>Email</label>
-                    <input class="input-sm validate[required] form-control" name="email" id="email" type="email" placeholder=" Enter Email">
-                </div>
-
-                <div class="form-group"><label>Username</label>
-                    <input class="input-sm form-control" name="username" id="username" type="text" placeholder=" Enter Username">
-                </div>
-
-                <div class="form-group"><label>Password</label>
-                    <input class="input-sm form-control" name="password" id="password" type="password" value="dtu1234" placeholder=" Enter Username">
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
-                <a type="button" href="<?php echo SITEURL ?>admin/index.php?page=faculty" name="update" class="btn btn-primary">Add</a>
-            </div>
-        </div>
-    </div>
-</div>

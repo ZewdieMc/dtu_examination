@@ -30,7 +30,7 @@
           <h2>Admin</h2>
           <ol class="breadcrumb">
             <li>
-              <a href="index.php">Home</a>
+              <a href="<?php echo SITEURL ?>admin/index.php?page=dashboard">Home</a>
             </li>
 
           </ol>
@@ -103,7 +103,6 @@
         </div>
       </div>
       <?php include('includes/scripts2.php') ?>
-
 
       <script>
         $(document).ready(function() {

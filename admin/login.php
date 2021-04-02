@@ -4,14 +4,14 @@
     }
 </style>
 <div class="container" style="margin-top: 10px">
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
+    <div class="row  justify-content-center">
+        <!-- <div class="col"></div> -->
+        <div class="col-md-4">
             <!--Body Starts Here-->
             <div class="card">
                 <div class="card-body">
                     <form method="post" action="">
-                        <h2>Admin | Log In</h2>
+                        <h5>Admin | Log In</h5>
                         <?php
                         if (isset($_SESSION['validation'])) {
                             echo $_SESSION['validation'];
@@ -70,7 +70,7 @@
             </div>
             <!--Body Ends Here-->
         </div>
-        <div class="col"></div>
+        <!-- <div class="col"></div> -->
     </div>
 
 </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 27, 2021 at 06:28 AM
+-- Generation Time: Apr 02, 2021 at 07:08 PM
 -- Server version: 5.5.20
 -- PHP Version: 5.3.10
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `quizapp`
+-- Database: `examination`
 --
 
 -- --------------------------------------------------------
@@ -29,8 +29,25 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `faculty` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `faculty_name` varchar(50) NOT NULL,
+  `Description` text NOT NULL,
+  `Location` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+--
+-- Dumping data for table `faculty`
+--
+
+INSERT INTO `faculty` (`id`, `faculty_name`, `Description`, `Location`) VALUES
+(1, 'Faculty of Technology', 'Description about technology faculty', 'Block 143'),
+(2, 'Faculty of Natural and Computational science', 'Description about natural and computational science faculty.', 'Block 99'),
+(3, 'Faculty of Faculty of social science and humanitie', 'Description of Faculty of social science and humanities', 'Block 170'),
+(4, 'Faculty of of business and economics', 'Description of Faculty of of business and economics', 'Block 201'),
+(5, 'Faculty of agriculture and environmental science', 'Description about Faculty of agriculture and environmental science', 'Block 251'),
+(6, 'College of medicine and health-science', 'Description of College of medicine and health-science', 'Block 22'),
+(11, '', '', ''),
+(12, '', '', ''),
+(13, '', '', '');
 
 -- --------------------------------------------------------
 
@@ -46,7 +63,14 @@ CREATE TABLE IF NOT EXISTS `tbl_admin` (
   `email` varchar(150) NOT NULL,
   `password` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_admin`
+--
+
+INSERT INTO `tbl_admin` (`id`, `first_name`, `last_name`, `username`, `email`, `password`) VALUES
+(1, 'Zewdie', 'Habtie', 'Zewdie', 'zewdiehabtie26@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055');
 
 -- --------------------------------------------------------
 
@@ -81,7 +105,7 @@ INSERT INTO `tbl_app` (`app_id`, `app_name`, `email`, `username`, `password`, `c
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_course` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `course_code` varchar(50) NOT NULL,
   `course_name` varchar(50) NOT NULL,
   `department_id` int(11) NOT NULL,
@@ -89,7 +113,14 @@ CREATE TABLE IF NOT EXISTS `tbl_course` (
   PRIMARY KEY (`id`),
   KEY `department_id` (`department_id`),
   KEY `teacher_id` (`teacher_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_course`
+--
+
+INSERT INTO `tbl_course` (`id`, `course_code`, `course_name`, `department_id`, `teacher_id`) VALUES
+(1, 'CS201', 'Object Oriented Programming', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -103,7 +134,15 @@ CREATE TABLE IF NOT EXISTS `tbl_department` (
   `faculty_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `faculty_id` (`faculty_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `tbl_department`
+--
+
+INSERT INTO `tbl_department` (`id`, `department_name`, `faculty_id`) VALUES
+(1, 'Computer Science', 1),
+(2, 'Mathematics', 2);
 
 -- --------------------------------------------------------
 
@@ -136,10 +175,17 @@ CREATE TABLE IF NOT EXISTS `tbl_exam` (
   `qns_per_set` int(11) NOT NULL,
   `status` enum('created','started','completed') NOT NULL,
   `added_daate` date NOT NULL,
-  `udpated_date` date NOT NULL,
+  `exam_date` date NOT NULL,
   PRIMARY KEY (`exam_id`),
   KEY `course_id` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_exam`
+--
+
+INSERT INTO `tbl_exam` (`exam_id`, `course_id`, `time_duration`, `qns_per_set`, `status`, `added_daate`, `exam_date`) VALUES
+(1, 1, 30, 15, 'created', '2021-03-29', '2021-03-31');
 
 -- --------------------------------------------------------
 
@@ -175,16 +221,24 @@ INSERT INTO `tbl_faculty` (`faculty_id`, `faculty_name`, `time_duration`, `qns_p
 --
 
 CREATE TABLE IF NOT EXISTS `tbl_faculty_dean` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dean_id` int(11) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(100) NOT NULL,
   `faculty_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`dean_id`),
   KEY `faculty_id` (`faculty_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23 ;
+
+--
+-- Dumping data for table `tbl_faculty_dean`
+--
+
+INSERT INTO `tbl_faculty_dean` (`dean_id`, `first_name`, `last_name`, `email`, `username`, `password`, `faculty_id`) VALUES
+(2, 'Abeje', 'Demssie', 'abedem@gmail.com', 'Abeje', 'cfbf14ea7c2e3cfbc0bbdf912911b31c', 1),
+(22, 'Tekalgn', 'Abera', 'tekabera@gmail.com', 'Teka', 'cfbf14ea7c2e3cfbc0bbdf912911b31c', 6);
 
 -- --------------------------------------------------------
 
@@ -313,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `tbl_result` (
   `right_answer` int(11) unsigned NOT NULL,
   `added_date` date NOT NULL,
   PRIMARY KEY (`result_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=301 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=320 ;
 
 --
 -- Dumping data for table `tbl_result`
@@ -544,7 +598,26 @@ INSERT INTO `tbl_result` (`result_id`, `student_id`, `question_id`, `user_answer
 (297, 2, 0, 0, 0, '2021-03-23'),
 (298, 2, 21, 1, 4, '2021-03-23'),
 (299, 0, 1, 1, 1, '2021-03-23'),
-(300, 0, 2, 1, 2, '2021-03-23');
+(300, 0, 2, 1, 2, '2021-03-23'),
+(301, 2, 1, 1, 1, '2021-04-01'),
+(302, 2, 2, 1, 2, '2021-04-01'),
+(303, 2, 3, 3, 1, '2021-04-01'),
+(304, 2, 4, 4, 1, '2021-04-01'),
+(305, 2, 5, 4, 4, '2021-04-01'),
+(306, 2, 6, 2, 2, '2021-04-01'),
+(307, 2, 7, 5, 4, '2021-04-01'),
+(308, 2, 8, 2, 4, '2021-04-01'),
+(309, 2, 9, 4, 3, '2021-04-01'),
+(310, 2, 0, 0, 0, '2021-04-01'),
+(311, 2, 1, 1, 1, '2021-04-01'),
+(312, 2, 0, 0, 0, '2021-04-01'),
+(313, 2, 3, 1, 1, '2021-04-01'),
+(314, 2, 0, 0, 0, '2021-04-01'),
+(315, 2, 2, 1, 2, '2021-04-01'),
+(316, 2, 6, 2, 2, '2021-04-01'),
+(317, 0, 1, 1, 1, '2021-04-01'),
+(318, 0, 2, 1, 2, '2021-04-01'),
+(319, 0, 3, 3, 1, '2021-04-01');
 
 -- --------------------------------------------------------
 
@@ -660,7 +733,16 @@ CREATE TABLE IF NOT EXISTS `tbl_teacher` (
   `department_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `department_id` (`department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `tbl_teacher`
+--
+
+INSERT INTO `tbl_teacher` (`id`, `first_name`, `last_name`, `username`, `email`, `password`, `department_id`) VALUES
+(1, 'Gizatie', 'Desalegn', 'Gizatie', 'Gizatied2004@gmail.com', '1234', 1),
+(2, 'Zewdie', 'Habtie', 'Zewdie', 'zewdiehabtie26@gmail.com', '1234', 1),
+(3, 'Abaynew', 'Takele', 'Abaynew', 'abaynew@gmail.com', '1234', 2);
 
 --
 -- Constraints for dumped tables

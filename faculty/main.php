@@ -16,27 +16,27 @@
         }
         break;
         
-        case "users":
+        case "login":
         {
-            include('users.php');
+            include('./login.php');
         }
         break;
         
-        case "add_user":
+        case "department":
         {
-            include('add_user.php');
+            include('department.php');
         }
         break;
         
-        case "update_user":
+        case "exams":
         {
-            include('add_user.php');
+            include('exams.php');
         }
         break;
         
-        case "students":
+        case "heads":
         {
-            include('students.php');
+            include('dept_head.php');
         }
         break;
         
@@ -111,7 +111,7 @@
             if(isset($_SESSION['user']))
             {
                 unset($_SESSION['user']);
-            header('location:'.SITEURL.'teacher/login.php');
+            header('location:'.SITEURL.'teacher/index.php?page=login');
             }
             
         }

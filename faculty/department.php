@@ -33,7 +33,7 @@
             </li>
 
             <li class="active">
-              <strong>Faculty lists</strong>
+              <strong>Department lists</strong>
             </li>
           </ol>
         </div>
@@ -47,7 +47,7 @@
             <div class="ibox float-e-margins">
               <div class="ibox-title">
                 &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_fa' data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty</button>
+                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Department</button>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -67,17 +67,16 @@
                   <table class="table table-striped table-bordered table-hover dataTables-example">
                     <thead>
                       <tr>
-                        <th>Faculty ID</th>
-                        <th>Faculty Name</th>
-                        <th>Descrition</th>
-                        <th>Location</th>
+                        <th>Dept. ID</th>
+                        <th>Department Name</th>
+                        <th>Faculty</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $tbl_name = "faculty";
+                      $tbl_name = "tbl_department join faculty on tbl_department.faculty_id=faculty.id";
                       $query = $obj->select_data($tbl_name);
                       $res = $obj->execute_query($conn, $query);
                       $count_rows = $obj->num_rows($res);
@@ -87,17 +86,16 @@
                           <tr class="gradeX">
 
                             <td>
-                              <?php echo $row['id'] ?>
+                              <?php echo $row['dept_id'] ?>
+                            </td>
+                            <td>
+                              <?php echo $row['department_name'] ?>
                             </td>
                             <td>
                               <?php echo $row['faculty_name'] ?>
                             </td>
-                            <td>
-                              <?php echo $row['Description'] ?>
-                            </td>
-                            <td><?php echo $row['Location'] ?></td>
-                            <td class="center"><a class="edit-data" id='<?php echo $row['id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                            <td class="center"><a id="delete_faculty" data-id="<?php echo $row['id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
+                            <td class="center"><a class="edit-data" id='<?php echo $row['dept_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
+                            <td class="center"><a id="delete_department" data-id="<?php echo $row['dept_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
                           </tr>
                       <?php }
                       } else
@@ -107,10 +105,9 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Faculty ID</th>
-                        <th>Faculty Name</th>
-                        <th>Descrition</th>
-                        <th>Location</th>
+                        <th>Dept. ID</th>
+                        <th>Department Name</th>
+                        <th>Faculty</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>
@@ -127,34 +124,43 @@
       </div>
     </div>
   </div>
-  <div class="modal inmodal fade" id="add_faculty" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+  <div class="modal inmodal fade" id="add_department" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Add Faculty</h4>
+          <h4 class="modal-title">Add Department</h4>
         </div>
         <div class="modal-body">
           <form method="POST" id="insert_form">
-            <div class="form-group"><label>Faculty Name</label>
-              <input class="form-control input-sm validate[required]" name="insert_faculty_name" id="insert_name" type="text" placeholder=" Enter Faculty Name">
+            <div class="form-group"><label>Department Name</label>
+              <input class="form-control input-sm validate[required]" name="insert_dept_name" id="insert_dept_name" type="text" placeholder=" Enter Department Name">
             </div>
 
-            <div class="form-group"><label>Description</label>
-              <input class="input-sm validate[required] form-control" name="insert_faculty_description" id="insert_descritpion" type="text" placeholder=" Enter Faculty Description">
-            </div>
-
-            <div class="form-group"><label>Location</label>
-              <input class="input-sm form-control" name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location">
+            <div class="form-group"><label>Faculty</label>
+              <select class="form-control select2 validate[required]" required name="dept_faculty">
+                <option></option>
+                <?php
+                $tbl_name = "faculty";
+                $query = $obj->select_data($tbl_name);
+                $res = $obj->execute_query($conn, $query);
+                $count_rows = $obj->num_rows($res);
+                if ($count_rows > 0) {
+                  while ($row = $obj->fetch_data($res)) {
+                ?>
+                    <option value="<?php echo $row['id'] ?>"><?php echo $row['faculty_name'] ?></option>
+                <?php }
+                } ?>
+              </select>
             </div>
             <div id="add_information" class="form-group"></div>
-            <input type="hidden" name="faculty_id" id="faculty_id" value="" />
-            <input type="submit" name="insert" value="Insert Faculty" id="insert" class="btn  btn-outline btn-lg btn-success btn-rounded" />
+            <input type="hidden" name="dept_id" id="dept_id" value="" />
+            <input type="submit" name="insert" value="Insert Department" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
           </form>
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -221,7 +227,7 @@
       $('#insert').on("click", function(event) {
         event.preventDefault();
         $.ajax({
-          url: "<?php echo SITEURL; ?>admin/faculty_add.php",
+          url: "<?php echo SITEURL; ?>faculty/department_add.php",
           data: $('#insert_form').serialize(),
           type: 'POST',
           cache: false,
@@ -244,12 +250,12 @@
 
       });
 
-      $('#add_fa').on('click', function() {
-        $("#insert").val("Insert Faculty");
+      $('#add_de').on('click', function() {
+        $("#insert").val("Insert Department");
         $('#insert_form')[0].reset();
 
       });
-      $(document).on('click', '#delete_faculty', function() {
+      $(document).on('click', '#delete_department', function() {
         var faculty_id = $(this).data('id');
         confirmDelete(faculty_id);
         e.preventDefault();
@@ -258,20 +264,18 @@
       $(document).on('click', '.edit-data', function() {
         var id = $(this).attr("id");
         $.ajax({
-          url: "<?php echo SITEURL; ?>admin/faculty_fetch.php",
+          url: "<?php echo SITEURL; ?>faculty/department_fetch.php",
           method: "POST",
           data: {
-            dean_id: id
+            dept_id: id
           },
           dataType: "json",
           success: function(data) {
-            $('#insert_name').val(data.faculty_name);
-            $('#insert_descritpion').val(data.Description);
-            $('#insert_location').val(data.Location);
-            $('#faculty_id').val(data.id);
-            $('#insert').val("Update Faculty");
+            $('#insert_dept_name').val(data.department_name);
+            $('#dept_id').val(data.dept_id);
+            $('#insert').val("Update department");
             // alert($('#deanid').attr("value"));
-            $('#add_faculty').modal('show');
+            $('#add_department').modal('show');
           },
           error: function(responseObj) {
             alert("Something went wrong while processing your request.\n\nError => " +

@@ -44,52 +44,52 @@
                     <div class="wrapper wrapper-content">
 
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 btn">
                                 <div class="widget style1 red-bg">
                                     <div class="row">
-                                        <div class="col-4 text-center">
+                                        <div class="col-4">
                                             <i class="fa fa-building fa-5x"></i>
                                         </div>
-                                        <div class="col-8 text-right">
+                                        <div class="col-8 text-center">
                                             <span> Departments </span>
                                             <h2 class="font-bold">7</h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 btn">
                                 <div class="widget style1 navy-bg">
                                     <div class="row">
                                         <div class="col-4">
                                             <i class="fa fa-pencil fa-5x"></i>
                                         </div>
-                                        <div class="col-8 text-right">
+                                        <div class="col-8 text-center">
                                             <span> Exams </span>
                                             <h2 class="font-bold">12</h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 btn">
                                 <div class="widget style1 lazur-bg">
                                     <div class="row">
                                         <div class="col-4">
                                             <i class="fa fa-users fa-5x"></i>
                                         </div>
-                                        <div class="col-8 text-right">
+                                        <div class="col-8 text-center">
                                             <span> Users </span>
                                             <h2 class="font-bold">7</h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-3 btn">
                                 <div class="widget style1 yellow-bg">
                                     <div class="row">
                                         <div class="col-4">
                                             <i class="fa fa-file-text fa-5x"></i>
                                         </div>
-                                        <div class="col-8 text-right">
+                                        <div class="col-8 text-center">
                                             <span> Reports</span>
                                             <h2 class="font-bold">12</h2>
                                         </div>

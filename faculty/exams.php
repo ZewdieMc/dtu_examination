@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 if (!isset($_SESSION['user'])) {
-    header('location:' . SITEURL . 'admin/index.php?page=login');
+    header('location:' . SITEURL . 'faculty/index.php?page=login');
 }
 ?>
 <html>
@@ -30,14 +30,14 @@ if (!isset($_SESSION['user'])) {
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Admin</h2>
+                    <h2>Faculty Dean</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.php">Home</a>
                         </li>
 
                         <li class="active">
-                            <strong>Exam lists</strong>
+                            <strong>Exams list</strong>
                         </li>
                     </ol>
                 </div>
@@ -80,7 +80,12 @@ if (!isset($_SESSION['user'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tbl_name = "tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.id";
+                                            $tbl_name = "((tbl_exam join tbl_course on
+                                            tbl_exam.course_id=tbl_course.id)join tbl_department on 
+                                            tbl_course.department_id=tbl_department.dept_id) join 
+                                            faculty on tbl_department.faculty_id=faculty.id";
+                                            $faculty_id = $_SESSION['faculty_id'];
+                                            $where = "faculty.id=$faculty_id";
                                             $query = $obj->select_data($tbl_name);
                                             $res = $obj->execute_query($conn, $query);
                                             $count_rows = $obj->num_rows($res);

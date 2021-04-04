@@ -19,11 +19,7 @@ include('check.php');
 
             <div class="alert alert-success">
                 <p style="text-align: left;">
-                    Here are some of the rules and regulations of this app.<br />
-                    1. This test is automated and you won't be able to return to previous question.<br />
-                    2. Once you successfully login, you can't log back in unless the permission of system administrator.<br />
-                    3. After you click on "Take a Test", the timer will start and it can't be paused or stopped.<br />
-                    4. English questions will appear first and after you finish Englihs, you will be given Math question.
+                    Here, an input field for the examination code should be prepared.
                 </p>
             </div>
 

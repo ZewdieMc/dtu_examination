@@ -69,16 +69,15 @@
                       <tr>
                         <th>Dept. ID</th>
                         <th>Department Name</th>
-                        <th>Head</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $tbl_name = "tbl_department join tbl_department_head on tbl_department.dept_id=tbl_department_head.department_id";
+                      $tbl_name = "tbl_department";
                       $faculty_id = $_SESSION['faculty_id'];
-                      $where = "tbl_department.faculty_id = $faculty_id";
+                      $where = "faculty_id = $faculty_id";
                       $query = $obj->select_data($tbl_name, $where);
                       $res = $obj->execute_query($conn, $query);
                       $count_rows = $obj->num_rows($res);
@@ -93,9 +92,7 @@
                             <td>
                               <?php echo $row['department_name'] ?>
                             </td>
-                            <td>
-                              <?php echo $row['first_name'] . " " . $row['last_name'] ?>
-                            </td>
+
                             <td class="center"><a class="edit-data" id='<?php echo $row['dept_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
                             <td class="center"><a id="delete_department" data-id="<?php echo $row['dept_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
                           </tr>
@@ -109,7 +106,6 @@
                       <tr>
                         <th>Dept. ID</th>
                         <th>Department Name</th>
-                        <th>Heead</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>

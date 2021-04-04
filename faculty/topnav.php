@@ -25,7 +25,7 @@
     </li>
 
     <li>
-        <a href="<?php echo SITEURL ?>admin/index.php?page=logout">
+        <a href="<?php echo SITEURL ?>faculty/index.php?page=logout">
             <i class="fa fa-sign-out"></i> Log out
         </a>
     </li>

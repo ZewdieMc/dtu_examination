@@ -26,14 +26,14 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Admin</h2>
+                    <h2>Fac. Dean</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.php">Home</a>
                         </li>
 
                         <li class="active">
-                            <strong>Dean lists</strong>
+                            <strong>Heads list</strong>
                         </li>
                     </ol>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_dean' data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Faculty Dean</button>
+                                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_head' data-target="#add_faculty"><span class="fa fa-plus"></span>&nbsp;Dept. Head</button>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -71,15 +71,17 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Username</th>
-                                                <th>Faculty</th>
+                                                <th>Department</th>
                                                 <th>Update</th>
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tbl_name = "tbl_faculty_dean join faculty on tbl_faculty_dean.faculty_id=faculty.id";
-                                            $query = $obj->select_data($tbl_name);
+                                            $tbl_name = "tbl_department_head join tbl_department on tbl_department_head.department_id=tbl_department.dept_id";
+                                            $faculty_id = $_SESSION['faculty_id'];
+                                            $where = "tbl_department.faculty_id=$faculty_id";
+                                            $query = $obj->select_data($tbl_name, $where);
                                             $res = $obj->execute_query($conn, $query);
                                             $count_rows = $obj->num_rows($res);
                                             if ($count_rows > 0) {
@@ -88,7 +90,7 @@
                                                     <tr class="gradeX">
 
                                                         <td>
-                                                            <?php echo $row['dean_id'] ?>
+                                                            <?php echo $row['id'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $row['first_name'] ?>
@@ -98,9 +100,9 @@
                                                         </td>
                                                         <td><?php echo $row['email'] ?></td>
                                                         <td><?php echo $row['username'] ?></td>
-                                                        <td><?php echo $row['faculty_name'] ?></td>
-                                                        <td><a class="edit-data" id='<?php echo $row['dean_id'] ?>'><span class="fa fa-pencil fa-lg "></span></a></td>
-                                                        <td><a id="delete_dean" data-id="<?php echo $row['dean_id']; ?>"><span class="fa fa-trash fa-lg "></span> </a></td>
+                                                        <td><?php echo $row['department_name'] ?></td>
+                                                        <td><a class="edit-data" id='<?php echo $row['id'] ?>'><span class="fa fa-pencil fa-lg "></span></a></td>
+                                                        <td><a id="delete_dean" data-id="<?php echo $row['id']; ?>"><span class="fa fa-trash fa-lg "></span> </a></td>
                                                     </tr>
 
 
@@ -118,7 +120,7 @@
                                                 <th>Last Name</th>
                                                 <th>Email</th>
                                                 <th>Username</th>
-                                                <th>Faculty</th>
+                                                <th>Department</th>
                                                 <th>Update</th>
                                                 <th>Delete</th>
                                             </tr>
@@ -149,10 +151,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Add Dean</h4>
+                    <h4 class="modal-title">Add Head</h4>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" id="dean_form">
+                    <form method="POST" id="head_form">
                         <div class="form-group"><label>First Name</label>
                             <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
                         </div>
@@ -168,18 +170,20 @@
                             <input class="input-sm form-control" name="username" id="username" type="text" placeholder=" Enter Username">
                         </div>
 
-                        <div class="form-group"><label>Faculty</label>
-                            <select class="form-control select2 validate[required]" name="faculty">
+                        <div class="form-group"><label>Department</label>
+                            <select class="form-control select2 validate[required]" name="department">
                                 <option></option>
                                 <?php
-                                $tbl_name = "faculty";
-                                $query = $obj->select_data($tbl_name);
+                                $tbl_name = "tbl_department";
+                                $faculty_id = $_SESSION['faculty_id'];
+                                $where = "faculty_id = $faculty_id";
+                                $query = $obj->select_data($tbl_name, $where);
                                 $res = $obj->execute_query($conn, $query);
                                 $count_rows = $obj->num_rows($res);
                                 if ($count_rows > 0) {
                                     while ($row = $obj->fetch_data($res)) {
                                 ?>
-                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['faculty_name'] ?></option>
+                                        <option value="<?php echo $row['dept_id'] ?>"><?php echo $row['department_name'] ?></option>
                                 <?php }
                                 } ?>
                             </select>
@@ -189,7 +193,7 @@
                         </div>
                         <div id="add_information">
                         </div>
-                        <input type="hidden" name="deanid" id="deanid" value="" />
+                        <input type="hidden" name="headid" id="headid" value="" />
 
                         <input type="submit" name="insert_dean" value="Insert dean" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
                     </form>
@@ -255,9 +259,9 @@
                 "width": "90%",
                 "height": "100%"
             });
-            $('#add_dean').on('click', function() {
-                $("#insert").val("Insert Dean");
-                $('#dean_form')[0].reset();
+            $('#add_head').on('click', function() {
+                $("#insert").val("Insert Head");
+                $('#head_form')[0].reset();
 
             });
             $(document).on('click', '#delete_dean', function() {
@@ -269,8 +273,8 @@
             $('#insert').on('click', function(event) {
                 event.preventDefault();
                 $.ajax({
-                    url: "<?php echo SITEURL; ?>admin/faculty_dean_add.php",
-                    data: $('#dean_form').serialize(),
+                    url: "<?php echo SITEURL; ?>faculty/dept_head_add.php",
+                    data: $('#head_form').serialize(),
                     type: 'POST',
                     cache: false,
                     beforeSend: function() {
@@ -297,21 +301,20 @@
             $(document).on('click', '.edit-data', function() {
                 var id = $(this).attr("id");
                 $.ajax({
-                    url: "<?php echo SITEURL; ?>admin/faculty_dean_fetch.php",
+                    url: "<?php echo SITEURL; ?>faculty/dept_head_fetch.php",
                     method: "POST",
                     data: {
-                        dean_id: id
+                        head_id: id
                     },
                     dataType: "json",
                     success: function(data) {
                         $('#first_name').val(data.first_name);
                         $('#last_name').val(data.last_name);
                         $('#email').val(data.email);
-                        $('#faculty').val(data.faculty_id);
+                        $('#department').val(data.department_id);
                         $('#username').val(data.username);
-                        $('#deanid').val(data.dean_id);
-                        $('#insert').val("Update");
-                        // alert($('#deanid').attr("value"));
+                        $('#headid').val(data.id);
+                        $('#insert').val("Update Head");
                         $('#add_faculty').modal('show');
                     },
                     error: function(responseObj) {
@@ -337,7 +340,7 @@
                 preConfirm: function() {
                     return new Promise(function(resolve) {
                         $.ajax({
-                                url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                                url: '<?php echo SITEURL ?>faculty/dept_head_delete.php',
                                 type: 'POST',
                                 data: 'delete=' + productId,
                                 dataType: 'json'
@@ -371,7 +374,7 @@
                 function(isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                            url: '<?php echo SITEURL ?>faculty/dept_head_delete.php',
                             type: "POST",
                             data: {
                                 id: userid

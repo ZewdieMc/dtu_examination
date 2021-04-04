@@ -26,7 +26,7 @@
       </div>
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-          <h2>Admin</h2>
+          <h2>Fac. Dean</h2>
           <ol class="breadcrumb">
             <li>
               <a href="index.php">Home</a>
@@ -69,15 +69,17 @@
                       <tr>
                         <th>Dept. ID</th>
                         <th>Department Name</th>
-                        <th>Faculty</th>
+                        <th>Head</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $tbl_name = "tbl_department join faculty on tbl_department.faculty_id=faculty.id";
-                      $query = $obj->select_data($tbl_name);
+                      $tbl_name = "tbl_department join tbl_department_head on tbl_department.dept_id=tbl_department_head.department_id";
+                      $faculty_id = $_SESSION['faculty_id'];
+                      $where = "tbl_department.faculty_id = $faculty_id";
+                      $query = $obj->select_data($tbl_name, $where);
                       $res = $obj->execute_query($conn, $query);
                       $count_rows = $obj->num_rows($res);
                       if ($count_rows > 0) {
@@ -92,7 +94,7 @@
                               <?php echo $row['department_name'] ?>
                             </td>
                             <td>
-                              <?php echo $row['faculty_name'] ?>
+                              <?php echo $row['first_name'] . " " . $row['last_name'] ?>
                             </td>
                             <td class="center"><a class="edit-data" id='<?php echo $row['dept_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
                             <td class="center"><a id="delete_department" data-id="<?php echo $row['dept_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
@@ -107,7 +109,7 @@
                       <tr>
                         <th>Dept. ID</th>
                         <th>Department Name</th>
-                        <th>Faculty</th>
+                        <th>Heead</th>
                         <th>Update</th>
                         <th>Delete</th>
                       </tr>
@@ -135,23 +137,6 @@
           <form method="POST" id="insert_form">
             <div class="form-group"><label>Department Name</label>
               <input class="form-control input-sm validate[required]" name="insert_dept_name" id="insert_dept_name" type="text" placeholder=" Enter Department Name">
-            </div>
-
-            <div class="form-group"><label>Faculty</label>
-              <select class="form-control select2 validate[required]" required name="dept_faculty">
-                <option></option>
-                <?php
-                $tbl_name = "faculty";
-                $query = $obj->select_data($tbl_name);
-                $res = $obj->execute_query($conn, $query);
-                $count_rows = $obj->num_rows($res);
-                if ($count_rows > 0) {
-                  while ($row = $obj->fetch_data($res)) {
-                ?>
-                    <option value="<?php echo $row['id'] ?>"><?php echo $row['faculty_name'] ?></option>
-                <?php }
-                } ?>
-              </select>
             </div>
             <div id="add_information" class="form-group"></div>
             <input type="hidden" name="dept_id" id="dept_id" value="" />
@@ -310,14 +295,14 @@
         function(isConfirm) {
           if (isConfirm) {
             $.ajax({
-              url: '<?php echo SITEURL ?>admin/faculty_delete.php',
+              url: '<?php echo SITEURL ?>faculty/department_delete.php',
               type: "POST",
               data: {
                 id: userid
               },
               dataType: "json",
-              success: function() {
-                swal("Done!", "Operation successful!", "success");
+              success: function(response) {
+                swal("Done!", response.message, response.status);
               }
             });
           } else {

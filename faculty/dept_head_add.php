@@ -1,36 +1,36 @@
 <?php
 include('config/apply.php');
-$tbl_name = "tbl_department";
-$department_name = $_POST['insert_dept_name'];
-$faculty_id = $_SESSION['faculty_id'];
-$dept_id = $_POST['dept_id'];
-$data = "department_name='$department_name',faculty_id='$faculty_id'";
+$tbl_name = "tbl_department_head";
+$first_name = $_POST['first_name'];
+$last_name = $_POST['last_name'];
+$email = $_POST['email'];
+$username = $_POST['username'];
+$department = $_POST['department'];
+$password = md5($_POST['password']);
+$head_id = $_POST['headid'];
 
-$where = "dept_id ='$dept_id'";
-
-// $query = $obj->insert_data($tbl_name, $data);
-// $res = $obj->execute_query($conn, $query);
-// if ($res) {
-//     echo "<div class = 'alert alert-success'><b> $faculty_name saved successfully<b></div>";
-// } else {
-//     echo "<div class = 'alert alert-danger'> failed to '$faculty_name'</div>";
-// }
-
+$data = "first_name='$first_name',
+last_name='$last_name',
+email='$email',
+username='$username',
+department_id='$department',
+password='$password'";
+$where = "id ='$head_id'";
 $nessage = "";
 $query = "";
-if (!empty($dept_id)) {
+if (!empty($head_id)) {
     $query = $obj->update_data($tbl_name, $data, $where);
     $message =
         "<div class='alert alert-success alert-dismissable'>
                                 <button aria-hidden='true data-dismiss='alert' class='close' type='button'>×</button>
-                               <b> $department_name updated successfully</b>.
+                               <b> $first_name updated successfully</b>.
                             </div>";
 } else {
     $query = $obj->insert_data($tbl_name, $data);
     $message =
         "<div class='alert alert-success alert-dismissable'>
                                 <button aria-hidden='true data-dismiss='alert' class='close' type='button'>×</button>
-                                $department_name saved successfully.
+                               <b> $first_name saved successfully</b>.
                             </div>";
 }
 $res = $obj->execute_query($conn, $query);

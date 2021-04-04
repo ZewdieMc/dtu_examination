@@ -58,6 +58,7 @@
                         if ($count_rows == 1) {
                             $_SESSION['user'] = $username;
                             $_SESSION['user_id'] = $row['dean_id'];
+                            $_SESSION['faculty_id'] = $row['faculty_id'];
                             $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
                             header('location:' . SITEURL . 'faculty/index.php?page=dashboard');
                         } else {

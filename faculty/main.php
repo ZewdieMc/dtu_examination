@@ -111,7 +111,7 @@
             if(isset($_SESSION['user']))
             {
                 unset($_SESSION['user']);
-            header('location:'.SITEURL.'teacher/index.php?page=login');
+            header('location:'.SITEURL.'faculty/index.php?page=login');
             }
             
         }
@@ -122,4 +122,3 @@
             include('dashboard.php');
         }
     }
-?>

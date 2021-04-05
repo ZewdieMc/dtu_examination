@@ -27,7 +27,7 @@ switch ($page) {
         break;
 
     case "students": {
-            include('students.php');
+            include('student.php');
         }
         break;
 
@@ -89,7 +89,7 @@ switch ($page) {
     case "logout": {
             if (isset($_SESSION['user'])) {
                 unset($_SESSION['user']);
-                header('location:' . SITEURL . 'department/login.php');
+                header('location:' . SITEURL . 'department/index.php?page=login');
             }
         }
         break;

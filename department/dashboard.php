@@ -39,131 +39,7 @@
 
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="ibox-content">
-                        <b>Departments</b>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>Dept. ID</th>
-                                        <th>Department Name</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $tbl_name = "tbl_department";
-                                    $faculty_id = $_SESSION['faculty_id'];
-                                    $where = "faculty_id = $faculty_id";
-                                    $query = $obj->select_data($tbl_name, $where);
-                                    $res = $obj->execute_query($conn, $query);
-                                    $count_rows = $obj->num_rows($res);
-                                    if ($count_rows > 0) {
-                                        while ($row = $obj->fetch_data($res)) {
-                                    ?>
-                                            <tr class="gradeX">
-
-                                                <td>
-                                                    <?php echo $row['dept_id'] ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $row['department_name'] ?>
-                                                </td>
-
-                                                <td class="center"><a class="edit-data" id='<?php echo $row['dept_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                                                <td class="center"><a id="delete_department" data-id="<?php echo $row['dept_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
-                                            </tr>
-                                    <?php }
-                                    } else
-                                        echo "no data";
-                                    ?>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Dept. ID</th>
-                                        <th>Department Name</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="ibox-content">
-                        <b>Department Heads</b>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example">
-                                <thead>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $tbl_name = "tbl_department_head join tbl_department on tbl_department_head.department_id=tbl_department.dept_id";
-                                    $faculty_id = $_SESSION['faculty_id'];
-                                    $where = "tbl_department.faculty_id=$faculty_id";
-                                    $query = $obj->select_data($tbl_name, $where);
-                                    $res = $obj->execute_query($conn, $query);
-                                    $count_rows = $obj->num_rows($res);
-                                    if ($count_rows > 0) {
-                                        while ($row = $obj->fetch_data($res)) {
-                                    ?>
-                                            <tr class="gradeX">
-
-                                                <td>
-                                                    <?php echo $row['id'] ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $row['first_name'] ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $row['last_name'] ?>
-                                                </td>
-                                                <td><?php echo $row['email'] ?></td>
-                                                <td><a class="edit-data" id='<?php echo $row['id'] ?>'><span class="fa fa-pencil fa-lg "></span></a></td>
-                                                <td><a id="delete_dean" data-id="<?php echo $row['id']; ?>"><span class="fa fa-trash fa-lg "></span> </a></td>
-                                            </tr>
-
-
-                                    <?php }
-                                    } else
-                                        echo "no data";
-                                    ?>
-
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>First</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Update</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row">
+             <div class="row">
                 <div class="col-lg-12">
                     <div class="wrapper wrapper-content">
 
@@ -253,7 +129,7 @@
                     <?php //include('footer.php');   
                     ?>
                 </div>
-            </div> -->
+            </div> 
             <?php include('includes/scripts2.php') ?>
 
             <script>

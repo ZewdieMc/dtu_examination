@@ -34,3 +34,4 @@
 
  <script src="<?php echo SITEURL ?>asset/js/plugins/sweetalert/sweetalert.min.js"></script>
  <script src="<?php echo SITEURL ?>asset/js/plugins/select2/select2.full.min.js"></script>
+ <script src="<?php echo SITEURL ?>asset/js/plugins/validate/jquery.validate.min.js"></script>

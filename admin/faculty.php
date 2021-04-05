@@ -135,17 +135,17 @@
           <h4 class="modal-title">Add Faculty</h4>
         </div>
         <div class="modal-body">
-          <form method="POST" id="insert_form">
+          <form method="POST" id="insert_form" novalidate="novalidate">
             <div class="form-group"><label>Faculty Name</label>
-              <input class="form-control input-sm validate[required]" name="insert_faculty_name" id="insert_name" type="text" placeholder=" Enter Faculty Name">
+              <input class="form-control input-sm  " name="insert_faculty_name" id="insert_name" type="text"  placeholder=" Enter Faculty Name" required>
             </div>
 
             <div class="form-group"><label>Description</label>
-              <input class="input-sm validate[required] form-control" name="insert_faculty_description" id="insert_descritpion" type="text" placeholder=" Enter Faculty Description">
+              <input class="input-sm validate[required]  form-control" name="insert_faculty_description" id="insert_descritpion" type="text" placeholder=" Enter Faculty Description" required>
             </div>
 
             <div class="form-group"><label>Location</label>
-              <input class="input-sm form-control" name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location">
+              <input class="input-sm form-control"  name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location" required>
             </div>
             <div id="add_information" class="form-group"></div>
             <input type="hidden" name="faculty_id" id="faculty_id" value="" />
@@ -167,6 +167,23 @@
   <!-- Page-Level Scripts -->
   <script>
     $(document).ready(function() {
+      // $('#insert_form').validate({
+      //   rules: {
+      //     insert_faculty_name: {
+      //                    required: true,
+      //                    minlength: 3
+      //                },
+      //                insert_faculty_description: {
+      //                    required: true,
+      //                    maxlength:100
+
+      //                },
+      //                numinsert_faculty_locationber: {
+      //                    required: true
+      //                }
+
+      //   }
+      // });
       $('.dataTables-example').DataTable({
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [{
@@ -220,6 +237,7 @@
       });
       $('#insert').on("click", function(event) {
         event.preventDefault();
+
         $.ajax({
           url: "<?php echo SITEURL; ?>admin/faculty_add.php",
           data: $('#insert_form').serialize(),

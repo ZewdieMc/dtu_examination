@@ -129,4 +129,6 @@ att:
 					        exam table contains which course. which department, whcih faculty.
 					        each of of the table contains exam_id
 					        each question in the questions table have exam_id
+
+						After logon, a student should be asked to enter exam_code to be able to start te 							eximination.
 			  	*/

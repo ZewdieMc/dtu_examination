@@ -72,6 +72,7 @@ if (!isset($_SESSION['user'])) {
                                             <tr>
                                                 <th>Exam Code</th>
                                                 <th>Course Name</th>
+                                                <th>Department</th>
                                                 <th>Total Questions</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>
@@ -99,6 +100,8 @@ if (!isset($_SESSION['user'])) {
                                                         </td>
                                                         <td>
                                                             <?php echo $row['course_name'] ?>
+                                                        <td>
+                                                            <?php echo $row['department_name'] ?>
                                                         </td>
                                                         <td>
                                                             <?php echo $row['qns_per_set'] ?>
@@ -120,6 +123,7 @@ if (!isset($_SESSION['user'])) {
                                             <tr>
                                                 <th>Exam Code</th>
                                                 <th>Course Name</th>
+                                                <th>Department</th>
                                                 <th>Total Questions</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>

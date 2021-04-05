@@ -1,6 +1,5 @@
 <?php
-include('config/apply.php');
-include('../box/header.php');
+
 ?>
 <style type="text/css">
     body {
@@ -8,9 +7,9 @@ include('../box/header.php');
     }
 </style>
 <div class="container" style="margin-top: 10px">
-    <div class="row">
-        <div class="col"></div>
-        <div class="col">
+    <div class="row justify-content-center">
+        <!-- <div class="col"></div> -->
+        <div class="col-md-4">
             <!--Body Starts Here-->
             <div class="card">
                 <div class="card-body">
@@ -51,20 +50,23 @@ include('../box/header.php');
 
                         if (($username == "") or ($password = "")) {
                             $_SESSION['validation'] = "<div class='alert alert-danger'>Username or Password is Empty</div>";
-                            header('location:' . SITEURL . 'department/login.php');
+                            header('location:' . SITEURL . 'department/index.php?page=login');
                         }
-                        $tbl_name = "tbl_app";
+                        $tbl_name = "tbl_department_head";
                         $where = "username='$username' AND password='$password_db'";
                         $query = $obj->select_data($tbl_name, $where);
                         $res = $obj->execute_query($conn, $query);
+                        $row = $obj->fetch_data($res);
                         $count_rows = $obj->num_rows($res);
                         if ($count_rows == 1) {
                             $_SESSION['user'] = $username;
+                            $_SESSION['id'] = $row['id'];
+                            $_SESSION['dept_id'] = $row['dept_id'];
                             $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
-                            header('location:' . SITEURL . 'department/index.php');
+                            header('location:' . SITEURL . 'department/index.php?page=home');
                         } else {
                             $_SESSION['fail'] = "<div class='alert alert-danger'>Username or Password is invalid. Please try again.</div>";
-                            header('location:' . SITEURL . 'department/login.php');
+                            header('location:' . SITEURL . 'department/index.php?page=login');
                         }
                     }
                     ?>
@@ -72,7 +74,7 @@ include('../box/header.php');
             </div>
             <!--Body Ends Here-->
         </div>
-        <div class="col"></div>
+        <!-- <div class="col"></div> -->
     </div>
 
 </div>

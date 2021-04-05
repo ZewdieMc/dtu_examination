@@ -4,7 +4,7 @@
         <div class="form-group" style="margin-top:10%" ;>
             <Strong>
                 <h4>
-                    <p>DTU Examination System</p>
+                    <p class="m-r-sm text-muted welcome-message">DTU Examination System</p>
                 </h4>
 
             </strong>

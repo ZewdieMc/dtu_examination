@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4
+-- version 3.4.10.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2021 at 05:34 AM
--- Server version: 5.6.12-log
--- PHP Version: 5.4.12
+-- Generation Time: Apr 05, 2021 at 09:38 AM
+-- Server version: 5.5.20
+-- PHP Version: 5.3.10
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `examination`
 --
-CREATE DATABASE IF NOT EXISTS `examination` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `examination`;
 
 -- --------------------------------------------------------
 
@@ -714,23 +712,21 @@ CREATE TABLE IF NOT EXISTS `tbl_student` (
   `password` varchar(255) NOT NULL,
   `contact` varchar(20) NOT NULL,
   `gender` varchar(10) NOT NULL,
-  `study_year` int(11) NOT NULL,
   `department_id` int(11) NOT NULL,
-  `year` year(4) NOT NULL,
+  `faculty` varchar(50) NOT NULL,
   `is_active` varchar(10) NOT NULL,
   `added_date` date NOT NULL,
   `updated_date` date NOT NULL,
   PRIMARY KEY (`student_id`),
-  UNIQUE KEY `study_year` (`study_year`),
   KEY `department_id` (`department_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `tbl_student`
 --
 
-INSERT INTO `tbl_student` (`student_id`, `first_name`, `last_name`, `email`, `username`, `password`, `contact`, `gender`, `study_year`, `department_id`, `year`, `is_active`, `added_date`, `updated_date`) VALUES
-(4, 'Gizatie', 'Desalegn', 'gizatie2004@gmail.com', 'Gizatie', 'student', '45454545', 'male', 5, 1, 2013, 'yes', '2021-04-02', '2021-04-02');
+INSERT INTO `tbl_student` (`student_id`, `first_name`, `last_name`, `email`, `username`, `password`, `contact`, `gender`, `department_id`, `faculty`, `is_active`, `added_date`, `updated_date`) VALUES
+(2, 'Tadese', 'Mamu', 'tadese@gmail.com', 'tadese', 'student', '454545454545', 'male', 0, '1', 'yes', '2020-09-23', '2021-03-15');
 
 -- --------------------------------------------------------
 
@@ -758,30 +754,6 @@ INSERT INTO `tbl_teacher` (`id`, `first_name`, `last_name`, `username`, `email`,
 (1, 'Gizatie', 'Desalegn', 'Gizatie', 'Gizatied2004@gmail.com', '1234', 1),
 (2, 'Zewdie', 'Habtie', 'Zewdie', 'zewdiehabtie26@gmail.com', '1234', 1),
 (3, 'Abaynew', 'Takele', 'Abaynew', 'abaynew@gmail.com', '1234', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_year_study`
---
-
-CREATE TABLE IF NOT EXISTS `tbl_year_study` (
-  `study_year_id` int(11) NOT NULL AUTO_INCREMENT,
-  `year` varchar(50) NOT NULL,
-  PRIMARY KEY (`study_year_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
-
---
--- Dumping data for table `tbl_year_study`
---
-
-INSERT INTO `tbl_year_study` (`study_year_id`, `year`) VALUES
-(1, '1st'),
-(2, '2nd'),
-(3, '3rd'),
-(4, '4th'),
-(5, '5th'),
-(6, '6th');
 
 --
 -- Constraints for dumped tables
@@ -817,13 +789,6 @@ ALTER TABLE `tbl_exam`
 --
 ALTER TABLE `tbl_faculty_dean`
   ADD CONSTRAINT `tbl_faculty_dean_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `tbl_student`
---
-ALTER TABLE `tbl_student`
-  ADD CONSTRAINT `tbl_student_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `tbl_department` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tbl_student_ibfk_2` FOREIGN KEY (`study_year`) REFERENCES `tbl_year_study` (`study_year_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_teacher`

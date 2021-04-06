@@ -13,7 +13,7 @@
 
 </head>
 
-<body>
+<body class="md-skin pace-done">
     <div id="wrapper">
         <?php include('sidenav.php'); ?>
 
@@ -39,7 +39,7 @@
 
                 </div>
             </div>
-             <div class="row">
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="wrapper wrapper-content">
 
@@ -129,7 +129,7 @@
                     <?php //include('footer.php');   
                     ?>
                 </div>
-            </div> 
+            </div>
             <?php include('includes/scripts2.php') ?>
 
             <script>

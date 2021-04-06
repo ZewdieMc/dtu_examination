@@ -12,7 +12,7 @@
 </head>
 
 <body class="md-skin pace-done">
-<!-- light-skin pace-done -->
+  <!-- light-skin pace-done -->
 
   <div id="wrapper">
 
@@ -49,6 +49,8 @@
               <div class="ibox-title">
                 &nbsp;&nbsp;&nbsp;
                 <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Student</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-arrpw"></span>&nbsp;Upload</button>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -117,7 +119,7 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                      <th>ID</th>
+                        <th>ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
@@ -143,12 +145,27 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Add Department</h4>
+          <h4 class="modal-title">Add Student</h4>
         </div>
         <div class="modal-body">
           <form method="POST" id="insert_form">
-            <div class="form-group"><label>Department Name</label>
-              <input class="form-control input-sm validate[required]" name="insert_dept_name" id="insert_dept_name" type="text" placeholder=" Enter Department Name">
+            <div class="form-group"><label>First Name</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            </div>
+            <div class="form-group"><label>Lasts Name</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            </div>
+            <div class="form-group"><label> Username</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            </div>
+            <div class="form-group"><label> Email</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            </div>
+            <div class="form-group"><label> Password</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            </div>
+            <div class="form-group"><label> Contact Number</label>
+              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
             </div>
             <div id="add_information" class="form-group"></div>
             <input type="hidden" name="dept_id" id="dept_id" value="" />

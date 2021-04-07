@@ -1,6 +1,6 @@
 <?php
 #global variables
-#session_destroy();
+//session_destroy();
 #echo $_SESSION['sn'];
 
 if (!isset($_SESSION['prev_disabled'])) {
@@ -27,29 +27,30 @@ if (!isset($_SESSION['next'])) {
     <?php
 
     $table_name = "tbl_student";
-    $where = "username='tadese'";
+    $username = $_SESSION['student'];
+    $where = "username='$username'";
     $result = $obj->execute_query($conn, $obj->select_data($table_name, $where));
     if ($result) {
         $row = $obj->fetch_data($result);
         $student_id = $row['student_id'];
         $full_name = $row['first_name'] . " " . $row['last_name'];
-        $_SESSION['department'] = $row['faculty'];
-        $faculty = $row['faculty'];
+        $_SESSION['exam'] = $row['exam_id'];
+        // $faculty = $row['exam_id'];
     }
 
     //get the questions and questions numbers department wise. 
-    $tbl_name_qns = 'tbl_faculty';
-    $where_qns = "faculty_id='$_SESSION[department]'";
+    $tbl_name_qns = 'tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.id';
+    $where_qns = "tbl_exam.exam_id='$_SESSION[exam]'";
     $query_qns = $obj->select_data($tbl_name_qns, $where_qns);
     $res_qns = $obj->execute_query($conn, $query_qns);
     if ($res_qns == true) {
         $row_qns = $obj->fetch_data($res_qns);
-        $faculty_name = $row_qns['faculty_name'];
-        $_SESSION['facultyName'] = $faculty_name;
+        $course_name = $row_qns['course_name'];
+        $_SESSION['courseName'] = $course_name;
         $time_duration = $row_qns['time_duration'];
-        $totalTime = $time_duration * 60;
-        $qns_per_page = $row_qns['qns_per_set'];
-        $total_english = $row_qns['total_english'];
+        // $totalTime = $time_duration * 60;
+        // $qns_per_page = $row_qns['qns_per_set'];
+        // $total_english = $row_qns['total_english'];
 
         //echo $total_english;die();
     }
@@ -64,17 +65,19 @@ if (!isset($_SESSION['next'])) {
 
     <div class="row well alert alert-primary" style="margin-top: 10px">
         Examinee: <span class="heavy"><?php echo $full_name; ?></span>&nbsp;&nbsp;
-        Department: <span class="heavy"><?php echo $faculty_name; ?></span>&nbsp;&nbsp;
+        Course: <span class="heavy"><?php echo $course_name; ?></span>&nbsp;&nbsp;
         Start Time: <span class="heavy"><?php echo $_SESSION['strt_time']; ?></span>&nbsp;&nbsp;
         End Time: <span class="heavy"><?php echo $_SESSION['end_time']; ?></span>&nbsp;&nbsp;
         <?php
         //Getting Time Difference
         $startTime = strtotime($_SESSION['end_time']);
+        // $startTime = strtotime(date('h:i:s A', strtotime("+" . $time_duration . " minutes")));
         $currentTime = strtotime(date('h:i:s A'));
+        // $currentTime = strtotime(date('h:i:s A'));
         $timeDifference = $startTime - $currentTime;
-
         ?>
-        Time left:<span class='badge-warning timer' style="border-radius: 5px;" data-seconds-left=<?php echo $timeDifference; ?>></span>
+        <!-- <span><?php echo $startTime ."-".$currentTime?></span> -->
+        <span class='badge-warning timer' style="border-radius: 5px;" data-seconds-left=<?php echo $timeDifference; ?>></span>
     </div>
     <!-- The question and its answer options -->
     <form method="post" action="">
@@ -88,7 +91,7 @@ if (!isset($_SESSION['next'])) {
 
                 $tbl_name = "tbl_question";
                 // if ($_SESSION['next'] == "ON") {
-                $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id NOT IN (" . $_SESSION['all_qns'] . ")";
+                $where = "is_active='yes' && exam_id='" . $_SESSION['exam'] . "' && question_id NOT IN (" . $_SESSION['all_qns'] . ")";
                 // } else {
                 //     $where = "is_active='yes' && category='Math' && faculty='" . $faculty . "' && question_id < '" . $_SESSION['question_id'] . "'order by question_id desc";
                 // }
@@ -150,8 +153,8 @@ if (!isset($_SESSION['next'])) {
         </div>
 
         <div class="row" style="margin-bottom: 10px">
-            <div class="col"><button id="prev" <?php echo $_SESSION['prev_disabled']; ?> name="previous" class="btn btn-lg btn-success" formnovalidate>&laquo; Previous</button></div>
-            <div class="col"><button <?php echo $_SESSION['next_disabled']; ?> name="next" class="btn btn-lg btn-success">&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp; &raquo; </button></div>
+            <div class="col"><button id="prev" <?php echo $_SESSION['prev_disabled']; ?> name="previous" class="btn btn-lg btn-success btn-rounded" formnovalidate>&laquo; Previous</button></div>
+            <div class="col"><button <?php echo $_SESSION['next_disabled']; ?> name="next" class="btn btn-lg btn-success btn-rounded">&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp; &raquo; </button></div>
             <div class="col">
                 <a href="<?php echo SITEURL; ?>index.php?page=logout">
                     <button type="button" class="btn btn-lg btn-danger" onclick="return confirm('Are you sure you want to Quit?')">&nbsp; Quit &nbsp;</button>

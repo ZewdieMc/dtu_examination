@@ -4,8 +4,10 @@
 <head>
   <!--Meta Tags Starts Here-->
   <meta charset="UTF-8" />
-  <meta name="author" content="Beyond Boundaries" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="author" content="Zewdie Habtie" />
+        <meta name="description" content="Online Examination system for Debre Tabor University" />
+        <meta name="keywords" content="Online Examination, Debre Tabor University,DTU, Ethiopia" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <!--Meta Tags Ends Here-->
   <title>Intranet Examination for DTU</title>
 

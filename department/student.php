@@ -50,7 +50,7 @@
                 &nbsp;&nbsp;&nbsp;
                 <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Student</button>
                 &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-upload"></span>&nbsp;Upload</button>
+                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" id='upload' ><span class="fa fa-upload"></span>&nbsp;Upload Excel file</button>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>

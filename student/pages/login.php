@@ -47,6 +47,7 @@
                         $count_rows = $obj->num_rows($res);
                         if ($count_rows > 0) {
                             $_SESSION['student'] = $username;
+                            // $_SESSION['exam_id'] = 
                             $_SESSION['login'] = "<div class='alert alert-success'>Login Successful.</div>";
                             header('location:' . SITEURL . 'student/index.php?page=welcome');
                         } else {

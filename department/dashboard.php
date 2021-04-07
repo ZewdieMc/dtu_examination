@@ -30,7 +30,7 @@
                     <h2>Dept. Head</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="<?php echo SITEURL ?>admin/index.php?page=dashboard">Home</a>
+                            <a href="<?php echo SITEURL ?>department/index.php?page=dashboard">Home</a>
                         </li>
 
                     </ol>

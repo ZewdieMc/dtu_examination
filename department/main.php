@@ -56,8 +56,8 @@ switch ($page) {
         }
         break;
 
-    case "questions": {
-            include('questions.php');
+    case "Questions": {
+            include('Questions.php');
         }
         break;
 

@@ -76,41 +76,7 @@
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            $tbl_name = "tbl_faculty_dean join faculty on tbl_faculty_dean.faculty_id=faculty.id";
-                                            $query = $obj->select_data($tbl_name);
-                                            $res = $obj->execute_query($conn, $query);
-                                            $count_rows = $obj->num_rows($res);
-                                            if ($count_rows > 0) {
-                                                while ($row = $obj->fetch_data($res)) {
-                                            ?>
-                                                    <tr class="gradeX">
 
-                                                        <td>
-                                                            <?php echo $row['dean_id'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['first_name'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['last_name'] ?>
-                                                        </td>
-                                                        <td><?php echo $row['email'] ?></td>
-                                                        <td><?php echo $row['username'] ?></td>
-                                                        <td><?php echo $row['faculty_name'] ?></td>
-                                                        <td><a class="edit-data" id='<?php echo $row['dean_id'] ?>'><span class="fa fa-pencil fa-lg "></span></a></td>
-                                                        <td><a id="delete_dean" data-id="<?php echo $row['dean_id']; ?>"><span class="fa fa-trash fa-lg "></span> </a></td>
-                                                    </tr>
-
-
-                                            <?php }
-                                            } else
-                                                echo "no data";
-                                            ?>
-
-
-                                        </tbody>
                                         <tfoot>
                                             <tr>
                                                 <th>User ID</th>
@@ -204,21 +170,36 @@
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
-            $('.dataTables-example').DataTable({
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
+            var dataTable = $('.dataTables-example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    url: "<?php echo SITEURL; ?>admin/get_faculty.php",
+                    type: "POST",
+                    data: {
+                        action: 'fetch',
+                        page: 'dean'
+                    }
+                },
+                "columnDefs": [{
+                    "targets": [0, 5],
+                    "orderable": false,
+                }],
+                "dom": '<"html5buttons"B>lTfgitp',
+                "buttons": [{
+                        "extend": 'copy'
                     },
                     {
                         extend: 'csv'
                     },
                     {
                         extend: 'excel',
-                        title: 'ExampleFile'
+                        title: 'faculties'
                     },
                     {
                         extend: 'pdf',
-                        title: 'ExampleFile'
+                        title: 'faculties'
                     },
 
                     {
@@ -232,7 +213,7 @@
                                 .css('font-size', 'inherit');
                         }
                     }
-                ]
+                ],
 
             });
 
@@ -280,8 +261,8 @@
                         if (status != "error" && status != "timeout") {
                             // $("#insert").val("Inserted");
                             $('#add_information').html(response.responseText);
-                            //$("#add_faculty").modal('toggle');
-                            // $('.dataTables-example').DataTable().ajax.reload();
+                            $("#add_faculty").modal('toggle');
+                            $('.dataTables-example').DataTable().ajax.reload();
 
 
                         }
@@ -319,73 +300,79 @@
                             responseObj.responseText);
                     }
                 });
+
+
+
+
             });
-        });
 
-        function SwalDelete(productId) {
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-                showLoaderOnConfirm: true,
-                closeOnConfirm: false,
-                closeOnCancel: false,
-                preConfirm: function() {
-                    return new Promise(function(resolve) {
-                        $.ajax({
-                                url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
-                                type: 'POST',
-                                data: 'delete=' + productId,
-                                dataType: 'json'
-                            })
-                            .done(function(response) {
-                                swal('Deleted!', response.message, response.status);
-                            })
-                            .fail(function() {
-                                swal('Oops...', 'Something went wrong with ajax !', 'error');
-                            });
-                    });
-                },
-                allowOutsideClick: false
-            });
-        }
-
-
-
-        function confirmDelete(userid) {
-            swal({
-                    title: "Are you sure?",
-                    text: "You will not be able to undo this.",
-                    type: "warning",
+            function SwalDelete(productId) {
+                swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "green",
-                    cancelButtonColor: "red",
-                    confirmButtonText: "Delete!",
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
                     closeOnConfirm: false,
-                    closeOnCancel: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
-                            type: "POST",
-                            data: {
-                                id: userid
-                            },
-                            dataType: "json",
-                            success: function() {
-                                swal("Done!", "User succesfully deleted!", "success");
-                            }
+                    closeOnCancel: false,
+                    preConfirm: function() {
+                        return new Promise(function(resolve) {
+                            $.ajax({
+                                    url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                                    type: 'POST',
+                                    data: 'delete=' + productId,
+                                    dataType: 'json'
+                                })
+                                .done(function(response) {
+                                    swal('Deleted!', response.message, response.status);
+                                    $('.dataTables-example').DataTable().ajax.reload();
+                                })
+                                .fail(function() {
+                                    swal('Oops...', 'Something went wrong with ajax !', 'error');
+                                });
                         });
-                    } else {
-                        swal("Cancelled", "Operation cancelled! :)", "error");
-                    }
-                })
-        }
+                    },
+                    allowOutsideClick: false
+                });
+            }
+
+            function confirmDelete(userid) {
+                swal({
+                        title: "Are you sure?",
+                        text: "You will not be able to undo this.",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "green",
+                        cancelButtonColor: "red",
+                        confirmButtonText: "Delete!",
+                        closeOnConfirm: false,
+                        closeOnCancel: false
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                url: '<?php echo SITEURL ?>admin/faculty_dean_delete.php',
+                                type: "POST",
+                                data: {
+                                    id: userid
+                                },
+                                dataType: "json",
+                                success: function() {
+                                    swal("Done!", "User succesfully deleted!", "success");
+                                    $('.dataTables-example').DataTable().ajax.reload();
+
+                                }
+                            });
+                        } else {
+                            swal("Cancelled", "Operation cancelled! :)", "error");
+                        }
+                    })
+            }
+
+        });
     </script>
 
 </body>

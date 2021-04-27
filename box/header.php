@@ -9,7 +9,7 @@
         <meta name="keywords" content="Online Examination, Debre Tabor University,DTU, Ethiopia" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <!--Meta Tags Ends Here-->
-  <title>Intranet Examination for DTU</title>
+  <title>DTU Examination</title>
 
   <!--COUNT DOWN TIMER STARTS HERE-->
   <script src="<?php echo SITEURL; ?>/assets/js/countdown/jquery.js"></script>
@@ -29,6 +29,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo SITEURL; ?>/assets/bootstrap2/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="<?php echo SITEURL; ?>/assets/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="<?php echo SITEURL; ?>/assets/css/style.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo SITEURL; ?>/asset/callout.css" />
   <script src="<?php echo SITEURL; ?>/assets/bootstrap2/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {

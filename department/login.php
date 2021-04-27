@@ -63,7 +63,7 @@
                             $_SESSION['id'] = $row['id'];
                             $_SESSION['dept_id'] = $row['department_id'];
                             $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=home');
+                            header('location:' . SITEURL . 'department/index.php?page=dashboard');
                         } else {
                             $_SESSION['fail'] = "<div class='alert alert-danger'>Username or Password is invalid. Please try again.</div>";
                             header('location:' . SITEURL . 'department/index.php?page=login');

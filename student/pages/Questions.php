@@ -63,7 +63,7 @@ if (!isset($_SESSION['next'])) {
 
     ?>
 
-    <div class="row well alert alert-primary" style="margin-top: 10px">
+    <div class="row  bd-callout bd-callout-info" style="margin-top: 10px">
         Examinee: <span class="heavy"><?php echo $full_name; ?></span>&nbsp;&nbsp;
         Course: <span class="heavy"><?php echo $course_name; ?></span>&nbsp;&nbsp;
         Start Time: <span class="heavy"><?php echo $_SESSION['strt_time']; ?></span>&nbsp;&nbsp;
@@ -76,7 +76,7 @@ if (!isset($_SESSION['next'])) {
         // $currentTime = strtotime(date('h:i:s A'));
         $timeDifference = $startTime - $currentTime;
         ?>
-        <!-- <span><?php echo $startTime ."-".$currentTime?></span> -->
+        <!-- <span><?php echo $startTime . "-" . $currentTime ?></span> -->
         <span class='badge-warning timer' style="border-radius: 5px;" data-seconds-left=<?php echo $timeDifference; ?>></span>
     </div>
     <!-- The question and its answer options -->

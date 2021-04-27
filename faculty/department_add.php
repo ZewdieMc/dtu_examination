@@ -8,14 +8,6 @@ $data = "department_name='$department_name',faculty_id='$faculty_id'";
 
 $where = "dept_id ='$dept_id'";
 
-// $query = $obj->insert_data($tbl_name, $data);
-// $res = $obj->execute_query($conn, $query);
-// if ($res) {
-//     echo "<div class = 'alert alert-success'><b> $faculty_name saved successfully<b></div>";
-// } else {
-//     echo "<div class = 'alert alert-danger'> failed to '$faculty_name'</div>";
-// }
-
 $nessage = "";
 $query = "";
 if (!empty($dept_id)) {

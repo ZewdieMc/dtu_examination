@@ -40,8 +40,8 @@
 
                         <a href="#"><i class="fa fa-eye"></i>View<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
-                            <li><a href="<?php echo SITEURL ?>faculty/index.php?page=exams"><i class="fa fa-pencil"></i>Exams</a></li>
-                            <li><a href="<?php echo SITEURL ?>faculty/index.php?page=dashboard"><i class="fa fa-file-text"></i>Report</a></li>
+                            <li><a href="<?php echo SITEURL ?>department/index.php?page=exams"><i class="fa fa-pencil"></i>Exams</a></li>
+                            <li><a href="<?php echo SITEURL ?>department/index.php?page=dashboard"><i class="fa fa-file-text"></i>Report</a></li>
                             <!-- <li><a href="addcollege.php"><i class="fa fa-plus"></i>Report</a></li> -->
                         </ul>
                     </li>

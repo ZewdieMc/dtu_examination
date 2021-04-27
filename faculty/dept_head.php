@@ -76,7 +76,7 @@
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <!-- <tbody>
                                             <?php
                                             $tbl_name = "tbl_department_head join tbl_department on tbl_department_head.department_id=tbl_department.dept_id";
                                             $faculty_id = $_SESSION['faculty_id'];
@@ -112,7 +112,7 @@
                                             ?>
 
 
-                                        </tbody>
+                                        </tbody> -->
                                         <tfoot>
                                             <tr>
                                                 <th>User ID</th>
@@ -208,7 +208,22 @@
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
-            $('.dataTables-example').DataTable({
+            var dataTable = $('.dataTables-example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    url: "<?php echo SITEURL; ?>faculty/get_department.php",
+                    type: "POST",
+                    data: {
+                        action: 'fetch',
+                        page: 'head'
+                    }
+                },
+                "columnDefs": [{
+                    "targets": [0, 3],
+                    "orderable": false,
+                }],
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [{
                         extend: 'copy'
@@ -264,7 +279,7 @@
                 $('#head_form')[0].reset();
 
             });
-            $(document).on('click', '#delete_dean', function() {
+            $(document).on('click', '#delete_head', function() {
                 var userId = $(this).data('id');
                 confirmDelete(userId);
                 e.preventDefault();
@@ -285,7 +300,7 @@
                             // $("#insert").val("Inserted");
                             $('#add_information').html(response.responseText);
                             //$("#add_faculty").modal('toggle');
-                            // $('.dataTables-example').DataTable().ajax.reload();
+                            $('.dataTables-example').DataTable().ajax.reload();
 
 
                         }
@@ -347,6 +362,7 @@
                             })
                             .done(function(response) {
                                 swal('Deleted!', response.message, response.status);
+                                
                             })
                             .fail(function() {
                                 swal('Oops...', 'Something went wrong with ajax !', 'error');
@@ -382,6 +398,7 @@
                             dataType: "json",
                             success: function() {
                                 swal("Done!", "User succesfully deleted!", "success");
+                                $('.dataTables-example').DataTable().ajax.reload();
                             }
                         });
                     } else {

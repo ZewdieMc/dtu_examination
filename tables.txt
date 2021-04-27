@@ -132,4 +132,12 @@ att:
 
 						After logon, a student should be asked to enter exam_code to be able to start the eximination.
 						Before Exam gets started it needs to be approved by examination committee....
+						OR 
+						A student can be provided with a list of exams to enroll, and take exam accordingly when the exam commences
+
+						SESSIONS SHOULD CAREFULLY BE MANAGED IN EVERY MODULES OF THE SYSTEM.
+						// set the default timezone to use.
+						date_default_timezone_set('UTC+3');
+
+						Student login is not hashed.
 			  	*/

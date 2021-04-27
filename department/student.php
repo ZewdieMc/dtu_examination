@@ -7,12 +7,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>DTU Examination</title>
+  <title>DTU Exam</title>
   <?php include('./includes/css2.php') ?>
 </head>
+<script>
+  function formToggle(ID) {
+    var element = document.getElementById(ID);
+    if (element.style.display === "none") {
+      element.style.display = "block";
+    } else {
+      element.style.display = "none";
+    }
+  }
+</script>
 
 <body class="md-skin pace-done">
   <!-- light-skin pace-done -->
+  <!-- class=" md-skin pace-done" -->
 
   <div id="wrapper">
 
@@ -27,7 +38,7 @@
       </div>
       <div class="row wrapper border-bottom white-bg page-heading">
         <div class="col-lg-10">
-          <h2>Fac. Dean</h2>
+          <h2>Dept. Head</h2>
           <ol class="breadcrumb">
             <li>
               <a href="index.php">Home</a>
@@ -47,10 +58,27 @@
           <div class="col-lg-12">
             <div class="ibox float-e-margins">
               <div class="ibox-title">
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Student</button>
-                &nbsp;&nbsp;&nbsp;
-                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" id='upload' ><span class="fa fa-upload"></span>&nbsp;Upload Excel file</button>
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-2"> <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Student</button>
+                    </div>
+                    <div class="col-md-6 head panel panel-primary" id="importform" style="padding: 15px;display:none">
+                      <form method="POST" action="student_upload.php" id="upload_form" enctype="multipart/form-data">
+                        <div class="col-md-6">
+                          <input type="file" name="file" class="form-control-file" id="upload_student">
+                        </div>
+                        <div class="col-md-2">
+                          <input type="submit" value="Import" name="uploadstudent" class="btn btn-primary btn-outline " id='cvs_upload' />
+                        </div>
+                        <!-- upload -->
+                      </form>
+                    </div>
+                    <div class="col-md-2">
+                      <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV file</a>
+                    </div>
+                  </div>
+                  <span id="upload_information" class=" alert alert-primary"></span>
+                </div>
                 <div class="ibox-tools">
                   <a class="collapse-link">
                     <i class="fa fa-chevron-up"></i>
@@ -74,58 +102,24 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
+                        <th>Contact</th>
+                        <th>Gender</th>
                         <th>Study Year</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <?php
-                      $tbl_name = "tbl_student join tbl_year_study on tbl_student.study_year=tbl_year_study.study_year_id";
-                      $dept_id = $_SESSION['dept_id'];
-                      $where = "tbl_student.department_id = $dept_id";
-                      $query = $obj->select_data($tbl_name, $where);
-                      $res = $obj->execute_query($conn, $query);
-                      $count_rows = $obj->num_rows($res);
-                      if ($count_rows > 0) {
-                        while ($row = $obj->fetch_data($res)) {
-                      ?>
-                          <tr class="gradeX">
-
-                            <td>
-                              <?php echo $row['student_id'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['first_name'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['last_name'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['email'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['year'] ?>
-                            </td>
-
-                            <td class="center"><a class="edit-data" id='<?php echo $row['student_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                            <td class="center"><a id="delete_department" data-id="<?php echo $row['student_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
-                          </tr>
-                      <?php }
-                      } else
-                        echo "no data";
-                      ?>
-
-                    </tbody>
                     <tfoot>
                       <tr>
                         <th>ID</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
+                        <th>Contact</th>
+                        <th>Gender</th>
                         <th>Study Year</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </tfoot>
                   </table>
@@ -149,27 +143,57 @@
         </div>
         <div class="modal-body">
           <form method="POST" id="insert_form">
-            <div class="form-group"><label>First Name</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group"><label>First Name</label>
+                  <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+                </div>
+                <div class="form-group"><label>Lasts Name</label>
+                  <input class="form-control input-sm validate[required]" name="last_name" id="last_name" type="text" placeholder=" Enter Last Name">
+                </div>
+                <div class="form-group"><label> Username</label>
+                  <input class="form-control input-sm validate[required]" name="username" id="username" type="text" placeholder=" Enter Username">
+                </div>
+                <div class="form-group"><label> Email</label>
+                  <input class="form-control input-sm validate[required]" name="email" id="email" type="email" placeholder=" Enter Email">
+                </div>
+                <div class="form-group"><label> Password</label>
+                  <input class="form-control input-sm validate[required]" name="password" value="dtu1234" id="password" type="password" placeholder=" Password">
+                </div>
+                <div class="form-group"><label> Contact Number</label>
+                  <input class="form-control input-sm validate[required]" name="contact" id="contact" type="text" placeholder=" Enter Contact Number">
+                </div>
+                <div id="add_information" class="form-group"></div>
+                <input type="hidden" name="student_id" id="student_id" value="" />
+                <input type="hidden" name="page" value="student" />
+                <input type="hidden" name="action" id="action" value="Add" />
+                <input type="submit" name="insert" value="Insert Student" id="insert" class="btn  btn-outline  btn-primary btn-rounded" />
+
+              </div>
+              <div class="col-md-6">
+                <div class="form-group"><label> Gender</label>
+                  <select class="form-control" name="gender">
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="form-group"><label> Study Year</label>
+                  <select class="form-control" name="study_year">
+                    <option></option>
+                    <?php
+                    $tbl_name  = "tbl_year_study";
+                    $query = $obj->select_data($tbl_name);
+                    $res = $obj->execute_query($conn, $query);
+                    while ($row = $obj->fetch_data($res)) {
+                    ?>
+                      <option value="<?php echo $row['study_year_id'] ?>"><?php echo $row['year'] ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div class="form-group"><label>Lasts Name</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-            </div>
-            <div class="form-group"><label> Username</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-            </div>
-            <div class="form-group"><label> Email</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-            </div>
-            <div class="form-group"><label> Password</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-            </div>
-            <div class="form-group"><label> Contact Number</label>
-              <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
-            </div>
-            <div id="add_information" class="form-group"></div>
-            <input type="hidden" name="dept_id" id="dept_id" value="" />
-            <input type="submit" name="insert" value="Insert Department" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
           </form>
         </div>
 
@@ -187,21 +211,58 @@
   <!-- Page-Level Scripts -->
   <script>
     $(document).ready(function() {
-      $('.dataTables-example').DataTable({
+
+      // $('#cvs_upload').on('click', function(event) {
+      //     // code
+      //     event.preventDefault();
+      //     $.ajax({
+      //         url: "<?php echo SITEURL; ?>department/student_upload.php",
+      //         method: "POST",
+      //         data: $('#upload_form').serialize(),
+      //         dataType: "json",
+      //         success: function(data) {
+      //           $('.dataTables-example').DataTable().ajax.reload();
+      //           $("#upload_information").html(data.success);
+      //             },
+      //             error: function(responseObj) {
+      //               alert("Something went wrong while processing your requestt.\n\nError => " +
+      //                 responseObj.responseText);
+      //             }
+
+      //         });
+      //     });
+
+      var dataTable = $('.dataTables-example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          url: "<?php echo SITEURL; ?>department/ajax_department.php",
+          type: "POST",
+          data: {
+            action: 'fetch',
+            page: 'student'
+          }
+        },
+        "columnDefs": [{
+          "targets": [0, 6],
+          "orderable": false,
+        }],
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [{
             extend: 'copy'
           },
           {
-            extend: 'csv'
+            extend: 'csv',
+            title: 'Students'
           },
           {
             extend: 'excel',
-            title: 'ExampleFile'
+            title: 'Students'
           },
           {
             extend: 'pdf',
-            title: 'ExampleFile'
+            title: 'Students'
           },
 
           {
@@ -241,74 +302,85 @@
       $('#insert').on("click", function(event) {
         event.preventDefault();
         $.ajax({
-          url: "<?php echo SITEURL; ?>faculty/department_add.php",
+          url: "<?php echo SITEURL; ?>department/ajax_department.php",
           data: $('#insert_form').serialize(),
           type: 'POST',
           cache: false,
           beforeSend: function() {
             //$("#insert").val("Inserting");
           },
-          complete: function(response, status) {
+          complete: function(status) {
             if (status != "error" && status != "timeout") {
               //$("#insert").val("Inserted");
-              $('#add_information').html(response.responseText);
-              //$("#add_faculty").modal('toggle');
+              $('#add_information').html("Operation successful");
+              $('.dataTables-example').DataTable().ajax.reload();
+              // $("#add_faculty").modal('toggle');
 
             }
           },
           error: function(responseObj) {
             alert("Something went wrong while processing your request.\n\nError => " +
-              responseObj.responseText);
+              responseObj.error);
           }
         });
 
       });
 
       $('#add_de').on('click', function() {
-        $("#insert").val("Insert Department");
+        $("#insert").val("Insert Student");
         $('#insert_form')[0].reset();
 
       });
-      $(document).on('click', '#delete_department', function() {
-        var faculty_id = $(this).data('id');
-        confirmDelete(faculty_id);
+      $(document).on('click', '#delete_student', function() {
+        var student_id = $(this).data('id');
+        confirmDelete(student_id);
         e.preventDefault();
 
       });
       $(document).on('click', '.edit-data', function() {
-        var id = $(this).attr("id");
+        var student_id = $(this).attr("id");
         $.ajax({
-          url: "<?php echo SITEURL; ?>faculty/department_fetch.php",
+          url: "<?php echo SITEURL; ?>department/ajax_department.php",
           method: "POST",
           data: {
-            dept_id: id
+            page: "student",
+            action: "edit_fetch",
+            student_id: student_id
           },
           dataType: "json",
           success: function(data) {
-            $('#insert_dept_name').val(data.department_name);
-            $('#dept_id').val(data.dept_id);
-            $('#insert').val("Update department");
+            $('#first_name').val(data.first_name);
+            $('#last_name').val(data.last_name);
+            $('#email').val(data.email);
+            $('#username').val(data.username);
+            $('#contact').val(data.contact);
+            $('#student_id').val(student_id);
+            $('#add_department').on('show.bs.modal', function(event) {
+              $(this).find('h4.modal-title').text("Update student");
+            });
+            $('#insert').val("Update Student");
             // alert($('#deanid').attr("value"));
+            $('#action').val("update");
+            $('.modal_title').text('Edit Student');
             $('#add_department').modal('show');
           },
           error: function(responseObj) {
-            alert("Something went wrong while processing your request.\n\nError => " +
+            alert("Something went wrong while processing your requestt.\n\nError => " +
               responseObj.responseText);
           }
         });
       });
     });
 
-    // function fnClickAddRow() {
-    //   $('#editable').dataTable().fnAddData([
-    //     "Custom row",
-    //     "New row",
-    //     "New row",
-    //     "New row",
-    //     "New row"
-    //   ]);
-
+    // function formToggle(importform) {
+    //   var element = document.getElementById(importform);
+    //   if (element.style.display = "none") {
+    //     element.style.display = "block";
+    //   } else {
+    //     element.style.display = "none";
+    //   }
     // }
+
     function confirmDelete(userid) {
       swal({
           title: "Are you sure?",
@@ -324,14 +396,17 @@
         function(isConfirm) {
           if (isConfirm) {
             $.ajax({
-              url: '<?php echo SITEURL ?>faculty/department_delete.php',
+              url: '<?php echo SITEURL ?>department/ajax_department.php',
               type: "POST",
               data: {
-                id: userid
+                student_id: userid,
+                page: "student",
+                action: "delete"
               },
               dataType: "json",
               success: function(response) {
                 swal("Done!", response.message, response.status);
+                $('.dataTables-example').DataTable().ajax.reload();
               }
             });
           } else {
@@ -340,6 +415,7 @@
         })
     }
   </script>
+
 
 </body>
 

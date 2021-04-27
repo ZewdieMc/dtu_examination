@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>DTU Examination</title>
+  <title>DTU Exam</title>
   <?php include('./includes/css2.php') ?>
 </head>
 
@@ -73,7 +73,7 @@
                         <th>Delete</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <!-- <tbody>
                       <?php
                       $tbl_name = "tbl_department";
                       $faculty_id = $_SESSION['faculty_id'];
@@ -101,7 +101,7 @@
                         echo "no data";
                       ?>
 
-                    </tbody>
+                    </tbody> -->
                     <tfoot>
                       <tr>
                         <th>Dept. ID</th>
@@ -154,7 +154,23 @@
   <!-- Page-Level Scripts -->
   <script>
     $(document).ready(function() {
-      $('.dataTables-example').DataTable({
+
+      var dataTable = $('.dataTables-example').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          url: "<?php echo SITEURL; ?>faculty/get_department.php",
+          type: "POST",
+          data: {
+            action: 'fetch',
+            page: 'department'
+          }
+        },
+        "columnDefs": [{
+          "targets": [0, 3],
+          "orderable": false,
+        }],
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [{
             extend: 'copy'
@@ -219,7 +235,8 @@
             if (status != "error" && status != "timeout") {
               //$("#insert").val("Inserted");
               $('#add_information').html(response.responseText);
-              //$("#add_faculty").modal('toggle');
+              $('.dataTables-example').DataTable().ajax.reload();
+              // $("#add_faculty").modal('toggle');
 
             }
           },
@@ -299,6 +316,7 @@
               dataType: "json",
               success: function(response) {
                 swal("Done!", response.message, response.status);
+                $('.dataTables-example').DataTable().ajax.reload();
               }
             });
           } else {

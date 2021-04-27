@@ -21,8 +21,8 @@ switch ($page) {
         }
         break;
 
-    case "update_user": {
-            include('add_user.php');
+    case "courses": {
+            include('course.php');
         }
         break;
 
@@ -31,8 +31,8 @@ switch ($page) {
         }
         break;
 
-    case "add_student": {
-            include('add_student.php');
+    case "teachers": {
+            include('teacher.php');
         }
         break;
 

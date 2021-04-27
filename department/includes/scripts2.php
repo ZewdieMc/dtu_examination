@@ -17,6 +17,8 @@
  <script src="<?php echo SITEURL ?>asset/js/plugins/pace/pace.min.js"></script>
  <!-- jQuery UI -->
  <script src="<?php echo SITEURL ?>asset/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+ <!-- Jasny -->
+ <script src="<?php echo SITEURL ?>asset/js/plugins/jasny/jasny-bootstrap.min.js"></script>
  <!-- GITTER -->
  <script src="<?php echo SITEURL ?>asset/js/plugins/gritter/jquery.gritter.min.js"></script>
  <!-- Sparkline -->

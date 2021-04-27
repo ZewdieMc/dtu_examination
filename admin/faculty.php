@@ -64,57 +64,18 @@
               <div class="ibox-content">
 
                 <div class="table-responsive">
-                  <table class="table table-striped table-bordered table-hover dataTables-example">
+                  <table id="data-faculty" class="table table-striped table-bordered table-hover dataTables-example">
                     <thead>
                       <tr>
                         <th>Faculty ID</th>
                         <th>Faculty Name</th>
                         <th>Descrition</th>
                         <th>Location</th>
-                        <th>Update</th>
-                        <th>Delete</th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <?php
-                      $tbl_name = "faculty";
-                      $query = $obj->select_data($tbl_name);
-                      $res = $obj->execute_query($conn, $query);
-                      $count_rows = $obj->num_rows($res);
-                      if ($count_rows > 0) {
-                        while ($row = $obj->fetch_data($res)) {
-                      ?>
-                          <tr class="gradeX">
 
-                            <td>
-                              <?php echo $row['id'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['faculty_name'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['Description'] ?>
-                            </td>
-                            <td><?php echo $row['Location'] ?></td>
-                            <td class="center"><a class="edit-data" id='<?php echo $row['id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                            <td class="center"><a id="delete_faculty" data-id="<?php echo $row['id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
-                          </tr>
-                      <?php }
-                      } else
-                        echo "no data";
-                      ?>
-
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Faculty ID</th>
-                        <th>Faculty Name</th>
-                        <th>Descrition</th>
-                        <th>Location</th>
-                        <th>Update</th>
-                        <th>Delete</th>
-                      </tr>
-                    </tfoot>
                   </table>
 
                 </div>
@@ -137,7 +98,7 @@
         <div class="modal-body">
           <form method="POST" id="insert_form" novalidate="novalidate">
             <div class="form-group"><label>Faculty Name</label>
-              <input class="form-control input-sm  " name="insert_faculty_name" id="insert_name" type="text"  placeholder=" Enter Faculty Name" required>
+              <input class="form-control input-sm  " name="insert_faculty_name" id="insert_name" type="text" placeholder=" Enter Faculty Name" required>
             </div>
 
             <div class="form-group"><label>Description</label>
@@ -145,7 +106,7 @@
             </div>
 
             <div class="form-group"><label>Location</label>
-              <input class="input-sm form-control"  name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location" required>
+              <input class="input-sm form-control" name="insert_faculty_location" id="insert_location" type="text" placeholder="Enter Faculty Location" required>
             </div>
             <div id="add_information" class="form-group"></div>
             <input type="hidden" name="faculty_id" id="faculty_id" value="" />
@@ -167,38 +128,36 @@
   <!-- Page-Level Scripts -->
   <script>
     $(document).ready(function() {
-      // $('#insert_form').validate({
-      //   rules: {
-      //     insert_faculty_name: {
-      //                    required: true,
-      //                    minlength: 3
-      //                },
-      //                insert_faculty_description: {
-      //                    required: true,
-      //                    maxlength:100
-
-      //                },
-      //                numinsert_faculty_locationber: {
-      //                    required: true
-      //                }
-
-      //   }
-      // });
-      $('.dataTables-example').DataTable({
-        dom: '<"html5buttons"B>lTfgitp',
-        buttons: [{
-            extend: 'copy'
+      var dataTable = $('#data-faculty').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order": [],
+        "ajax": {
+          url: "<?php echo SITEURL; ?>admin/get_faculty.php",
+          type: "POST",
+          data: {
+            action: 'fetch',
+            page: 'faculty'
+          }
+        },
+        "columnDefs": [{
+          "targets": [0, 5],
+          "orderable": false,
+        }],
+        "dom": '<"html5buttons"B>lTfgitp',
+        "buttons": [{
+            "extend": 'copy'
           },
           {
             extend: 'csv'
           },
           {
             extend: 'excel',
-            title: 'ExampleFile'
+            title: 'faculties'
           },
           {
             extend: 'pdf',
-            title: 'ExampleFile'
+            title: 'faculties'
           },
 
           {
@@ -212,23 +171,18 @@
                 .css('font-size', 'inherit');
             }
           }
-        ]
-
+        ],
       });
 
-      /* Init DataTables */
-      var oTable = $('#editable').DataTable();
-
-      /* Apply the jEditable handlers to the table */
-      oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
+      dataTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
         "callback": function(sValue, y) {
-          var aPos = oTable.fnGetPosition(this);
-          oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+          var aPos = dataTable.fnGetPosition(this);
+          dataTable.fnUpdate(sValue, aPos[0], aPos[1]);
         },
         "submitdata": function(value, settings) {
           return {
             "row_id": this.parentNode.getAttribute('id'),
-            "column": oTable.fnGetPosition(this)[2]
+            "column": dataTable.fnGetPosition(this)[2]
           };
         },
 
@@ -250,8 +204,9 @@
             if (status != "error" && status != "timeout") {
               //$("#insert").val("Inserted");
               $('#add_information').html(response.responseText);
-              //$("#add_faculty").modal('toggle');
-
+              $("#add_faculty").modal('toggle');
+              $('#data-faculty').DataTable().ajax.reload();
+              // $('#add_faculty').modal('hide');
             }
           },
           error: function(responseObj) {
@@ -297,6 +252,39 @@
           }
         });
       });
+
+      function confirmDelete(userid) {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to undo this.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "green",
+            cancelButtonColor: "red",
+            confirmButtonText: "Delete!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm) {
+            if (isConfirm) {
+              $.ajax({
+                url: '<?php echo SITEURL ?>admin/faculty_delete.php',
+                type: "POST",
+                data: {
+                  id: userid
+                },
+                dataType: "json",
+                success: function() {
+                  swal("Done!", "Operation successful!", "success");
+                  $('#data-faculty').DataTable().ajax.reload();
+                }
+              });
+            } else {
+              swal("Cancelled", "Operation cancelled! :)", "error");
+            }
+          })
+      }
+
     });
 
     // function fnClickAddRow() {
@@ -309,36 +297,6 @@
     //   ]);
 
     // }
-    function confirmDelete(userid) {
-      swal({
-          title: "Are you sure?",
-          text: "You will not be able to undo this.",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "green",
-          cancelButtonColor: "red",
-          confirmButtonText: "Delete!",
-          closeOnConfirm: false,
-          closeOnCancel: false
-        },
-        function(isConfirm) {
-          if (isConfirm) {
-            $.ajax({
-              url: '<?php echo SITEURL ?>admin/faculty_delete.php',
-              type: "POST",
-              data: {
-                id: userid
-              },
-              dataType: "json",
-              success: function() {
-                swal("Done!", "Operation successful!", "success");
-              }
-            });
-          } else {
-            swal("Cancelled", "Operation cancelled! :)", "error");
-          }
-        })
-    }
   </script>
 
 </body>

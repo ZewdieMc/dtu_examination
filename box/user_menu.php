@@ -4,14 +4,14 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item active text-center">
         <a class="nav-link" href="<?php echo SITEURL; ?>index.php?page=contact">Contact us</a>
       </li>
-      <li class="nav-item active">
+      <li class="nav-item active text-center">
         <a class="nav-link" href="<?php echo SITEURL; ?>index.php?page=about">About us</a>
       </li>
-      <li class="nav-item dropdown active">
+      <li class="nav-item dropdown active text-center">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Login
         </a>

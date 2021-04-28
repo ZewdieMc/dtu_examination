@@ -114,26 +114,21 @@ if ($_POST['action'] == 'fetch') {
         );
         echo json_encode($output);
     }
-    if ($_POST['page'] == 'examiner') {
-    }
     if ($_POST['page'] == 'course') {
         $tbl_name = "tbl_course join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id join tbl_year_study on tbl_course.study_year=tbl_year_study.study_year_id";
         $where = "tbl_course.department_id = '".$_SESSION['dept_id']."' AND";
         if (isset($_POST['search']['value'])) {
             $where .= "(";
-            $where .= 'first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR email LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'course_code LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR course_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= 'OR year LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR gender LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR contact LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR student_id LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= ")";
         }
         if (isset($_POST['order'])) {
             $where .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
         } else {
-            $where .= 'ORDER BY student_id ASC ';
+            $where .= 'ORDER BY course_id ASC ';
         }
 
         $other = '';
@@ -148,15 +143,13 @@ if ($_POST['action'] == 'fetch') {
         $data = array();
         while ($row = $obj->fetch_data($res)) {
             $sub_array = array();
-            $sub_array[] .= $row['student_id'];
-            $sub_array[] .= $row['first_name'];
-            $sub_array[] .= $row['last_name'];
-            $sub_array[] .= $row['email'];
-            $sub_array[] .= $row['contact'];
-            $sub_array[] .= $row['gender'];
+            $sub_array[] .= $row['course_id'];
+            $sub_array[] .= $row['course_code'];
+            $sub_array[] .= $row['course_name'];
+            $sub_array[] .= $row['first_name']." ".$row['last_name'];
             $sub_array[] .= $row['year'];
-            $edit_button = '<a class="edit-data" id="' . $row['student_id'] . '"><i class="fa fa-pencil fa-lg text-blue "></i></a>';
-            $delete_button = '<a id="delete_student" data-id="' . $row['student_id'] . '" ><i class="fa fa-trash fa-lg"></i></a>';
+            $edit_button = '<a class="edit-data" id="' . $row['course_id'] . '"><i class="fa fa-pencil fa-lg text-blue "></i></a>';
+            $delete_button = '<a id="delete_course" data-id="' . $row['course_id'] . '" ><i class="fa fa-trash fa-lg"></i></a>';
             $sub_array[] .= $edit_button;
             $sub_array[] .= $delete_button;
             $data[] = $sub_array;
@@ -173,6 +166,8 @@ if ($_POST['action'] == 'fetch') {
         );
         echo json_encode($output);
 
+    }
+    if ($_POST['page'] == 'examiner') {
     }
 }
 // Read for update Operation
@@ -202,6 +197,17 @@ if ($_POST['action'] == 'edit_fetch') {
             $output['last_name'] = $row['last_name'];
             $output['username'] = $row['username'];
             $output['email'] = $row['email'];
+        }
+        echo json_encode($output);
+    }
+    if ($_POST['page'] == 'course') {
+        $tbl_name = "tbl_course";
+        $where = "course_id ='" . $_POST['course_id'] . "'";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        while ($row = $obj->fetch_data($res)) {
+            $output['course_code'] = $row['course_code'];
+            $output['course_name'] = $row['course_name'];
         }
         echo json_encode($output);
     }
@@ -259,6 +265,26 @@ if ($_POST['action'] == 'update') {
             echo json_encode(array("error" => "Registration failed"));
         }
     }
+    if ($_POST['page'] == 'course') {
+        $tbl_name = "tbl_course";
+        $data = "
+        course_code = '" . $_POST["course_code"] . "',
+        course_name = '" . $_POST["course_name"] . "',
+        teacher_id = '" . $_POST["teacher"] . "',
+        study_year = '" . $_POST["study_year"] . "' ";
+        $where = "course_id = '".$_POST['course_id']."'";
+        $query = $obj->update_data($tbl_name, $data,$where);
+        $res = $obj->execute_query($conn, $query);
+        if ($res) {
+            # code...
+            $output = array(
+                'success'    =>    'Course Updated'
+            );
+            echo json_encode($output);
+        } else {
+            echo json_encode(array("error" => "action failed"));
+        }
+    }
 }
 // Create Operation
 if ($_POST['action'] == 'Add') {
@@ -313,6 +339,27 @@ if ($_POST['action'] == 'Add') {
             echo json_encode(array("error" => "action failed"));
         }
     }
+    if ($_POST['page'] == 'course') {
+        $tbl_name = "tbl_course";
+        $data = "
+        course_code = '" . $_POST["course_code"] . "',
+        course_name = '" . $_POST["course_name"] . "',
+        teacher_id = '" . $_POST["teacher"] . "',
+        study_year = '" . $_POST["study_year"] . "',
+        department_id = '" . $_SESSION["dept_id"] . "'
+        ";
+        $query = $obj->insert_data($tbl_name, $data);
+        $res = $obj->execute_query($conn, $query);
+        if ($res) {
+            # code...
+            $output = array(
+                'success'    =>    'Course saved'
+            );
+            echo json_encode($output);
+        } else {
+            echo json_encode(array("error" => "action failed"));
+        }
+    }
 }
 // Delete Operation
 if ($_POST['action'] == 'delete') {
@@ -334,6 +381,20 @@ if ($_POST['action'] == 'delete') {
     if ($_POST['page'] == 'teacher') {
         $tbl_name = "tbl_teacher";
         $where = "id='" . $_POST['teacher_id'] . "'";
+        $query = $obj->delete_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        if ($res) {
+            $response['status'] = 'success';
+            $response['message'] = 'Entity deleted successfully';
+        } else {
+            $response['status'] = "error";
+            $response['message'] = "unable to delete the Entity";
+        }
+        echo json_encode($response);
+    }
+    if ($_POST['page'] == 'course') {
+        $tbl_name = "tbl_course";
+        $where = "course_id='" . $_POST['course_id'] . "'";
         $query = $obj->delete_data($tbl_name, $where);
         $res = $obj->execute_query($conn, $query);
         if ($res) {

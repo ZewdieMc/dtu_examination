@@ -64,15 +64,15 @@ if (isset($_POST['uploadstudent'])) {
       // Close opened CSV file
       fclose($csvFile);
 
-      $qstring = '?status=succ';
+      $qstring = 'status=succ';
       // $message = array("success"=>"Imported successfully");
     } else {
       //  $message = array("error"=> "file not uploaded");
-      $qstring = '?status=err';
+      $qstring = 'status=err';
     }
   } else {
     // $message = array("error"=> "Invalid file uploaded");
-    $qstring = '?status=invalid_file';
+    $qstring = 'status=invalid_file';
   }# code...
 }
 // echo json_encode($message)

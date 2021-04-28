@@ -83,7 +83,7 @@ if (!isset($_SESSION['user'])) {
                                         <tbody>
                                             <?php
                                             $tbl_name = "(tbl_exam join tbl_course on
-                                            tbl_exam.course_id=tbl_course.id)join tbl_year_study on 
+                                            tbl_exam.course_id=tbl_course.course_id)join tbl_year_study on 
                                             tbl_course.study_year=tbl_year_study.study_year_id";
                                             $department_id = $_SESSION['dept_id'];
                                             $where = "tbl_course.department_id=$department_id";

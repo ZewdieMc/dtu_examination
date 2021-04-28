@@ -11,7 +11,7 @@
     <?php include('./includes/css2.php') ?>
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
     <div id="wrapper">
 
@@ -33,7 +33,7 @@
                         </li>
 
                         <li class="active">
-                            <strong>Course lists</strong>
+                            <strong>Courses list</strong>
                         </li>
                     </ol>
                 </div>
@@ -76,35 +76,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <!-- <tbody>
-                      <?php
-                        $tbl_name = "tbl_department";
-                        $faculty_id = $_SESSION['faculty_id'];
-                        $where = "faculty_id = $faculty_id";
-                        $query = $obj->select_data($tbl_name, $where);
-                        $res = $obj->execute_query($conn, $query);
-                        $count_rows = $obj->num_rows($res);
-                        if ($count_rows > 0) {
-                            while ($row = $obj->fetch_data($res)) {
-                        ?>
-                          <tr class="gradeX">
 
-                            <td>
-                              <?php echo $row['dept_id'] ?>
-                            </td>
-                            <td>
-                              <?php echo $row['department_name'] ?>
-                            </td>
-
-                            <td class="center"><a class="edit-data" id='<?php echo $row['dept_id'] ?>'><i class="fa fa-pencil fa-lg text-blue"></i> </a></td>
-                            <td class="center"><a id="delete_department" data-id="<?php echo $row['dept_id']; ?>"><i class="fa fa-trash fa-lg"></i> </a></td>
-                          </tr>
-                      <?php }
-                        } else
-                            echo "no data";
-                        ?>
-
-                    </tbody> -->
                                         <tfoot>
                                             <tr>
                                                 <th>ID</th>
@@ -133,7 +105,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Add Department</h4>
+                    <h4 class="modal-title">Add Course</h4>
                 </div>
                 <div class="modal-body">
                     <form method="POST" id="insert_form">
@@ -144,16 +116,16 @@
                             <input class="form-control input-sm validate[required]" name="course_name" id="course_name" type="text" placeholder=" Enter Course Name">
                         </div>
                         <div class="form-group"><label>Teacher</label>
-                            <select class="form-control" name="study_year">
+                            <select class="form-control" name="teacher">
                                 <option>Who Teaches this course?</option>
                                 <?php
                                 $tbl_name  = "tbl_teacher";
-                                $where = "department_id='".$_SESSION['dept_id']."'";
-                                $query = $obj->select_data($tbl_name,$where);
+                                $where = "department_id='" . $_SESSION['dept_id'] . "'";
+                                $query = $obj->select_data($tbl_name, $where);
                                 $res = $obj->execute_query($conn, $query);
                                 while ($row = $obj->fetch_data($res)) {
                                 ?>
-                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['first_name']." ".$row['last_name'] ?></option>
+                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['first_name'] . " " . $row['last_name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -171,8 +143,10 @@
                             </select>
                         </div>
                         <div id="add_information" class="form-group"></div>
-                        <input type="hidden" name="dept_id" id="dept_id" value="" />
-                        <input type="submit" name="insert" value="Insert Department" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
+                        <input type="hidden" name="course_id" id="course_id" value="" />
+                        <input type="hidden" name="page" value="course" />
+                        <input type="hidden" name="action" id="action" value="Add" />
+                        <input type="submit" name="insert" value="Insert Course" id="insert" class="btn  btn-outline  btn-success btn-rounded" />
                     </form>
                 </div>
 
@@ -204,7 +178,7 @@
                     }
                 },
                 "columnDefs": [{
-                    "targets": [0, 3],
+                    "targets": [0, 6],
                     "orderable": false,
                 }],
                 dom: '<"html5buttons"B>lTfgitp',
@@ -260,7 +234,7 @@
             $('#insert').on("click", function(event) {
                 event.preventDefault();
                 $.ajax({
-                    url: "<?php echo SITEURL; ?>faculty/department_add.php",
+                    url: "<?php echo SITEURL; ?>department/ajax_department.php",
                     data: $('#insert_form').serialize(),
                     type: 'POST',
                     cache: false,
@@ -289,26 +263,30 @@
                 $('#insert_form')[0].reset();
 
             });
-            $(document).on('click', '#delete_department', function() {
-                var faculty_id = $(this).data('id');
-                confirmDelete(faculty_id);
+            $(document).on('click', '#delete_course', function() {
+                var course_id = $(this).data('id');
+                confirmDelete(course_id);
                 e.preventDefault();
 
             });
             $(document).on('click', '.edit-data', function() {
-                var id = $(this).attr("id");
+                var course_id = $(this).attr("id");
                 $.ajax({
-                    url: "<?php echo SITEURL; ?>faculty/department_fetch.php",
+                    url: "<?php echo SITEURL; ?>department/ajax_department.php",
                     method: "POST",
                     data: {
-                        dept_id: id
+                        page: "course",
+                        action: "edit_fetch",
+                        course_id: course_id
                     },
                     dataType: "json",
                     success: function(data) {
-                        $('#insert_dept_name').val(data.department_name);
-                        $('#dept_id').val(data.dept_id);
-                        $('#insert').val("Update department");
+                        $('#course_code').val(data.course_code);
+                        $('#course_name').val(data.course_name);
+                        $('#course_id').val(course_id);
+                        $('#insert').val("Update Course");
                         // alert($('#deanid').attr("value"));
+                        $('#action').val("update");
                         $('#add_department').modal('show');
                     },
                     error: function(responseObj) {
@@ -329,7 +307,7 @@
         //   ]);
 
         // }
-        function confirmDelete(userid) {
+        function confirmDelete(course_id) {
             swal({
                     title: "Are you sure?",
                     text: "You will not be able to undo this.",
@@ -344,10 +322,12 @@
                 function(isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: '<?php echo SITEURL ?>faculty/department_delete.php',
+                            url: '<?php echo SITEURL ?>department/ajax_department.php',
                             type: "POST",
                             data: {
-                                id: userid
+                                course_id: course_id,
+                                page:'course',
+                                action:'delete'
                             },
                             dataType: "json",
                             success: function(response) {

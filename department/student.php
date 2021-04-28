@@ -70,11 +70,23 @@
                         <div class="col-md-2">
                           <input type="submit" value="Import" name="uploadstudent" class="btn btn-primary btn-outline " id='cvs_upload' />
                         </div>
-                        <!-- upload -->
                       </form>
                     </div>
                     <div class="col-md-2">
                       <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV file</a>
+                    </div>
+                    <div class="col-md-2" style="padding: 15px;">
+                      <?php
+                      if (isset($_GET['status'])) {
+                        if ($_GET['status'] == 'succ') {
+                          echo '<span class ="alert alert-success">File imported successfully.</span>';
+                        } elseif ($_GET['status'] == 'invalid_file') {
+                          echo '<span class ="alert alert-danger">Please upload valid file.</span>';
+                        } elseif ($_GET['status'] == 'err') {
+                          echo '<span class ="alert alert-danger">The file uploaded is not CSV file.</span>';
+                        }
+                      }
+                      ?>
                     </div>
                   </div>
                   <span id="upload_information" class=" alert alert-primary"></span>

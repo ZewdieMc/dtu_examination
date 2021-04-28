@@ -36,8 +36,8 @@ switch ($page) {
         }
         break;
 
-    case "update_student": {
-            include('update_student.php');
+    case "exams": {
+            include('exam.php');
         }
         break;
 

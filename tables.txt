@@ -139,5 +139,6 @@ att:
 						// set the default timezone to use.
 						date_default_timezone_set('UTC+3');
 
-						Student login is not hashed.
+						check whether logins are hashed or not.
+						check proper form validation for each page.
 			  	*/

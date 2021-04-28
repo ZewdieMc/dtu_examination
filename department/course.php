@@ -26,14 +26,14 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-lg-10">
-                    <h2>Fac. Dean</h2>
+                    <h2>Dept. Head</h2>
                     <ol class="breadcrumb">
                         <li>
                             <a href="index.php">Home</a>
                         </li>
 
                         <li class="active">
-                            <strong>Department lists</strong>
+                            <strong>Course lists</strong>
                         </li>
                     </ol>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 &nbsp;&nbsp;&nbsp;
-                                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Department</button>
+                                <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_department"><span class="fa fa-plus"></span>&nbsp;Course</button>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -67,10 +67,13 @@
                                     <table class="table table-striped table-bordered table-hover dataTables-example">
                                         <thead>
                                             <tr>
-                                                <th>Dept. ID</th>
-                                                <th>Department Name</th>
-                                                <th>Update</th>
-                                                <th>Delete</th>
+                                                <th>ID</th>
+                                                <th>Course Code</th>
+                                                <th>Course Name</th>
+                                                <th>Teacher</th>
+                                                <th>Study Year</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                         <!-- <tbody>
@@ -104,10 +107,13 @@
                     </tbody> -->
                                         <tfoot>
                                             <tr>
-                                                <th>Dept. ID</th>
-                                                <th>Department Name</th>
-                                                <th>Update</th>
-                                                <th>Delete</th>
+                                                <th>ID</th>
+                                                <th>Course Code</th>
+                                                <th>Course Name</th>
+                                                <th>Teacher</th>
+                                                <th>Study Year</th>
+                                                <th></th>
+                                                <th></th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -131,8 +137,38 @@
                 </div>
                 <div class="modal-body">
                     <form method="POST" id="insert_form">
-                        <div class="form-group"><label>Department Name</label>
-                            <input class="form-control input-sm validate[required]" name="insert_dept_name" id="insert_dept_name" type="text" placeholder=" Enter Department Name">
+                        <div class="form-group"><label>Course Code</label>
+                            <input class="form-control input-sm validate[required]" name="course_code" id="course_code" type="text" placeholder=" Enter Course Code">
+                        </div>
+                        <div class="form-group"><label>Course Name</label>
+                            <input class="form-control input-sm validate[required]" name="course_name" id="course_name" type="text" placeholder=" Enter Course Name">
+                        </div>
+                        <div class="form-group"><label>Teacher</label>
+                            <select class="form-control" name="study_year">
+                                <option>Who Teaches this course?</option>
+                                <?php
+                                $tbl_name  = "tbl_teacher";
+                                $where = "department_id='".$_SESSION['dept_id']."'";
+                                $query = $obj->select_data($tbl_name,$where);
+                                $res = $obj->execute_query($conn, $query);
+                                while ($row = $obj->fetch_data($res)) {
+                                ?>
+                                    <option value="<?php echo $row['id'] ?>"><?php echo $row['first_name']." ".$row['last_name'] ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="form-group"><label> Study Year</label>
+                            <select class="form-control" name="study_year">
+                                <option>Who studies this course?</option>
+                                <?php
+                                $tbl_name  = "tbl_year_study";
+                                $query = $obj->select_data($tbl_name);
+                                $res = $obj->execute_query($conn, $query);
+                                while ($row = $obj->fetch_data($res)) {
+                                ?>
+                                    <option value="<?php echo $row['study_year_id'] ?>"><?php echo $row['year'] ?></option>
+                                <?php } ?>
+                            </select>
                         </div>
                         <div id="add_information" class="form-group"></div>
                         <input type="hidden" name="dept_id" id="dept_id" value="" />
@@ -249,7 +285,7 @@
             });
 
             $('#add_de').on('click', function() {
-                $("#insert").val("Insert Department");
+                $("#insert").val("Insert Course");
                 $('#insert_form')[0].reset();
 
             });

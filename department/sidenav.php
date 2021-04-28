@@ -31,8 +31,8 @@
             <li>
                 <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Dept. Managment</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=teachers"><i class="fa fa-building-o"></i>Teachers </a>
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=courses"><i class="fa fa-users"></i>Courses</a>
+                    <li><a href="<?php echo SITEURL ?>department/index.php?page=teachers"><i class="fa fa-pencil"></i>Teachers </a>
+                    <li><a href="<?php echo SITEURL ?>department/index.php?page=courses"><i class="fa fa-book"></i>Courses</a>
                     <li><a href="<?php echo SITEURL ?>department/index.php?page=students"><i class="fa fa-users"></i>Students</a>
                     <li><a href="<?php echo SITEURL ?>department/index.php?page=examiner"><i class="fa fa-users"></i>Invigilators</a>
 

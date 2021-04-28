@@ -142,19 +142,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group"><label>First Name</label>
-                                    <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name">
+                                    <input class="form-control input-sm validate[required]" name="first_name" id="first_name" type="text" placeholder=" Enter First Name" required />
                                 </div>
                                 <div class="form-group"><label>Lasts Name</label>
-                                    <input class="form-control input-sm validate[required]" name="last_name" id="last_name" type="text" placeholder=" Enter Last Name">
+                                    <input class="form-control input-sm validate[required]" name="last_name" id="last_name" type="text" placeholder=" Enter Last Name" required />
                                 </div>
                                 <div class="form-group"><label> Username</label>
-                                    <input class="form-control input-sm validate[required]" name="username" id="username" type="text" placeholder=" Enter Username">
+                                    <input class="form-control input-sm validate[required]" name="username" id="username" type="text" placeholder=" Enter Username" required />
                                 </div>
                                 <div class="form-group"><label> Email</label>
-                                    <input class="form-control input-sm validate[required]" name="email" id="email" type="email" placeholder=" Enter Email">
+                                    <input class="form-control input-sm validate[required]" name="email" id="email" type="email" placeholder=" Enter Email" required />
                                 </div>
                                 <div class="form-group"><label> Password</label>
-                                    <input class="form-control input-sm validate[required]" name="password" value="dtu1234" id="password" type="password" placeholder=" Password">
+                                    <input class="form-control input-sm validate[required]" name="password" value="dtu1234" id="password" type="password" placeholder=" Password" required />
                                 </div>
 
                                 <div id="add_information" class="form-group"></div>
@@ -183,6 +183,9 @@
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function() {
+            // ========================
+
+            // ========================
 
             // $('#cvs_upload').on('click', function(event) {
             //     // code
@@ -271,6 +274,31 @@
                 "width": "90%",
                 "height": "100%"
             });
+            // ++++++++++++++++form validator+++++++++++++++
+            // $('# insert_form').validate({
+            //     rules: {
+            //         password: {
+            //             required: true,
+            //             minlength: 6
+            //         },
+            //         email: {
+            //             required: true,
+            //             email: true
+            //         },
+            //         first_name: {
+            //             required: true
+            //         },
+            //         last_name: {
+            //             required: true
+            //         },
+            //         username: {
+            //             required: true,
+            //             minlength: 3
+            //         }
+            //     }
+            // });
+            // ++++++++++++endform validator+++++++++++++++
+
             $('#insert').on("click", function(event) {
                 event.preventDefault();
                 $.ajax({
@@ -343,14 +371,7 @@
             });
         });
 
-        // function formToggle(importform) {
-        //   var element = document.getElementById(importform);
-        //   if (element.style.display = "none") {
-        //     element.style.display = "block";
-        //   } else {
-        //     element.style.display = "none";
-        //   }
-        // }
+     
 
         function confirmDelete(userid) {
             swal({
@@ -370,8 +391,8 @@
                             url: '<?php echo SITEURL ?>department/ajax_department.php',
                             type: "POST",
                             data: {
-                                student_id: userid,
-                                page: "student",
+                                teacher_id: userid,
+                                page: "teacher",
                                 action: "delete"
                             },
                             dataType: "json",

@@ -39,7 +39,7 @@ if (!isset($_SESSION['next'])) {
     }
 
     //get the questions and questions numbers department wise. 
-    $tbl_name_qns = 'tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.id';
+    $tbl_name_qns = 'tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id';
     $where_qns = "tbl_exam.exam_id='$_SESSION[exam]'";
     $query_qns = $obj->select_data($tbl_name_qns, $where_qns);
     $res_qns = $obj->execute_query($conn, $query_qns);

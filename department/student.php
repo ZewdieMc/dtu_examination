@@ -40,11 +40,11 @@
         <div class="col-lg-10">
           <h2>Dept. Head</h2>
           <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item">
               <a href="index.php">Home</a>
             </li>
 
-            <li class="active">
+            <li class="breadcrumb-item active">
               <strong>Students</strong>
             </li>
           </ol>
@@ -73,9 +73,9 @@
                       </form>
                     </div>
                     <div class="col-md-2">
-                      <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV file</a>
+                      <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV </a>
                     </div>
-                    <div class="col-md-2" style="padding: 15px;">
+                    <div class="col" style="padding: 15px;">
                       <?php
                       if (isset($_GET['status'])) {
                         if ($_GET['status'] == 'succ') {
@@ -220,6 +220,7 @@
   <?php include("./includes/scripts2.php") ?>
 
 
+
   <!-- Page-Level Scripts -->
   <script>
     $(document).ready(function() {
@@ -243,11 +244,13 @@
 
       //         });
       //     });
+      $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
 
       var dataTable = $('.dataTables-example').DataTable({
         "processing": true,
         "serverSide": true,
         "order": [],
+        responsive: true,
         "ajax": {
           url: "<?php echo SITEURL; ?>department/ajax_department.php",
           type: "POST",

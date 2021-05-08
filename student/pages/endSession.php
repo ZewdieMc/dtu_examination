@@ -28,9 +28,9 @@ $res = $obj->execute_query($conn, $query);
             <?php
             if (isset($_SESSION['time_complete'])) {
                 echo $_SESSION['time_complete'];
+                echo "You have successfully completed the test. Thank You.<br />";
             }
             ?>
-            You have successfully completed the test. Thank You.<br />
             <?php
             $tbl_name = 'tbl_student';
             $username = $_SESSION['student'];

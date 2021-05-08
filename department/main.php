@@ -46,8 +46,8 @@ switch ($page) {
         }
         break;
 
-    case "add_faculty": {
-            include('add_faculty.php');
+    case "empty_page": {
+            include('empty_page.php');
         }
         break;
 

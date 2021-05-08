@@ -19,7 +19,7 @@
           <a class="dropdown-item" href="<?php echo SITEURL; ?>admin/index.php?page=login">Admin</a>
           <a class="dropdown-item" href="<?php echo SITEURL; ?>faculty/index.php?page=login">Faculty</a>
           <a class="dropdown-item" href="<?php echo SITEURL; ?>department/index.php?page=login">Department</a>
-          <a class="dropdown-item" href="<?php echo SITEURL; ?>teacher/index.php?pag=login">Teacher</a>
+          <a class="dropdown-item" href="<?php echo SITEURL; ?>teacher/index.php?page=login">Teacher</a>
           <a class="dropdown-item" href="<?php echo SITEURL; ?>student/index.php?page=login">Examinee</a>
         </div>
       </li>

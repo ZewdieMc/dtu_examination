@@ -1211,7 +1211,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 .navbar-fixed-top,
 .navbar-static-top {
-  background: #f3f3f4;
+  background: #1ab394;
 }
 .fixed-nav #wrapper {
   margin-top: 0;
@@ -4968,6 +4968,7 @@ code {
   border-image: none;
   border-style: solid;
   border-width: 1px;
+  border-radius: 14px;
 }
 .ibox-footer {
   color: inherit;
@@ -5757,7 +5758,7 @@ body.mini-navbar.fixed-sidebar .logo-element {
 .loginColumns {
   max-width: 800px;
   margin: 0 auto;
-  padding: 100px 20px 20px 20px;
+  padding: 50px 20px 20px 20px;
 }
 .passwordBox {
   max-width: 460px;

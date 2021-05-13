@@ -98,7 +98,6 @@ att:
 	time_duration
 	total_questions
 
-
 QUESTION(TABLE)===================================>
 att:
 	quest_id
@@ -141,4 +140,8 @@ att:
 
 						check whether logins are hashed or not.
 						check proper form validation for each page.
+						SESSION name for each role has to be unique.
+						teachers Invigilations notification should be presented in the notification bell.
+						Knob input http://anthonyterrien.com/knob/ READ THIS TO CUSTOMIZE TIME COUNTER.
+						(form_advanced.html) in inspinia theme.
 			  	*/

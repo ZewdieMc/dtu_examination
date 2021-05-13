@@ -29,19 +29,39 @@
 
             <li>
             <li>
-                <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Dept. Managment</span><span class="fa arrow"></span></a>
+                <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Your Tasks</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=teachers"><i class="fa fa-pencil"></i>Teachers </a>
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=courses"><i class="fa fa-book"></i>Courses</a>
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=students"><i class="fa fa-users"></i>Students</a>
-                    <li><a href="<?php echo SITEURL ?>department/index.php?page=examiner"><i class="fa fa-users"></i>Invigilators</a>
+                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=teachers"><i class="fa fa-pencil"></i>Teachers </a> -->
+                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=courses"><i class="fa fa-book"></i>Your Courses</a> -->
+                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=students"><i class="fa fa-users"></i>Your Students</a> -->
+                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=examiner"><i class="fa fa-users"></i>Invigilators</a> -->
 
                     <li>
 
-                        <a href="#"><i class="fa fa-eye"></i>View<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-eye"></i>Courses<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
-                            <li><a href="<?php echo SITEURL ?>department/index.php?page=exams"><i class="fa fa-pencil"></i>Exams</a></li>
-                            <li><a href="<?php echo SITEURL ?>department/index.php?page=dashboard"><i class="fa fa-file-text"></i>Report</a></li>
+                            <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li> -->
+                            <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li> -->
+                            <!-- <li><a href="addcollege.php"><i class="fa fa-plus"></i>Report</a></li> -->
+                            <?php
+                            $tbl_name = "tbl_course";
+                            $where = "teacher_id = '" . $_SESSION['teacher_id'] . "'";
+                            $query = $obj->select_data($tbl_name, $where);
+                            $res = $obj->execute_query($conn, $query);
+                            while ($row = $obj->fetch_data($res)) {
+                            ?>
+                                <li><a href="<?php echo SITEURL ?>teacher/index.php?page=courses"><i class="fa fa-pencil"></i><?php echo $row['course_name'];?></a></li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </li>
+                    <li>
+
+                        <a href="#"><i class="fa fa-eye"></i>Exams<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li>
+                            <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li>
                             <!-- <li><a href="addcollege.php"><i class="fa fa-plus"></i>Report</a></li> -->
                         </ul>
                     </li>

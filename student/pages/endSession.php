@@ -51,11 +51,11 @@ $res = $obj->execute_query($conn, $query);
             $obtainedPercent = ($obtainedMarks / $full_marks) * 100;
             //Get Student ID
             //Get Faculty ID from Student ID then Show full marks based on the faculty and obtained percentage
-            if ($_SESSION['facultyName'] == 'GRE') {
-                $marksShown = 260 + round($obtainedPercent * 0.8);
-            } elseif ($_SESSION['facultyName'] == 'GMAT') {
-                $marksShown = 200 + round($obtainedPercent * 6);
-            }
+            // if ($_SESSION['facultyName'] == 'GRE') {
+            //     $marksShown = 260 + round($obtainedPercent * 0.8);
+            // } elseif ($_SESSION['facultyName'] == 'GMAT') {
+            //     $marksShown = 200 + round($obtainedPercent * 6);
+            // }
 
             $_SESSION['USERID'] = $userid;
             //Round Off Marks
@@ -68,15 +68,16 @@ $res = $obj->execute_query($conn, $query);
             }
             ?>
             You got <h2><?php echo $obtainedMarks . " / " . $full_marks; #$realMark; 
+                        //    echo  $_SESSION['USERID'];
                         ?></h2>
 
-            <a href="<?php echo SITEURL; ?>index.php?page=detail_result">
-                <button type="button" class="btn btn-lg btn-success">
+            <a class="btn btn-lg btn-success" href="<?php echo SITEURL; ?>student/index.php?page=detail_result">
+                <!-- <button type="button" class="btn btn-lg btn-success"> -->
                     View Result
-                </button>
+                <!-- </button> -->
             </a>
 
-            <a href="<?php echo SITEURL; ?>index.php?page=logout">
+            <a href="<?php echo SITEURL; ?>student/index.php?page=logout">
                 <button type="button" class="btn btn-lg btn-danger">&nbsp; Log Out &nbsp;</button>
             </a>
         </div>

@@ -8,11 +8,11 @@
                         {
                             $student_id=$_SESSION['USERID'];
                             $full_name=$obj->get_fullname('tbl_student',$student_id,$conn);
-                            echo "<h2>".$full_name."'s Result</h2>";
+                            echo "<h5>".$full_name."'s Result</h5> for course name...";
                         }
                         else
                         {
-                            header('location:'.SITEURL.'index.php?page=logout');
+                            header('location:'.SITEURL.'student/index.php?page=logout');
                         }
                         $added_date=date('Y-m-d');
                         //Now Getting VAlues Based on aded date and student id
@@ -148,7 +148,7 @@
                             <?php
                         }
                     ?>
-                        <a href="<?php echo SITEURL; ?>index.php?page=logout">
+                        <a href="<?php echo SITEURL; ?>student/index.php?page=logout">
                             <button type="button" class="btn btn-lg btn-danger">Log Out</button>
                         </a>
                     

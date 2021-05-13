@@ -2,7 +2,6 @@
 <html>
 
 
-<!-- Mirrored from webapplayers.com/inspinia_admin-v2.9.4/login_two_columns.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Apr 2021 11:44:36 GMT -->
 
 <head>
 
@@ -46,7 +45,7 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li>
                     <a href="login.html">
-                        <!-- <i class="fa fa-sign-out"></i> Log out -->
+                        <i class="fa fa-sign-out active"></i> Univeristy website
                     </a>
                 </li>
             </ul>
@@ -56,7 +55,7 @@
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Welcome to Online Examination System</h2>
+                <h2 class="font-bold">Teacher</h2>
 
                 <p>
                     Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
@@ -76,7 +75,7 @@
 
             </div>
             <div class="col-md-6">
-                <center><img src="<?php echo SITEURL;?>images/logo.jpg" class="img-circle" height="100" width ="100"></center>
+                <center><img src="<?php echo SITEURL; ?>images/logo.jpg" class="img-circle" height="100" width="100"></center>
                 <div class="ibox-content">
                     <form class="m-t" role="form" action="" method="POST">
                         <div class="form-group">
@@ -90,15 +89,8 @@
                         <a href="#">
                             <small>Forgot password?</small>
                         </a>
-                        <!-- 
-                        <p class="text-muted text-center">
-                            <small>Do not have an account?</small>
-                        </p>
-                        <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> -->
                     </form>
-                    <!-- <p class="m-t">
-                        <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
-                    </p> -->
+
                     <?php
                     if (isset($_POST['submit'])) {
                         //echo "Clicked";
@@ -108,7 +100,7 @@
 
                         if (($username == "") or ($password = "")) {
                             $_SESSION['validation'] = "<div class='alert alert-danger'>Username or Password is Empty</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=login');
+                            header('location:' . SITEURL . 'teacher/index.php?page=login');
                         }
                         $tbl_name = "tbl_teacher";
                         $where = "username='$username' AND password='$password_db'";
@@ -124,7 +116,7 @@
                             header('location:' . SITEURL . 'teacher/index.php?page=dashboard');
                         } else {
                             $_SESSION['fail'] = "<div class='alert alert-danger'>Username or Password is invalid. Please try again.</div>";
-                            header('location:' . SITEURL . 'teacheru/index.php?page=login');
+                            header('location:' . SITEURL . 'teacher/index.php?page=login');
                         }
                     }
                     ?>

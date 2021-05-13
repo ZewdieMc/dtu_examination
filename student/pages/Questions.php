@@ -1,6 +1,6 @@
 <?php
 #global variables
-//session_destroy();
+// session_destroy();
 #echo $_SESSION['sn'];
 
 if (!isset($_SESSION['prev_disabled'])) {
@@ -64,7 +64,7 @@ if (!isset($_SESSION['next'])) {
     ?>
 
     <div class="row  bd-callout bd-callout-info" style="margin-top: 10px">
-        Examinee: <span class="heavy"><?php echo $full_name; ?></span>&nbsp;&nbsp;
+        Examinee: <span class="heavy"><?php echo $full_name;$_SESSION['exam'] ?></span>&nbsp;&nbsp;
         Course: <span class="heavy"><?php echo $course_name; ?></span>&nbsp;&nbsp;
         Start Time: <span class="heavy"><?php echo $_SESSION['strt_time']; ?></span>&nbsp;&nbsp;
         End Time: <span class="heavy"><?php echo $_SESSION['end_time']; ?></span>&nbsp;&nbsp;

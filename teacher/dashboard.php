@@ -38,13 +38,13 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">3</span>
                             </a>
                             <ul class="dropdown-menu dropdown-messages">
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a class="dropdown-item float-left" href="profile.html">
-                                            <img alt="image" class="rounded-circle" src="img/a7.jpg">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
                                         </a>
                                         <div class="media-body">
                                             <small class="float-right">46h ago</small>
@@ -57,7 +57,7 @@
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a class="dropdown-item float-left" href="profile.html">
-                                            <img alt="image" class="rounded-circle" src="img/a4.jpg">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
                                         </a>
                                         <div class="media-body ">
                                             <small class="float-right text-navy">5h ago</small>
@@ -70,7 +70,7 @@
                                 <li>
                                     <div class="dropdown-messages-box">
                                         <a class="dropdown-item float-left" href="profile.html">
-                                            <img alt="image" class="rounded-circle" src="img/profile.jpg">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
                                         </a>
                                         <div class="media-body ">
                                             <small class="float-right">23h ago</small>
@@ -91,7 +91,7 @@
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-                                <i class="fa fa-bell"></i> <span class="label label-primary">8</span>
+                                <i class="fa fa-bell"></i> <span class="label label-danger">8</span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
                                 <li>
@@ -124,7 +124,7 @@
                                 <li>
                                     <div class="text-center link-block">
                                         <a href="notifications.html" class="dropdown-item">
-                                            <strong>See All Alerts</strong>
+                                            <strong>See All notifications</strong>
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </div>
@@ -147,11 +147,9 @@
                     <h2>Your department</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index-2.html">Home</a>
+                            <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
-                        <!-- <li class="breadcrumb-item active">
-                            <strong>Breadcrumb</strong>
-                        </li> -->
+
                     </ol>
                 </div>
                 <div class="col-sm-8">

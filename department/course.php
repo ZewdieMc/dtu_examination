@@ -12,15 +12,11 @@
 </head>
 
 <body class="md-skin pace-done">
-
     <div id="wrapper">
-
         <?php include('sidenav.php'); ?>
-
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-
                     <?php include('topnav.php');  ?>
                 </nav>
             </div>
@@ -326,8 +322,8 @@
                             type: "POST",
                             data: {
                                 course_id: course_id,
-                                page:'course',
-                                action:'delete'
+                                page: 'course',
+                                action: 'delete'
                             },
                             dataType: "json",
                             success: function(response) {

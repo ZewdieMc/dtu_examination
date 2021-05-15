@@ -171,10 +171,10 @@
             </div>
             <div class="footer">
                 <div class="float-right">
-                    10GB of <strong>250GB</strong> Free.
+                   Home
                 </div>
                 <div>
-                    <strong>Copyright</strong> Example Company &copy; 2014-2018
+                    <strong>Copyright</strong> DTU &copy; <?php echo date("Y")?>
                 </div>
             </div>
 

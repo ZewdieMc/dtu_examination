@@ -38,7 +38,7 @@
 
                     <li>
 
-                        <a href="#"><i class="fa fa-eye"></i>Courses<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-plus"></i>Courses<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
                             <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li> -->
                             <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li> -->
@@ -58,7 +58,7 @@
                     </li>
                     <li>
 
-                        <a href="#"><i class="fa fa-eye"></i>Exams<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-plus"></i>Exams<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
                             <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li>
                             <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li>

@@ -139,9 +139,16 @@ att:
 						date_default_timezone_set('UTC+3');
 
 						check whether logins are hashed or not.
+
 						check proper form validation for each page.
+
 						SESSION name for each role has to be unique.
+
 						teachers Invigilations notification should be presented in the notification bell.
+
 						Knob input http://anthonyterrien.com/knob/ READ THIS TO CUSTOMIZE TIME COUNTER.
 						(form_advanced.html) in inspinia theme.
+
+						upon completion of the examination, a new page("EXAM TIME OVER.") /other feasible option must be put.
+						disable browsing on new tab.
 			  	*/

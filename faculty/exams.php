@@ -82,7 +82,7 @@ if (!isset($_SESSION['user'])) {
                                         <tbody>
                                             <?php
                                             $tbl_name = "((tbl_exam join tbl_course on
-                                            tbl_exam.course_id=tbl_course.id)join tbl_department on 
+                                            tbl_exam.course_id=tbl_course.course_id)join tbl_department on 
                                             tbl_course.department_id=tbl_department.dept_id) join 
                                             faculty on tbl_department.faculty_id=faculty.id";
                                             $faculty_id = $_SESSION['faculty_id'];
@@ -191,7 +191,7 @@ if (!isset($_SESSION['user'])) {
             var oTable = $('#editable').DataTable();
 
             /* Apply the jEditable handlers to the table */
-            oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
+            oTable.$('td').editable('#', {
                 "callback": function(sValue, y) {
                     var aPos = oTable.fnGetPosition(this);
                     oTable.fnUpdate(sValue, aPos[0], aPos[1]);

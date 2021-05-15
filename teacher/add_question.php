@@ -337,7 +337,7 @@
                     <h2>Your department</h2>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="<?php echo SITEURL?>teacher/index.php?page=dashboard">Home</a>
+                            <a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
                         <!-- <li class="breadcrumb-item active">
                             <strong>Breadcrumb</strong>
@@ -371,96 +371,164 @@
                             unset($_SESSION['upload']);
                         }
                         ?>
-                        <span class="name">Question</span> <br />
-                        <div class="table-responsive">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5> Add Question</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li><a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
                             <div class="ibox-content">
                                 <textarea name="question" placeholder="Add Your Question" required="true"></textarea> <br />
                             </div>
                         </div>
-                            <script>
-                                CKEDITOR.replace('question');
-                            </script>
+                        <script>
+                            CKEDITOR.replace('question');
+                        </script>
 
-                            <span class="name">Image</span>
-                            <input type="file" name="image" /><br />
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5> Add choices</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li><a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
 
-                            <span class="name">First Answer</span>
-                            <input type="text" name="first_answer" placeholder="First Answer" required="true" /><br />
+                                <span class="name">Image</span>
+                                <input type="file" name="image" /><br />
 
-                            <span class="name">Second Answer</span>
-                            <input type="text" name="second_answer" placeholder="Second Answer" required="true" /><br />
+                                <span class="name">First Answer</span>
+                                <input type="text" name="first_answer" placeholder="First Answer" required="true" /><br />
 
-                            <span class="name">Third Answer</span>
-                            <input type="text" name="third_answer" placeholder="Third Answer" required="true" /><br />
+                                <span class="name">Second Answer</span>
+                                <input type="text" name="second_answer" placeholder="Second Answer" required="true" /><br />
 
-                            <span class="name">Fourth Answer</span>
-                            <input type="text" name="fourth_answer" placeholder="Fourth Answer" required="true" /><br />
+                                <span class="name">Third Answer</span>
+                                <input type="text" name="third_answer" placeholder="Third Answer" required="true" /><br />
 
-                            <span class="name">Fifth Answer</span>
-                            <input type="text" name="fifth_answer" placeholder="Fifth Answer" required="true" /><br />
+                                <span class="name">Fourth Answer</span>
+                                <input type="text" name="fourth_answer" placeholder="Fourth Answer" required="true" /><br />
+
+                                <span class="name">Fifth Answer</span>
+                                <input type="text" name="fifth_answer" placeholder="Fifth Answer" required="true" /><br />
 
 
-                            <span class="name">Answer</span>
-                            <select name="answer">
-                                <option value="1">First Answer</option>
-                                <option value="2">Second Answer</option>
-                                <option value="3">Third Answer</option>
-                                <option value="4">Fourth Answer</option>
-                                <option value="5">Fifth Answer</option>
-                            </select>
-                            <br />
+                                <span class="name">Answer</span>
+                                <select name="answer">
+                                    <option value="1">First Answer</option>
+                                    <option value="2">Second Answer</option>
+                                    <option value="3">Third Answer</option>
+                                    <option value="4">Fourth Answer</option>
+                                    <option value="5">Fifth Answer</option>
+                                </select>
+                                <br />
+                            </div>
+                        </div>
 
-                            <span class="name">Reason</span><br />
-                            <textarea name="reason" placeholder="Reason to be the answer"></textarea>
-                            <script>
-                                CKEDITOR.replace('reason');
-                            </script>
-                            <br />
 
-                            <span class="name">Marks</span>
-                            <input type="text" name="marks" placeholder="Marks for this question" />
-                            <br />
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5> Answer Description</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="#" class="dropdown-item">Config option 1</a>
+                                        </li>
+                                        <li><a href="#" class="dropdown-item">Config option 2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <textarea name="reason" placeholder="Reason to be the answer"></textarea>
+                            </div>
+                        </div>
+                        <script>
+                            CKEDITOR.replace('reason');
+                        </script>
+                        <br />
 
-                            <span class="name">Category</span>
-                            <select name="category">
-                                <option value="English">English</option>
-                                <option value="Math">Math</option>
-                            </select>
-                            <br />
+                        <span class="name">Marks</span>
+                        <input type="text" name="marks" placeholder="Marks for this question" />
+                        <br />
 
-                            <span class="name">Faculty</span>
-                            <select name="faculty">
-                                <?php
-                                //Get Faculties from database
-                                $tbl_name = "tbl_faculty";
-                                $query = $obj->select_data($tbl_name);
-                                $res = $obj->execute_query($conn, $query);
-                                $count_rows = $obj->num_rows($res);
-                                if ($count_rows > 0) {
-                                    while ($row = $obj->fetch_data($res)) {
-                                        $faculty_id = $row['faculty_id'];
-                                        $faculty_name = $row['faculty_name'];
-                                ?>
-                                        <option value="<?php echo $faculty_id; ?>"><?php echo $faculty_name; ?></option>
-                                    <?php
-                                    }
-                                } else {
-                                    ?>
-                                    <option value="0">Uncategorized</option>
+                        <span class="name">Category</span>
+                        <select name="category">
+                            <option value="English">English</option>
+                            <option value="Math">Math</option>
+                        </select>
+                        <br />
+
+                        <span class="name">Faculty</span>
+                        <select name="faculty">
+                            <?php
+                            //Get Faculties from database
+                            $tbl_name = "tbl_faculty";
+                            $query = $obj->select_data($tbl_name);
+                            $res = $obj->execute_query($conn, $query);
+                            $count_rows = $obj->num_rows($res);
+                            if ($count_rows > 0) {
+                                while ($row = $obj->fetch_data($res)) {
+                                    $faculty_id = $row['faculty_id'];
+                                    $faculty_name = $row['faculty_name'];
+                            ?>
+                                    <option value="<?php echo $faculty_id; ?>"><?php echo $faculty_name; ?></option>
                                 <?php
                                 }
+                            } else {
                                 ?>
+                                <option value="0">Uncategorized</option>
+                            <?php
+                            }
+                            ?>
 
-                            </select>
-                            <br />
+                        </select>
+                        <br />
 
-                            <span class="name">Is Active?</span>
-                            <input type="radio" name="is_active" value="yes" /> Yes
-                            <input type="radio" name="is_active" value="no" /> No
-                            <br />
+                        <span class="name">Is Active?</span>
+                        <input type="radio" name="is_active" value="yes" /> Yes
+                        <input type="radio" name="is_active" value="no" /> No
+                        <br />
 
-                            <input type="submit" name="submit" value="Add Question" class="btn-add" style="margin-left: 15%;" />
-                            <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn-delete">Cancel</button></a>
+                        <input type="submit" name="submit" value="Add Question" class="btn-add" style="margin-left: 15%;" />
+                        <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn-delete">Cancel</button></a>
                     </form>
 
                     <?php

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-if (!isset($_SESSION['user'])) {
-    header('location:' . SITEURL . 'department/index.php?page=login');
+if (!isset($_SESSION['teacher'])) {
+    header('location:' . SITEURL . 'teacher/index.php?page=login');
 }
 ?>
 <html>
@@ -23,29 +23,143 @@ if (!isset($_SESSION['user'])) {
 
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
-                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="#">
+                            <div class="form-group">
+                                <input type="text" placeholder="<?php echo $_SESSION['full_name'] ?>" class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="label label-info"> <?php echo $_SESSION['full_name'] ?></span>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning">3</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a class="dropdown-item float-left" href="profile.html">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
+                                        </a>
+                                        <div class="media-body">
+                                            <small class="float-right">46h ago</small>
+                                            <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                            <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a class="dropdown-item float-left" href="profile.html">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="float-right text-navy">5h ago</small>
+                                            <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                            <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a class="dropdown-item float-left" href="profile.html">
+                                            <img alt="image" class="rounded-circle" src="<?php echo SITEURL; ?>images/logo.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="float-right">23h ago</small>
+                                            <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                            <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="mailbox.html" class="dropdown-item">
+                                            <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-danger">8</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="mailbox.html" class="dropdown-item">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                            <span class="float-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a href="profile.html" class="dropdown-item">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                            <span class="float-right text-muted small">12 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <a href="grid_options.html" class="dropdown-item">
+                                        <div>
+                                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                            <span class="float-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="notifications.html" class="dropdown-item">
+                                            <strong>See All notifications</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
 
-                    <?php include('topnav.php');  ?>
+
+                        <li>
+                            <a href="<?php echo SITEURL ?>teacher/index.php?page=logout">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+
                 </nav>
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
-                <div class="col-lg-10">
-                    <h2>Dept. Head</h2>
+                <div class="col-sm-4">
+
+                    <h4><span class="label label-info"><?php echo $_SESSION['dept_name'] ?></span></h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="index.php">Home</a>
-                        </li>
-
-                        <li class="breadcrumb-item ">
-                            View
+                            <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <strong>Exams list</strong>
+                            Exams
                         </li>
+
                     </ol>
                 </div>
-                <div class="col-lg-2">
-
+                <div class="col-sm-8">
+                    <div class="title-action">
+                        <a href="#" class="btn btn-outline btn-rounded btn-primary">Check Invigilation</a>
+                    </div>
                 </div>
             </div>
             <div class="wrapper wrapper-content animated fadeInRight">
@@ -75,13 +189,13 @@ if (!isset($_SESSION['user'])) {
                                             <tr>
                                                 <th>Exam Code</th>
                                                 <th>Course Name</th>
-                                                <th>Created By</th>
+                                                <th>Invigilator</th>
                                                 <th>Total Questions</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>
                                                 <th>Exam Date</th>
                                                 <th>Study Year</th>
-                                                <th>Invigilator</th>
+                                                <th>Question</th>
                                             </tr>
                                             <!-- </thead>
                                         <tbody>
@@ -138,13 +252,13 @@ if (!isset($_SESSION['user'])) {
                                             <tr>
                                                 <th>Exam Code</th>
                                                 <th>Course Name</th>
-                                                <th>Created By</th>
+                                                <th>Invigilator</th>
                                                 <th>Total Questions</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>
                                                 <th>Total Date</th>
                                                 <th>Study Year</th>
-                                                <th>Invigilator</th>
+                                                <th>Question</th>
 
                                             </tr>
                                         </tfoot>
@@ -185,7 +299,7 @@ if (!isset($_SESSION['user'])) {
                 "order": [],
                 responsive: true,
                 "ajax": {
-                    url: "<?php echo SITEURL; ?>department/ajax_department.php",
+                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
                     type: "POST",
                     data: {
                         action: 'fetch',
@@ -221,6 +335,10 @@ if (!isset($_SESSION['user'])) {
                     }
                 ]
 
+            });
+            $(document).on('click', '.add-question',function () {
+                var id = $(this).attr('id');
+                location.href = "<?php echo SITEURL;?>teacher/index.php?page=add_question&exam_code="+id;
             });
 
 

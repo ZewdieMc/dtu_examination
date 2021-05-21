@@ -108,7 +108,7 @@
 
 
       <li>
-          <a href="<?php echo SITEURL ?>teacher/index.php?page=logout">
+          <a href="<?php echo SITEURL ?>department/index.php?page=logout">
               <i class="fa fa-sign-out"></i> Log out
           </a>
       </li>

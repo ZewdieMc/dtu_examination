@@ -12,7 +12,7 @@
                         <img class='img-circle' alt="image" style="width:80px;height:80px;" ; src="<?php echo SITEURL; ?>images/logo.jpg" /><span></span>
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['user'] ?></strong>
+                        <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['teacher'] ?></strong>
                             </span> <span class="text-muted text-xs block">Teacher <b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="<?php echo SITEURL; ?>department/index.php?page=change_password">Change Password</a></li>
@@ -24,7 +24,7 @@
                 </div>
             </li>
             <li>
-                <a href="<?php echo SITEURL ?>department/index.php?page=dashboard"><i class="fa fa-dashboard"></i> <span class="nav-label">Home</span></a>
+                <a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-dashboard"></i> <span class="nav-label">Home</span></a>
             </li>
 
             <li>
@@ -32,18 +32,15 @@
                 <a href="#"><i class="fa fa-tasks"></i> <span class="nav-label">Your Tasks</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=teachers"><i class="fa fa-pencil"></i>Teachers </a> -->
-                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=courses"><i class="fa fa-book"></i>Your Courses</a> -->
-                    <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=students"><i class="fa fa-users"></i>Your Students</a> -->
+                    <li><a href="<?php echo SITEURL ?>teacher/index.php?page=courses"><i class="fa fa-book"></i>Your Courses</a>
+                    <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-users"></i>Your Exams</a>
                     <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=examiner"><i class="fa fa-users"></i>Invigilators</a> -->
 
-                    <li>
+                    <!-- <li> -->
 
-                        <a href="#"><i class="fa fa-plus"></i>Courses<span class="fa arrow"></span></a>
-                        <ul class="nav nav-third-level">
-                            <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li> -->
-                            <!-- <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li> -->
-                            <!-- <li><a href="addcollege.php"><i class="fa fa-plus"></i>Report</a></li> -->
-                            <?php
+                        <!-- <a href="#"><i class="fa fa-plus"></i>Courses<span class="fa arrow"></span></a> -->
+                        <!-- <ul class="nav nav-third-level">
+                          <?php
                             $tbl_name = "tbl_course";
                             $where = "teacher_id = '" . $_SESSION['teacher_id'] . "'";
                             $query = $obj->select_data($tbl_name, $where);
@@ -54,17 +51,16 @@
                             <?php
                             }
                             ?>
-                        </ul>
-                    </li>
-                    <li>
+                        </ul> -->
+                    <!-- </li> -->
+                    <!-- <li>
 
                         <a href="#"><i class="fa fa-plus"></i>Exams<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
                             <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-pencil"></i>Programming</a></li>
                             <li><a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard"><i class="fa fa-file-text"></i>Database</a></li>
-                            <!-- <li><a href="addcollege.php"><i class="fa fa-plus"></i>Report</a></li> -->
                         </ul>
-                    </li>
+                    </li> -->
             </li>
             </li>
             </li>

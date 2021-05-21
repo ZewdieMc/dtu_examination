@@ -1,195 +1,6 @@
 <!--ADDING CKEDITOR HERE-->
 <script src="<?php echo SITEURL; ?>/assets/ckeditor/ckeditor.js"></script>
-<!-- <div class="main">
-            <div class="content">
-                <div class="report">
-                    
-                    <form method="post" action="" class="forms" enctype="multipart/form-data">
-                        <h2>Add Question</h2>
-                        <?php
-                        if (isset($_SESSION['add'])) {
-                            echo $_SESSION['add'];
-                            unset($_SESSION['add']);
-                        }
-                        if (isset($_SESSION['invalid'])) {
-                            echo $_SESSION['invalid'];
-                            unset($_SESSION['invalid']);
-                        }
-                        if (isset($_SESSION['upload'])) {
-                            echo $_SESSION['upload'];
-                            unset($_SESSION['upload']);
-                        }
-                        ?>
-                        <span class="name">Question</span> <br />
-                        <textarea name="question" placeholder="Add Your Question" required="true"></textarea> <br />
-                        <script>
-                            CKEDITOR.replace( 'question' );
-                        </script>
-                        
-                        <span class="name">Image</span>
-                        <input type="file" name="image" /><br />
-                        
-                        <span class="name">First Answer</span>
-                        <input type="text" name="first_answer" placeholder="First Answer" required="true" /><br />
-                        
-                        <span class="name">Second Answer</span>
-                        <input type="text" name="second_answer" placeholder="Second Answer" required="true" /><br />
-                        
-                        <span class="name">Third Answer</span>
-                        <input type="text" name="third_answer" placeholder="Third Answer" required="true" /><br />
-                        
-                        <span class="name">Fourth Answer</span>
-                        <input type="text" name="fourth_answer" placeholder="Fourth Answer" required="true" /><br />
-                        
-                         <span class="name">Fifth Answer</span>
-                        <input type="text" name="fifth_answer" placeholder="Fifth Answer" required="true" /><br />
-                       
-                        
-                        <span class="name">Answer</span>
-                        <select name="answer">
-                            <option value="1">First Answer</option>
-                            <option value="2">Second Answer</option>
-                            <option value="3">Third Answer</option>
-                            <option value="4">Fourth Answer</option>
-                            <option value="5">Fifth Answer</option>
-                        </select>
-                        <br />
-                        
-                        <span class="name">Reason</span><br />
-                        <textarea name="reason" placeholder="Reason to be the answer"></textarea>
-                        <script>
-                            CKEDITOR.replace( 'reason' );
-                        </script>
-                        <br />
-                        
-                        <span class="name">Marks</span>
-                        <input type="text" name="marks" placeholder="Marks for this question" />
-                        <br />
-                        
-                        <span class="name">Category</span>
-                        <select name="category">
-                            <option value="English">English</option>
-                            <option value="Math">Math</option>
-                        </select>
-                        <br />
-                        
-                        <span class="name">Faculty</span>
-                        <select name="faculty">
-                            <?php
-                            //Get Faculties from database
-                            $tbl_name = "tbl_faculty";
-                            $query = $obj->select_data($tbl_name);
-                            $res = $obj->execute_query($conn, $query);
-                            $count_rows = $obj->num_rows($res);
-                            if ($count_rows > 0) {
-                                while ($row = $obj->fetch_data($res)) {
-                                    $faculty_id = $row['faculty_id'];
-                                    $faculty_name = $row['faculty_name'];
-                            ?>
-                                        <option value="<?php echo $faculty_id; ?>"><?php echo $faculty_name; ?></option>
-                                        <?php
-                                    }
-                                } else {
-                                        ?>
-                                    <option value="0">Uncategorized</option>
-                                    <?php
-                                }
-                                    ?>
-                            
-                        </select>
-                        <br />
-                        
-                        <span class="name">Is Active?</span>
-                        <input type="radio" name="is_active" value="yes" /> Yes 
-                        <input type="radio" name="is_active" value="no" /> No
-                        <br />
-                        
-                        <input type="submit" name="submit" value="Add Question" class="btn-add" style="margin-left: 15%;" />
-                        <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn-delete">Cancel</button></a>
-                    </form>
-                    
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        //echo "Clicked";
-                        //Managing Question Images
-                        if ($_FILES['image']['name'] != "") {
-                            //echo "Book Cover is Available";
-                            //Getting File Extension
-                            $ext = end(explode('.', $_FILES['image']['name']));
-                            //Checking if the file type is valid or not
-                            $valid_file = $obj->check_image_type($ext);
-                            if ($valid_file == false) {
-                                $_SESSION['invalid'] = "<div class='error'>Invalid Image type. Please use JPG or PNG or GIF file type.</div>";
-                                header('location:' . SITEURL . 'admin/index.php?page=add_question');
-                                die();
-                            }
-                            //Uploading if the file is valid
-                            //first changing image name
-                            $new_name = 'Beyond_Boundaries_Question_' . $obj->uniqid();
-                            $image_name = $new_name . '.' . $ext;
-                            //Adding Watermark to the image fie too
-                            $source = $_FILES['image']['tmp_name'];
-                            $destination = "../images/questions/" . $image_name;
-                            $upload = $obj->upload_file($source, $destination);
-                            if ($upload == false) {
-                                $_SESSION['upload'] = "<div class='error'>Failed to upload question image. Try again.</div>";
-                                header('location:' . SITEURL . 'admin/index.php?page=add_question');
-                                die();
-                            }
-                        } else {
-                            $image_name = "";
-                        }
-                        //Get all values from the forms
-                        $question = $obj->sanitize($conn, $_POST['question']);
-                        $first_answer = $obj->sanitize($conn, $_POST['first_answer']);
-                        $second_answer = $obj->sanitize($conn, $_POST['second_answer']);
-                        $third_answer = $obj->sanitize($conn, $_POST['third_answer']);
-                        $fourth_answer = $obj->sanitize($conn, $_POST['fourth_answer']);
-                        $fifth_answer = $obj->sanitize($conn, $_POST['fifth_answer']);
 
-                        $faculty = $obj->sanitize($conn, $_POST['faculty']);
-                        if (isset($_POST['is_active'])) {
-                            $is_active = $_POST['is_active'];
-                        } else {
-                            $is_active = 'yes';
-                        }
-                        $answer = $obj->sanitize($conn, $_POST['answer']);
-                        $reason = $obj->sanitize($conn, $_POST['reason']);
-                        $marks = $obj->sanitize($conn, $_POST['marks']);
-                        $category = $obj->sanitize($conn, $_POST['category']);
-                        $added_date = date('Y-m-d');
-
-                        $tbl_name = 'tbl_question';
-                        $data = "question='$question',
-                                    first_answer='$first_answer',
-                                    second_answer='$second_answer',
-                                    third_answer='$third_answer',
-                                    fourth_answer='$fourth_answer',
-                                    fifth_answer='$fifth_answer',
-                                    answer='$answer',
-                                    reason='$reason',
-                                    marks='$marks',
-                                    category='$category',
-                                    faculty='$faculty',
-                                    is_active='$is_active',
-                                    added_date='$added_date',
-                                    updated_date='',
-                                    image_name='$image_name'
-                                    ";
-                        $query = $obj->insert_data($tbl_name, $data);
-                        $res = $obj->execute_query($conn, $query);
-                        if ($res === true) {
-                            $_SESSION['add'] = "<div class='success'>Question successfully added.</div>";
-                            header('location:' . SITEURL . 'admin/index.php?page=questions');
-                        } else {
-                            $_SESSION['add'] = "<div class='error'>Failed to add question. Try again.</div>";
-                            header('location:' . SITEURL . 'admin/index.php?page=add_question');
-                        }
-                    }
-                    ?>
-                </div>
-            </div>
-        </div> -->
 <!DOCTYPE html>
 <html>
 
@@ -200,7 +11,28 @@
 
     <title>DTU Exam | Teacher</title>
 
-    <?php include('./includes/css3.php') ?>
+    <?php // include('./includes/css3.php') 
+    ?>
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
 
 
 </head>
@@ -216,7 +48,7 @@
                 <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" action="http://webapplayers.com/inspinia_admin-v2.9.4/search_results.html">
+                        <form role="search" class="navbar-form-custom" action="#">
                             <div class="form-group">
                                 <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
                             </div>
@@ -224,7 +56,7 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">Welcome <?php echo $_SESSION['user'] ?>.</span>
+                            <span class="m-r-sm text-muted welcome-message">Welcome <?php echo $_SESSION['full_name'] ?>.</span>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -334,7 +166,7 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
-                    <h2>Your department</h2>
+                    <h4><span class="label label-info"><?php echo $_SESSION['dept_name'] ?></span></h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
                             <a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard">Home</a>
@@ -423,33 +255,41 @@
                             </div>
                             <div class="ibox-content">
 
-                                <span class="name">Image</span>
-                                <input type="file" name="image" /><br />
+                                <div class="form-group">
+                                    <span class="name">Image</span>
+                                    <!-- <input type="file" class="form-control" name="image" /><br /> -->
+                                    <div class="custom-file">
+                                        <input id="logo" type="file" name="image" class="custom-file-input">
+                                        <label for="logo" class="custom-file-label">Choose file...</label>
+                                    </div>
+                                    <span class="name">First Answer</span>
+                                    <input type="text" name="first_answer" class="form-control" placeholder="First Answer" required="true" /><br />
 
-                                <span class="name">First Answer</span>
-                                <input type="text" name="first_answer" placeholder="First Answer" required="true" /><br />
+                                    <span class="name">Second Answer</span>
+                                    <input type="text" name="second_answer" class="form-control" placeholder="Second Answer" required="true" /><br />
 
-                                <span class="name">Second Answer</span>
-                                <input type="text" name="second_answer" placeholder="Second Answer" required="true" /><br />
+                                    <span class="name">Third Answer</span>
+                                    <input type="text" name="third_answer" class="form-control" placeholder="Third Answer" required="true" /><br />
 
-                                <span class="name">Third Answer</span>
-                                <input type="text" name="third_answer" placeholder="Third Answer" required="true" /><br />
+                                    <span class="name">Fourth Answer</span>
+                                    <input type="text" name="fourth_answer" class="form-control" placeholder="Fourth Answer" required="true" /><br />
 
-                                <span class="name">Fourth Answer</span>
-                                <input type="text" name="fourth_answer" placeholder="Fourth Answer" required="true" /><br />
+                                    <span class="name">Fifth Answer</span>
+                                    <input type="text" name="fifth_answer" class="form-control" placeholder="Fifth Answer" required="true" /><br />
 
-                                <span class="name">Fifth Answer</span>
-                                <input type="text" name="fifth_answer" placeholder="Fifth Answer" required="true" /><br />
-
-
-                                <span class="name">Answer</span>
-                                <select name="answer">
-                                    <option value="1">First Answer</option>
-                                    <option value="2">Second Answer</option>
-                                    <option value="3">Third Answer</option>
-                                    <option value="4">Fourth Answer</option>
-                                    <option value="5">Fifth Answer</option>
-                                </select>
+                                    <span class="name">Answer</span>
+                                    <select name="answer" class="form-control select2_answer">
+                                        <option value="1"></option>
+                                        <option value="1">First Answer</option>
+                                        <option value="2">Second Answer</option>
+                                        <option value="3">Third Answer</option>
+                                        <option value="4">Fourth Answer</option>
+                                        <option value="5">Fifth Answer</option>
+                                    </select>
+                                    <span class="name">Marks</span>
+                                    <input type="number" name="marks" class="form-control" placeholder="Marks for this question" />
+                                    <br />
+                                </div>
                                 <br />
                             </div>
                         </div>
@@ -485,18 +325,16 @@
                         </script>
                         <br />
 
-                        <span class="name">Marks</span>
-                        <input type="text" name="marks" placeholder="Marks for this question" />
-                        <br />
 
-                        <span class="name">Category</span>
+
+                        <!-- <span class="name">Category</span>
                         <select name="category">
                             <option value="English">English</option>
                             <option value="Math">Math</option>
-                        </select>
+                        </select> -->
                         <br />
 
-                        <span class="name">Faculty</span>
+                        <!-- <span class="name">Faculty</span>
                         <select name="faculty">
                             <?php
                             //Get Faculties from database
@@ -519,16 +357,16 @@
                             }
                             ?>
 
-                        </select>
+                        </select> -->
                         <br />
 
                         <span class="name">Is Active?</span>
-                        <input type="radio" name="is_active" value="yes" /> Yes
-                        <input type="radio" name="is_active" value="no" /> No
+                        <input type="radio" class="radio radio-primary" name="is_active" value="yes" /> Yes
+                        <input type="radio" class="radio radio-danger " name="is_active" value="no" /> No
                         <br />
 
-                        <input type="submit" name="submit" value="Add Question" class="btn-add" style="margin-left: 15%;" />
-                        <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn-delete">Cancel</button></a>
+                        <input type="submit" name="submit" value="Add Question" class="btn btn-primary btn-rounded btn-outline" style="margin-left: 15%;" />
+                        <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn btn-danger btn-rounded btn-outline">Cancel</button></a>
                     </form>
 
                     <?php
@@ -543,7 +381,7 @@
                             $valid_file = $obj->check_image_type($ext);
                             if ($valid_file == false) {
                                 $_SESSION['invalid'] = "<div class='error'>Invalid Image type. Please use JPG or PNG or GIF file type.</div>";
-                                header('location:' . SITEURL . 'admin/index.php?page=add_question');
+                                header('location:' . SITEURL . 'teacher/index.php?page=add_question&exam_code=' . $_GET['exam_code'] . '');
                                 die();
                             }
                             //Uploading if the file is valid
@@ -570,7 +408,7 @@
                         $fourth_answer = $obj->sanitize($conn, $_POST['fourth_answer']);
                         $fifth_answer = $obj->sanitize($conn, $_POST['fifth_answer']);
 
-                        $faculty = $obj->sanitize($conn, $_POST['faculty']);
+                        // $faculty = $obj->sanitize($conn, $_POST['faculty']);
                         if (isset($_POST['is_active'])) {
                             $is_active = $_POST['is_active'];
                         } else {
@@ -578,8 +416,9 @@
                         }
                         $answer = $obj->sanitize($conn, $_POST['answer']);
                         $reason = $obj->sanitize($conn, $_POST['reason']);
+                        $exam_code = $_GET['exam_code'];
                         $marks = $obj->sanitize($conn, $_POST['marks']);
-                        $category = $obj->sanitize($conn, $_POST['category']);
+                        // $category = $obj->sanitize($conn, $_POST['category']);
                         $added_date = date('Y-m-d');
 
                         $tbl_name = 'tbl_question';
@@ -591,9 +430,8 @@
                                     fifth_answer='$fifth_answer',
                                     answer='$answer',
                                     reason='$reason',
+                                    exam_code='$exam_code',
                                     marks='$marks',
-                                    category='$category',
-                                    faculty='$faculty',
                                     is_active='$is_active',
                                     added_date='$added_date',
                                     updated_date='',
@@ -603,10 +441,10 @@
                         $res = $obj->execute_query($conn, $query);
                         if ($res === true) {
                             $_SESSION['add'] = "<div class='success'>Question successfully added.</div>";
-                            header('location:' . SITEURL . 'admin/index.php?page=questions');
+                            header('location:' . SITEURL . 'teacher/index.php?page=questions');
                         } else {
                             $_SESSION['add'] = "<div class='error'>Failed to add question. Try again.</div>";
-                            header('location:' . SITEURL . 'admin/index.php?page=add_question');
+                            header('location:' . SITEURL . 'teacher/index.php?page=add_question');
                         }
                     }
                     ?>
@@ -621,7 +459,20 @@
 
     <?php include("includes/scripts3.php") ?>
 </body>
+<script>
+    $(document).ready(function() {
 
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+        $('.select2_answer').select2({
+            theme: 'bootstrap4',
+            placeholder: "Select an answer",
+            allowClear: true
+        });
+    });
+</script>
 
 
 </html>

@@ -42,8 +42,8 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['contact'];
             $sub_array[] .= $row['gender'];
             $sub_array[] .= $row['year'];
-            $edit_button = '<a class="edit-data" id="' . $row['student_id'] . '"><i class="fa fa-pencil fa-lg text-blue "></i></a>';
-            $delete_button = '<a id="delete_student" data-id="' . $row['student_id'] . '" ><i class="fa fa-trash fa-lg"></i></a>';
+            $edit_button = '<a class="edit-data" id="' . $row['student_id'] . '"><i class="fa fa-pencil fa-lg "style="color:blue"></i></a>';
+            $delete_button = '<a id="delete_student" data-id="' . $row['student_id'] . '" ><i class="fa fa-trash fa-lg" style="color:red"></i></a>';
             $sub_array[] .= $edit_button;
             $sub_array[] .= $delete_button;
             $data[] = $sub_array;
@@ -96,8 +96,8 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['last_name'];
             $sub_array[] .= $row['email'];
             $sub_array[] .= $row['username'];
-            $edit_button = '<a class="edit-data" id="' . $row['id'] . '"><i class="fa fa-pencil fa-lg text-blue"></i></a>';
-            $delete_button = '<a id="delete_teacher" data-id="' . $row['id'] . '" ><i class="fa fa-trash fa-lg"></i></a>';
+            $edit_button = '<a class="edit-data" id="' . $row['id'] . '"><i class="fa fa-pencil fa-lg " style="color:blue"></i></a>';
+            $delete_button = '<a id="delete_teacher" data-id="' . $row['id'] . '" ><i class="fa fa-trash fa-lg"style="color:red"></i></a>';
             $sub_array[] .= $edit_button;
             $sub_array[] .= $delete_button;
             $data[] = $sub_array;
@@ -116,7 +116,7 @@ if ($_POST['action'] == 'fetch') {
     }
     if ($_POST['page'] == 'course') {
         $tbl_name = "tbl_course join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id join tbl_year_study on tbl_course.study_year=tbl_year_study.study_year_id";
-        $where = "tbl_course.department_id = '".$_SESSION['dept_id']."' AND";
+        $where = "tbl_course.department_id = '" . $_SESSION['dept_id'] . "' AND ";
         if (isset($_POST['search']['value'])) {
             $where .= "(";
             $where .= 'course_code LIKE "%' . $_POST["search"]["value"] . '%" ';
@@ -128,7 +128,7 @@ if ($_POST['action'] == 'fetch') {
         if (isset($_POST['order'])) {
             $where .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
         } else {
-            $where .= 'ORDER BY course_id ASC ';
+            $where .= ' ORDER BY course_id ASC ';
         }
 
         $other = '';
@@ -146,10 +146,10 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['course_id'];
             $sub_array[] .= $row['course_code'];
             $sub_array[] .= $row['course_name'];
-            $sub_array[] .= $row['first_name']." ".$row['last_name'];
+            $sub_array[] .= $row['first_name'] . " " . $row['last_name'];
             $sub_array[] .= $row['year'];
-            $edit_button = '<a class="edit-data" id="' . $row['course_id'] . '"><i class="fa fa-pencil fa-lg text-blue "></i></a>';
-            $delete_button = '<a id="delete_course" data-id="' . $row['course_id'] . '" ><i class="fa fa-trash fa-lg"></i></a>';
+            $edit_button = '<a class="edit-data" id="' . $row['course_id'] . '"><i class="fa fa-pencil fa-lg " style="color:blue"></i></a>';
+            $delete_button = '<a id="delete_course" data-id="' . $row['course_id'] . '" ><i class="fa fa-trash fa-lg" style="color:red"></i></a>';
             $sub_array[] .= $edit_button;
             $sub_array[] .= $delete_button;
             $data[] = $sub_array;
@@ -165,9 +165,71 @@ if ($_POST['action'] == 'fetch') {
             "data"                =>    $data
         );
         echo json_encode($output);
-
     }
     if ($_POST['page'] == 'examiner') {
+    }
+    if ($_POST['page'] == 'exam') {
+        $tbl_name = "(tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id)
+                      join tbl_year_study on tbl_course.study_year=tbl_year_study.study_year_id
+                      join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id";
+                    //   left join tbl_invigilator on tbl_exam.examiner_id=tbl_invigilator.examiner_id";
+        $where = "tbl_course.department_id = '" . $_SESSION['dept_id'] . "' AND ";
+        if (isset($_POST['search']['value'])) {
+            $where .= "(";
+            $where .= 'exam_id LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR course_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR year LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= ")";
+        }
+        if (isset($_POST['order'])) {
+            $where .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
+        } else {
+            $where .= ' ORDER BY exam_id ASC ';
+        }
+
+        $other = '';
+
+        if ($_POST['length'] != -1) {
+            $other .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+        }
+
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $filtered_rows = $obj->num_rows($res);
+        $data = array();
+        while ($row = $obj->fetch_data($res)) {
+            $sub_array = array();
+            $sub_array[] .= $row['exam_id'];
+            $sub_array[] .= $row['course_name'];
+            $sub_array[] .= $row['first_name'] . " " . $row['last_name'];
+            $sub_array[] .= $row['qns_per_set'];
+            if ($row['status'] == "created") {
+                $sub_array[] .= "<span class='badge badge-success'>" . $row['status'] . "</span>";
+            } elseif ($row['status'] == "started") {
+                $sub_array[] .= "<span class='badge badge-primary'>" . $row['status'] . "</span>";
+            } elseif ($row['status'] == "completed") {
+                $sub_array[] .= "<span class='badge badge-danger'>" . $row['status'] . "</span>";
+            }
+            $sub_array[] .= $row['time_duration'] . " minutes";;
+            $sub_array[] .= $row['exam_date'];
+            $sub_array[] .= $row['year'];
+            $sub_array[] .= '<button type="button" class="btn btn-primary btn-outline btn-circle add-examiner" data-toggle="tooltip" data-placement="top" title="Click to add Invigilator" id="' . $row['exam_id'] . '"><i class="fa fa-plus "> </i></button>';
+
+            $data[] = $sub_array;
+        }
+        $where = "";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $total_rows = $obj->num_rows($res);
+        $output = array(
+            "draw"                =>    intval($_POST["draw"]),
+            "recordsTotal"        =>    $total_rows,
+            "recordsFiltered"    =>    $filtered_rows,
+            "data"                =>    $data
+        );
+        echo json_encode($output);
     }
 }
 // Read for update Operation
@@ -272,8 +334,8 @@ if ($_POST['action'] == 'update') {
         course_name = '" . $_POST["course_name"] . "',
         teacher_id = '" . $_POST["teacher"] . "',
         study_year = '" . $_POST["study_year"] . "' ";
-        $where = "course_id = '".$_POST['course_id']."'";
-        $query = $obj->update_data($tbl_name, $data,$where);
+        $where = "course_id = '" . $_POST['course_id'] . "'";
+        $query = $obj->update_data($tbl_name, $data, $where);
         $res = $obj->execute_query($conn, $query);
         if ($res) {
             # code...

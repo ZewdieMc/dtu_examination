@@ -11,9 +11,10 @@
 <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
 <link href="<?php echo SITEURL ?>asset2/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
 <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
+<link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
 <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
 <?php
-if (!isset($_SESSION['user'])) {
-    header('location:' . SITEURL . 'department/index.php?page=login');
+if (!isset($_SESSION['teacher'])) {
+    header('location:' . SITEURL . 'teacher/index.php?page=login');
 }
 ?>

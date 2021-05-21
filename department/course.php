@@ -8,7 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Exam</title>
-    <?php include('./includes/css2.php') ?>
+    <!-- <?php include('./includes/css2.php') ?> -->
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
 </head>
 
 <body class="md-skin pace-done">
@@ -24,11 +48,11 @@
                 <div class="col-lg-10">
                     <h2>Dept. Head</h2>
                     <ol class="breadcrumb">
-                        <li>
+                        <li class="breadcrumb-item">
                             <a href="index.php">Home</a>
                         </li>
 
-                        <li class="active">
+                        <li class="breadcrumb-item active">
                             <strong>Courses list</strong>
                         </li>
                     </ol>
@@ -112,22 +136,23 @@
                             <input class="form-control input-sm validate[required]" name="course_name" id="course_name" type="text" placeholder=" Enter Course Name">
                         </div>
                         <div class="form-group"><label>Teacher</label>
-                            <select class="form-control" name="teacher">
-                                <option>Who Teaches this course?</option>
+                            <select class=" form-control  select2_teacher" style="width:100%" name="teacher">
+                                <option></option>
                                 <?php
                                 $tbl_name  = "tbl_teacher";
-                                $where = "department_id='" . $_SESSION['dept_id'] . "'";
+                                $where = ""; //"department_id='" . $_SESSION['dept_id'] . "'";
                                 $query = $obj->select_data($tbl_name, $where);
                                 $res = $obj->execute_query($conn, $query);
                                 while ($row = $obj->fetch_data($res)) {
                                 ?>
+                                    <!-- option value should be the staffID not the table primary key. -->
                                     <option value="<?php echo $row['id'] ?>"><?php echo $row['first_name'] . " " . $row['last_name'] ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                         <div class="form-group"><label> Study Year</label>
-                            <select class="form-control" name="study_year">
-                                <option>Who studies this course?</option>
+                            <select class="select2_student form-control" style="width:100%" name="study_year">
+                                <option></option>
                                 <?php
                                 $tbl_name  = "tbl_year_study";
                                 $query = $obj->select_data($tbl_name);
@@ -154,17 +179,23 @@
     </div>
     <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
     </div>
-    <?php include("./includes/scripts2.php") ?>
+    <?php include("./includes/scripts3.php") ?>
+    <script>
 
+    </script>
 
     <!-- Page-Level Scripts -->
     <script>
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
+
         $(document).ready(function() {
 
+
             var dataTable = $('.dataTables-example').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [],
+                pageLength: 10,
+                responsive: true,
+                serverSide: true,
+                order: [],
                 "ajax": {
                     url: "<?php echo SITEURL; ?>department/ajax_department.php",
                     type: "POST",
@@ -173,10 +204,10 @@
                         page: 'course'
                     }
                 },
-                "columnDefs": [{
-                    "targets": [0, 6],
-                    "orderable": false,
-                }],
+                // "columnDefs": [{
+                //     "targets": [0, 6],
+                //     "orderable": false,
+                // }],
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [{
                         extend: 'copy'
@@ -208,25 +239,42 @@
 
             });
 
+
+            $('.select2_teacher').select2({
+                dropdownParent: $('#add_department'),
+                theme: 'bootstrap4',
+                placeholder: "Select A Teacher",
+                allowClear: true
+
+            });
+
+
+            $('.select2_student').select2({
+                dropdownParent: $('#add_department'),
+                theme: 'bootstrap4',
+                placeholder: "Select A Studentss",
+                allowClear: true
+
+            });
             /* Init DataTables */
             var oTable = $('#editable').DataTable();
 
             /* Apply the jEditable handlers to the table */
-            oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
-                "callback": function(sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
-                },
-                "submitdata": function(value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
+            // oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
+            //     "callback": function(sValue, y) {
+            //         var aPos = oTable.fnGetPosition(this);
+            //         oTable.fnUpdate(sValue, aPos[0], aPos[1]);
+            //     },
+            //     "submitdata": function(value, settings) {
+            //         return {
+            //             "row_id": this.parentNode.getAttribute('id'),
+            //             "column": oTable.fnGetPosition(this)[2]
+            //         };
+            //     },
 
-                "width": "90%",
-                "height": "100%"
-            });
+            //     "width": "90%",
+            //     "height": "100%"
+            // });
             $('#insert').on("click", function(event) {
                 event.preventDefault();
                 $.ajax({
@@ -265,6 +313,7 @@
                 e.preventDefault();
 
             });
+
             $(document).on('click', '.edit-data', function() {
                 var course_id = $(this).attr("id");
                 $.ajax({

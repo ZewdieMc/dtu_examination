@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher Login </title>
+    <title>DTU Exam | Department Login </title>
 
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -116,7 +116,7 @@
                         $count_rows = $obj->num_rows($res);
                         if ($count_rows == 1) {
                             $_SESSION['user'] = $username;
-                            $_SESSION['teacher_id'] = $row['id'];
+                            $_SESSION['head_id'] = $row['id'];
                             $_SESSION['dept_id'] = $row['department_id'];
                             $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
                             header('location:' . SITEURL . 'department/index.php?page=dashboard');

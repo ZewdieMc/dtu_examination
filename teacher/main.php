@@ -22,9 +22,9 @@
         }
         break;
         
-        case "add_user":
+        case "exams":
         {
-            include('add_user.php');
+            include('exam.php');
         }
         break;
         
@@ -34,9 +34,9 @@
         }
         break;
         
-        case "students":
+        case "courses":
         {
-            include('students.php');
+            include('course.php');
         }
         break;
         
@@ -108,9 +108,9 @@
         
         case "logout":
         {
-            if(isset($_SESSION['user']))
+            if(isset($_SESSION['teacher']))
             {
-                unset($_SESSION['user']);
+                unset($_SESSION['teacher']);
             header('location:'.SITEURL.'teacher/index.php?page=login');
             }
             

@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>DTU Exam</title>
-  <?php include('./includes/css2.php') ?>
+  <?php include('./includes/css3.php') ?>
 </head>
 <script>
   function formToggle(ID) {
@@ -89,7 +89,7 @@
                       ?>
                     </div>
                   </div>
-                  <span id="upload_information" class=" alert alert-primary"></span>
+                  <!-- <span id="upload_information" class=" alert alert-primary"></span> -->
                 </div>
                 <div class="ibox-tools">
                   <a class="collapse-link">
@@ -217,12 +217,13 @@
   </div>
   <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
   </div>
-  <?php include("./includes/scripts2.php") ?>
+  <?php include("./includes/scripts3.php") ?>
 
 
 
   <!-- Page-Level Scripts -->
   <script>
+    $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
     $(document).ready(function() {
 
       // $('#cvs_upload').on('click', function(event) {
@@ -244,7 +245,6 @@
 
       //         });
       //     });
-      $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
 
       var dataTable = $('.dataTables-example').DataTable({
         "processing": true,
@@ -259,10 +259,7 @@
             page: 'student'
           }
         },
-        "columnDefs": [{
-          "targets": [0, 6],
-          "orderable": false,
-        }],
+
         dom: '<"html5buttons"B>lTfgitp',
         buttons: [{
             extend: 'copy'
@@ -296,24 +293,7 @@
       });
 
       /* Init DataTables */
-      var oTable = $('#editable').DataTable();
-
-      /* Apply the jEditable handlers to the table */
-      oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
-        "callback": function(sValue, y) {
-          var aPos = oTable.fnGetPosition(this);
-          oTable.fnUpdate(sValue, aPos[0], aPos[1]);
-        },
-        "submitdata": function(value, settings) {
-          return {
-            "row_id": this.parentNode.getAttribute('id'),
-            "column": oTable.fnGetPosition(this)[2]
-          };
-        },
-
-        "width": "90%",
-        "height": "100%"
-      });
+  
       $('#insert').on("click", function(event) {
         event.preventDefault();
         $.ajax({

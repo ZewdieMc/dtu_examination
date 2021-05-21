@@ -151,4 +151,5 @@ att:
 
 						upon completion of the examination, a new page("EXAM TIME OVER.") /other feasible option must be put.
 						disable browsing on new tab.
+						teachers must have a unique identifier across the system other than id, email for example.
 			  	*/

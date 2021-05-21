@@ -5,12 +5,13 @@
  <script src="<?php echo SITEURL ?>asset2/js/jquery-3.1.1.min.js"></script>
  <script src="<?php echo SITEURL ?>asset2/js/popper.min.js"></script>
  <script src="<?php echo SITEURL ?>asset2/js/bootstrap.js"></script>
+ <script src="<?php echo SITEURL ?>asset2/js/plugins/iCheck/icheck.min.js"></script>
  <script src="<?php echo SITEURL ?>asset2/js/plugins/metisMenu/jquery.metisMenu.js"></script>
- <script src="<?php echo SITEURL ?>asset2/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
  <!-- Custom and plugin javascript -->
  <script src="<?php echo SITEURL ?>asset2/js/inspinia.js"></script>
  <script src="<?php echo SITEURL ?>asset2/js/plugins/pace/pace.min.js"></script>
+ <script src="<?php echo SITEURL ?>asset2/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
  <script src="<?php echo SITEURL ?>asset2/js/plugins/dataTables/datatables.min.js"></script>
 
@@ -24,7 +25,7 @@
  <script src="<?php echo SITEURL ?>asset2/js/plugins/peity/jquery.peity.min.js"></script>
 
  <!-- jQuery UI -->
- <script src="<?php echo SITEURL ?>asset2/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+ <!-- <script src="<?php echo SITEURL ?>asset2/js/plugins/jquery-ui/jquery-ui.min.js"></script> -->
  <!-- Jasny -->
  <script src="<?php echo SITEURL ?>asset2/js/plugins/jasny/jasny-bootstrap.min.js"></script>
  <!-- GITTER -->

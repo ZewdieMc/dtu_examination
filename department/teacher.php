@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Exam</title>
-    <?php include('./includes/css2.php') ?>
+    <?php include('./includes/css3.php') ?>
 </head>
 <script>
     function formToggle(ID) {
@@ -40,11 +40,11 @@
                 <div class="col-lg-10">
                     <h2>Dept. Head</h2>
                     <ol class="breadcrumb">
-                        <li>
+                        <li class="breadcrumb-item">
                             <a href="index.php">Home</a>
                         </li>
 
-                        <li class="active">
+                        <li class="breadcrumb-item active">
                             <strong>Teachers</strong>
                         </li>
                     </ol>
@@ -62,7 +62,7 @@
                                     <div class="row">
                                         <div class="col-md-2"> <button class="btn  btn-sm btn-primary btn-rounded btn-outline" data-toggle="modal" id='add_de' data-target="#add_teacher"><span class="fa fa-plus"></span>&nbsp;Teacher</button>
                                         </div>
-                                        <div class="col-md-6 head panel panel-primary" id="importform" style="padding: 15px;display:none">
+                                        <div class="col-md-6 head panel panel-primary" id="importform" style="padding: 10px;display:none">
                                             <form method="POST" action="teacher_upload.php" id="upload_form" enctype="multipart/form-data">
                                                 <div class="col-md-6">
                                                     <input type="file" name="file" class="form-control-file" id="upload_teacher">
@@ -74,10 +74,10 @@
                                             </form>
                                         </div>
                                         <div class="col-md-2">
-                                            <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV file</a>
+                                            <a href="javascript:void(0);" class=" btn btn-sm btn-primary btn-outline btn-rounded " onclick="formToggle('importform');"><span class=" fa fa-upload"></span> Import CSV </a>
                                         </div>
                                     </div>
-                                    <span id="upload_information" class=" alert alert-primary"></span>
+                                    <!-- <span id="upload_information" class=" alert alert-primary"></span> -->
                                 </div>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
@@ -177,11 +177,12 @@
     </div>
     <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
     </div>
-    <?php include("./includes/scripts2.php") ?>
+    <?php include("./includes/scripts3.php") ?>
 
 
     <!-- Page-Level Scripts -->
     <script>
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
         $(document).ready(function() {
             // ========================
 
@@ -255,25 +256,7 @@
 
             });
 
-            /* Init DataTables */
-            var oTable = $('#editable').DataTable();
 
-            /* Apply the jEditable handlers to the table */
-            oTable.$('td').editable('http://webapplayers.com/example_ajax.php', {
-                "callback": function(sValue, y) {
-                    var aPos = oTable.fnGetPosition(this);
-                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
-                },
-                "submitdata": function(value, settings) {
-                    return {
-                        "row_id": this.parentNode.getAttribute('id'),
-                        "column": oTable.fnGetPosition(this)[2]
-                    };
-                },
-
-                "width": "90%",
-                "height": "100%"
-            });
             // ++++++++++++++++form validator+++++++++++++++
             // $('# insert_form').validate({
             //     rules: {
@@ -371,7 +354,7 @@
             });
         });
 
-     
+
 
         function confirmDelete(userid) {
             swal({

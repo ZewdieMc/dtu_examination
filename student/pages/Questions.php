@@ -115,7 +115,7 @@ if (!isset($_SESSION['next'])) {
                         $image_name = $row['image_name'];
                     } else {
                         //echo "Error";
-                        header('location:' . SITEURL . 'student/index.php?page=endSession');
+                        // header('location:' . SITEURL . 'student/index.php?page=endSession');
                     }
                 }
 

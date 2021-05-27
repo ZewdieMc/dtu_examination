@@ -413,10 +413,12 @@ if ($_POST['action'] == 'fetch') {
 				  	</div>
 				  	<br /><br />';
                       $output .= $prev_next;
+                      $var = $row['question_id'];
         }
         $data = array(
             "question" =>$output,
-            "nav" => $prev_next
+            "nav" => $prev_next,
+            "question_id"=>$var
         );
 
         echo json_encode($data);
@@ -441,7 +443,7 @@ if ($_POST['action'] == 'fetch') {
         while ($row = $obj->fetch_data($res)) {
             $output .= '
 				<div class="col-sm-2" style="margin-bottom:10px;">
-					<button type="button" class="btn btn-primary btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '">' . $count . '</button>
+					<button type="button" class="btn btn-primary btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
 				</div>
 				';
             $count++;

@@ -203,25 +203,25 @@
                         <div class="col-lg-4">
                             <div id="question_navigation_area"></div>
                             <div id="prev_next"></div>
-                            </div>
-
                         </div>
+
                     </div>
-
-
                 </div>
-                    <div class="footer">
-                        <div class="float-right">
-                            Home
-                        </div>
-                        <div>
-                            <strong>Copyright</strong> DTU &copy; <?php echo date("Y") ?>
-                        </div>
-                    </div>
-            </div>
 
-            <?php include("includes/scripts3.php") ?>
-            <!-- <script src="<?php echo SITEURL ?>asset2/js/jquery.min.js"></script> -->
+
+            </div>
+            <div class="footer">
+                <div class="float-right">
+                    Home
+                </div>
+                <div>
+                    <strong>Copyright</strong> DTU &copy; <?php echo date("Y") ?>
+                </div>
+            </div>
+        </div>
+
+        <?php include("includes/scripts3.php") ?>
+        <!-- <script src="<?php echo SITEURL ?>asset2/js/jquery.min.js"></script> -->
 
 </body>
 
@@ -231,11 +231,10 @@
             selector: '[data-toggle=tooltip]'
         });
         var exam_id = "<?php echo $_GET['exam_code']; ?>";
-        load_question();
         question_navigation();
+        load_question();
 
         function load_question(question_id = '') {
-            // alert("exam_id = " + exam_id);
             $.ajax({
                 url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
                 type: 'POST',
@@ -248,8 +247,11 @@
                 },
                 success: function(data) {
                     var res = JSON.parse(data);
+                    var prev = question_id-1;
                     $('#single_question_area').html(res.question);
                     $('#prev_next').html(res.nav);
+                    $('#question_navigation_area .btn').removeClass("active");
+                    $('#question_navigation_area #' + res.question_id).addClass("active");
                 },
                 error: function(response) {
                     $('#single_question_area').html("response.responseText");
@@ -279,6 +281,7 @@
 
         $(document).on('click', '.next', function() {
             var question_id = $(this).attr('id');
+            // $('#' + question_id).toggleClass('active');
             load_question(question_id);
         });
         $(document).on('click', '.delete_question', function() {

@@ -137,7 +137,7 @@ att:
 						SESSIONS SHOULD CAREFULLY BE MANAGED IN EVERY MODULES OF THE SYSTEM.
 						// set the default timezone to use.
 						date_default_timezone_set('UTC+3');
-
+						date_default_timezone_set('Africa/Nairobi');
 						check whether logins are hashed or not.
 
 						check proper form validation for each page.
@@ -152,4 +152,7 @@ att:
 						upon completion of the examination, a new page("EXAM TIME OVER.") /other feasible option must be put.
 						disable browsing on new tab.
 						teachers must have a unique identifier across the system other than id, email for example.
+						http://localhost/Examination/teacher/index.php?page=dashboard&exam_code=3
+						exam_code has to be hashed not visible for security purpose, may be a user can randomly change it to another number 
+						and enter a question for a course that he doesn't own.
 			  	*/

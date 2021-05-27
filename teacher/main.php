@@ -28,9 +28,9 @@
         }
         break;
         
-        case "update_user":
+        case "question":
         {
-            include('add_user.php');
+            include('view_question.php');
         }
         break;
         

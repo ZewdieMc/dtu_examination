@@ -27,6 +27,20 @@
             }
             return $query;
         }
+        public function select_with_row_number($tbl_name,$where="",$other="")
+        {
+            // $row_number = 0;
+            $query="SELECT (@row_number:=@row_number + 1) as number,t. FROM $tbl_name as t,(SELECT @row_number:=0)as foo ";
+            if($where!="")
+            {
+                $query.=" WHERE $where";
+            }
+            if($other!="")
+            {
+                $query.=' '.$other;
+            }
+            return $query;
+        }
         public function select_random_row($tbl_name,$where,$limit)
         {
             $query="SELECT * FROM $tbl_name";

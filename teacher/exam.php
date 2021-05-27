@@ -3,6 +3,8 @@
 if (!isset($_SESSION['teacher'])) {
     header('location:' . SITEURL . 'teacher/index.php?page=login');
 }
+
+
 ?>
 <html>
 
@@ -11,7 +13,7 @@ if (!isset($_SESSION['teacher'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Examination</title>
+    <title>DTU Exam | Teacher | Exams</title>
     <?php include('./includes/css3.php') ?>
 </head>
 
@@ -197,57 +199,8 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Study Year</th>
                                                 <th>Question</th>
                                             </tr>
-                                            <!-- </thead>
-                                        <tbody>
-                                            <?php
-                                            $tbl_name = "(tbl_exam join tbl_course on
-                                            tbl_exam.course_id=tbl_course.course_id)join tbl_year_study on 
-                                            tbl_course.study_year=tbl_year_study.study_year_id join
-                                            tbl_teacher on tbl_course.teacher_id = tbl_teacher.id";
-                                            $department_id = $_SESSION['dept_id'];
-                                            $where = "tbl_course.department_id=$department_id";
-                                            $query = $obj->select_data($tbl_name);
-                                            $res = $obj->execute_query($conn, $query);
-                                            $count_rows = $obj->num_rows($res);
-                                            if ($count_rows > 0) {
-                                                while ($row = $obj->fetch_data($res)) {
-                                            ?>
-                                                    <tr class="gradeX">
-
-                                                        <td>
-                                                            <?php echo $row['exam_id'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['course_name'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['first_name'] . " " . $row['last_name'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['qns_per_set'] ?>
-                                                        </td>
-                                                        <td><?php
-                                                            if ($row['status'] == "created") {
-                                                                echo "<span class='badge badge-success'>" . $row['status'] . "</span>";
-                                                            } elseif ($row['status'] == "started") {
-                                                                echo "<span class='badge badge-primary'>" . $row['status'] . "</span>";
-                                                            } elseif ($row['status'] == "completed") {
-                                                                echo "<span class='badge badge-danger'>" . $row['status'] . "</span>";
-                                                            }
-                                                            ?></td>
-                                                        <td><?php echo $row['time_duration'] . " minutes"; ?></td>
-                                                        <td><?php echo $row['exam_date'] ?></td>
-                                                        <td><?php echo $row['year'] ?></td>
-                                                    </tr>
-
-
-                                            <?php }
-                                            } else
-                                                echo "no data";
-                                            ?>
-
-
-                                        </tbody> -->
+                                             </thead>
+                          
                                         <tfoot>
                                             <tr>
                                                 <th>Exam Code</th>
@@ -336,24 +289,16 @@ if (!isset($_SESSION['teacher'])) {
                 ]
 
             });
-            $(document).on('click', '.add-question',function () {
+            $(document).on('click', '.add-question', function() {
                 var id = $(this).attr('id');
-                location.href = "<?php echo SITEURL;?>teacher/index.php?page=add_question&exam_code="+id;
+                location.href = "<?php echo SITEURL; ?>teacher/index.php?page=add_question&exam_code=" + id;
+            });
+            $(document).on('click', '.view-question', function() {
+                var id = $(this).attr('id');
+                location.href = "<?php echo SITEURL; ?>teacher/index.php?page=question&exam_code=" + id;
             });
 
-
         });
-
-        // function fnClickAddRow() {
-        //   $('#editable').dataTable().fnAddData([
-        //     "Custom row",
-        //     "New row",
-        //     "New row",
-        //     "New row",
-        //     "New row"
-        //   ]);
-
-        // }
     </script>
 
 </body>

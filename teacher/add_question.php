@@ -1,18 +1,18 @@
 <!--ADDING CKEDITOR HERE-->
+<!-- <script src="<?php echo SITEURL; ?>/asset2/ckeditor5/ckeditor.js"></script> -->
 <script src="<?php echo SITEURL; ?>/assets/ckeditor/ckeditor.js"></script>
 
 <!DOCTYPE html>
 <html>
+
+
 
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher</title>
-
-    <?php // include('./includes/css3.php') 
-    ?>
+    <title>DTU Exam | Teacher | Add question</title>
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -31,6 +31,7 @@
     <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
 
@@ -50,13 +51,13 @@
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                         <form role="search" class="navbar-form-custom" action="#">
                             <div class="form-group">
-                                <input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">
+                                <input type="text" placeholder="<?php echo $_SESSION['full_name'] ?>" class="form-control" name="top-search" id="top-search">
                             </div>
                         </form>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">Welcome <?php echo $_SESSION['full_name'] ?>.</span>
+                            <span class="label label-info"> <?php echo $_SESSION['full_name'] ?></span>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
@@ -166,315 +167,361 @@
             </div>
             <div class="row wrapper border-bottom white-bg page-heading">
                 <div class="col-sm-4">
-                    <h4><span class="label label-info"><?php echo $_SESSION['dept_name'] ?></span></h4>
+                    <h4><span class="label label-info"> <?php echo $_SESSION['dept_name']; ?></span></h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="<?php echo SITEURL ?>teacher/index.php?page=dashboard">Home</a>
+                            <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
-                        <!-- <li class="breadcrumb-item active">
-                            <strong>Breadcrumb</strong>
-                        </li> -->
+
                     </ol>
                 </div>
                 <div class="col-sm-8">
                     <div class="title-action">
-                        <a href="#" class="btn btn-outline btn-rounded btn-primary">This is action area</a>
+                        <a href="#" class="btn btn-outline btn-rounded btn-primary">Check Invigilation</a>
                     </div>
                 </div>
             </div>
 
             <div class="wrapper wrapper-content">
-                <!-- <div class="middle-box text-center animated fadeInRightBig"> -->
-                <div class="report">
+                <div class=" animated fadeInRightBig">
 
-                    <form method="post" action="" class="forms" enctype="multipart/form-data">
-                        <h2>Add Question</h2>
-                        <?php
-                        if (isset($_SESSION['add'])) {
-                            echo $_SESSION['add'];
-                            unset($_SESSION['add']);
-                        }
-                        if (isset($_SESSION['invalid'])) {
-                            echo $_SESSION['invalid'];
-                            unset($_SESSION['invalid']);
-                        }
-                        if (isset($_SESSION['upload'])) {
-                            echo $_SESSION['upload'];
-                            unset($_SESSION['upload']);
-                        }
-                        ?>
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5> Add Question</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-user">
-                                        <li><a href="#" class="dropdown-item">Config option 1</a>
-                                        </li>
-                                        <li><a href="#" class="dropdown-item">Config option 2</a>
-                                        </li>
-                                    </ul>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <textarea name="question" placeholder="Add Your Question" required="true"></textarea> <br />
-                            </div>
-                        </div>
-                        <script>
-                            CKEDITOR.replace('question');
-                        </script>
 
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5> Add choices</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-user">
-                                        <li><a href="#" class="dropdown-item">Config option 1</a>
-                                        </li>
-                                        <li><a href="#" class="dropdown-item">Config option 2</a>
-                                        </li>
-                                    </ul>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    <?php
+                                    $tbl_name = "tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id";
+                                    $where = "exam_id = '" . $_GET['exam_code'] . "'";
+                                    $query = $obj->select_data($tbl_name, $where);
+                                    $res = $obj->execute_query($conn, $query);
+                                    $row = $obj->fetch_data($res);
+                                    ?>
+                                    <h5><?php echo $row['course_name'] ?></h5>
+                                    <hr>
 
-                                <div class="form-group">
-                                    <span class="name">Image</span>
-                                    <!-- <input type="file" class="form-control" name="image" /><br /> -->
-                                    <div class="custom-file">
-                                        <input id="logo" type="file" name="image" class="custom-file-input">
-                                        <label for="logo" class="custom-file-label">Choose file...</label>
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-user">
+                                            <li><a href="#" class="dropdown-item">Config option 1</a>
+                                            </li>
+                                            <li><a href="#" class="dropdown-item">Config option 2</a>
+                                            </li>
+                                        </ul>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
                                     </div>
-                                    <span class="name">First Answer</span>
-                                    <input type="text" name="first_answer" class="form-control" placeholder="First Answer" required="true" /><br />
-
-                                    <span class="name">Second Answer</span>
-                                    <input type="text" name="second_answer" class="form-control" placeholder="Second Answer" required="true" /><br />
-
-                                    <span class="name">Third Answer</span>
-                                    <input type="text" name="third_answer" class="form-control" placeholder="Third Answer" required="true" /><br />
-
-                                    <span class="name">Fourth Answer</span>
-                                    <input type="text" name="fourth_answer" class="form-control" placeholder="Fourth Answer" required="true" /><br />
-
-                                    <span class="name">Fifth Answer</span>
-                                    <input type="text" name="fifth_answer" class="form-control" placeholder="Fifth Answer" required="true" /><br />
-
-                                    <span class="name">Answer</span>
-                                    <select name="answer" class="form-control select2_answer">
-                                        <option value="1"></option>
-                                        <option value="1">First Answer</option>
-                                        <option value="2">Second Answer</option>
-                                        <option value="3">Third Answer</option>
-                                        <option value="4">Fourth Answer</option>
-                                        <option value="5">Fifth Answer</option>
-                                    </select>
-                                    <span class="name">Marks</span>
-                                    <input type="number" name="marks" class="form-control" placeholder="Marks for this question" />
-                                    <br />
                                 </div>
-                                <br />
+                                <div class="ibox-content">
+                                    <h4>
+                                        Add Question Here
+                                    </h4>
+                                    <p>
+                                        Carefully fill each fields
+                                        <br>
+                                        <small>Question Lists</small><br>
+                                    <div id="questions_list">
+                                        <?php
+                                        $tbl_name = "tbl_question";
+                                        $where = "exam_id = '" . $_GET['exam_code'] . "'";
+                                        $query = $obj->select_data($tbl_name, $where);
+                                        $res = $obj->execute_query($conn, $query);
+                                        $counter  = 0;
+                                        while ($row = $obj->fetch_data($res)) {
+                                            $counter++; ?>
+                                            <button class="btn btn-primary btn-circle btn-outline btn-sm edit-question" data-question_id="<?php echo $row['question_id'] ?>"> <?php echo $counter; ?></button>&nbsp;
+                                        <?php
+                                        }
+                                        $counter = 0;
+                                        ?>
+                                    </div>
+                                    </p>
+
+                                    <form id="choice_form" method="POST" action="#" class="wizard-big" enctype="multipart/form-data">
+                                        <h1>Question</h1>
+                                        <fieldset>
+                                            <h4>Write the Question in the editor</h4>
+
+                                            <textarea id="question" placeholder="Add Your Question" required="true"></textarea>
+                                        </fieldset>
+                                        <h1>Choices</h1>
+                                        <fieldset>
+                                            <h4>Add Multiple Choice options</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+
+                                                    <div class="form-group">
+                                                        <spans>Image</span>
+                                                            <!-- <input type="file" class="form-control" name="image" /><br /> -->
+                                                            <div class="custom-file">
+                                                                <input id="logo" type="file" name="question_image" class="custom-file-input form-control">
+                                                                <label for="logo" class="custom-file-label">Choose file...</label>
+                                                            </div>
+                                                            <span class="name">First Answer</span>
+                                                            <input type="text" name="first_answer" id="first_answer" class="form-control" placeholder="First Answer" required="true" /><br />
+
+                                                            <span class="name">Second Answer</span>
+                                                            <input type="text" name="second_answer" id="second_answer" class=" form-control" placeholder="Second Answer" required="true" /><br />
+
+                                                            <span class="name">Third Answer</span>
+                                                            <input type="text" name="third_answer" id="third_answer" class="form-control" placeholder="Third Answer" required="true" /><br />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <span class="name">Fourth Answer</span>
+                                                        <input type="text" name="fourth_answer" id="fourth_answer" class="form-control" placeholder="Fourth Answer" required="true" /><br />
+
+                                                        <span class="name">Fifth Answer</span>
+                                                        <input type="text" name="fifth_answer" id="fifth_answer" class="form-control" placeholder="Fifth Answer" /><br />
+
+
+                                                        <span class="name">Answer</span>
+                                                        <select name="answer" class="form-control select2_answer" required="true" style="width: 100%;">
+                                                            <option value=""></option>
+                                                            <option value="1">First Answer</option>
+                                                            <option value="2">Second Answer</option>
+                                                            <option value="3">Third Answer</option>
+                                                            <option value="4">Fourth Answer</option>
+                                                            <option value="5">Fifth Answer</option>
+                                                        </select>
+                                                        <span class="name">Marks</span>
+                                                        <input type="number" name="marks" class="form-control" required="true" placeholder="Marks for this question" />
+                                                        <input type="hidden" name="exam_id" id="exam_id" value="<?php echo $_GET['exam_code'] ?>" />
+                                                        <input type="hidden" name="page" value="question" />
+                                                        <input type="hidden" name="action" id="action" value="Add" />
+                                                        <br />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </fieldset>
+
+                                        <h1>Reason</h1>
+                                        <fieldset>
+
+                                            <h4>Add Description of the answer here</h4>
+                                            <textarea id="reason" placeholder="Add Your Question" required="true"></textarea>
+                                        </fieldset>
+
+                                        <h1>Finish</h1>
+                                        <fieldset>
+                                            <h4>Question</h4>
+                                            <span id="ques"></span>
+                                            <hr>
+                                            <h4>Multiple Choice Options</h4>
+                                            <div class="row">
+                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option1"></span></div>
+                                                <hr>
+                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option2"></span></div>
+                                                <hr>
+                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option3"></span></div>
+                                                <hr>
+                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option4"></span></div>
+                                                <hr>
+                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option5"></span></div>
+                                                <hr>
+                                            </div>
+
+                                            <h4>Answer Description</h4>
+                                            <span id="desc"></span>
+                                        </fieldset>
+                                    </form>
+                                </div>
                             </div>
                         </div>
 
-
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5> Answer Description</h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-user">
-                                        <li><a href="#" class="dropdown-item">Config option 1</a>
-                                        </li>
-                                        <li><a href="#" class="dropdown-item">Config option 2</a>
-                                        </li>
-                                    </ul>
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <textarea name="reason" placeholder="Reason to be the answer"></textarea>
-                            </div>
-                        </div>
-                        <script>
-                            CKEDITOR.replace('reason');
-                        </script>
-                        <br />
-
-
-
-                        <!-- <span class="name">Category</span>
-                        <select name="category">
-                            <option value="English">English</option>
-                            <option value="Math">Math</option>
-                        </select> -->
-                        <br />
-
-                        <!-- <span class="name">Faculty</span>
-                        <select name="faculty">
-                            <?php
-                            //Get Faculties from database
-                            $tbl_name = "tbl_faculty";
-                            $query = $obj->select_data($tbl_name);
-                            $res = $obj->execute_query($conn, $query);
-                            $count_rows = $obj->num_rows($res);
-                            if ($count_rows > 0) {
-                                while ($row = $obj->fetch_data($res)) {
-                                    $faculty_id = $row['faculty_id'];
-                                    $faculty_name = $row['faculty_name'];
-                            ?>
-                                    <option value="<?php echo $faculty_id; ?>"><?php echo $faculty_name; ?></option>
-                                <?php
-                                }
-                            } else {
-                                ?>
-                                <option value="0">Uncategorized</option>
-                            <?php
-                            }
-                            ?>
-
-                        </select> -->
-                        <br />
-
-                        <span class="name">Is Active?</span>
-                        <input type="radio" class="radio radio-primary" name="is_active" value="yes" /> Yes
-                        <input type="radio" class="radio radio-danger " name="is_active" value="no" /> No
-                        <br />
-
-                        <input type="submit" name="submit" value="Add Question" class="btn btn-primary btn-rounded btn-outline" style="margin-left: 15%;" />
-                        <a href="<?php echo SITEURL; ?>admin/index.php?page=questions"><button type="button" class="btn btn-danger btn-rounded btn-outline">Cancel</button></a>
-                    </form>
-
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        //echo "Clicked";
-                        //Managing Question Images
-                        if ($_FILES['image']['name'] != "") {
-                            //echo "Book Cover is Available";
-                            //Getting File Extension
-                            $ext = end(explode('.', $_FILES['image']['name']));
-                            //Checking if the file type is valid or not
-                            $valid_file = $obj->check_image_type($ext);
-                            if ($valid_file == false) {
-                                $_SESSION['invalid'] = "<div class='error'>Invalid Image type. Please use JPG or PNG or GIF file type.</div>";
-                                header('location:' . SITEURL . 'teacher/index.php?page=add_question&exam_code=' . $_GET['exam_code'] . '');
-                                die();
-                            }
-                            //Uploading if the file is valid
-                            //first changing image name
-                            $new_name = 'Beyond_Boundaries_Question_' . $obj->uniqid();
-                            $image_name = $new_name . '.' . $ext;
-                            //Adding Watermark to the image fie too
-                            $source = $_FILES['image']['tmp_name'];
-                            $destination = "../images/questions/" . $image_name;
-                            $upload = $obj->upload_file($source, $destination);
-                            if ($upload == false) {
-                                $_SESSION['upload'] = "<div class='error'>Failed to upload question image. Try again.</div>";
-                                header('location:' . SITEURL . 'admin/index.php?page=add_question');
-                                die();
-                            }
-                        } else {
-                            $image_name = "";
-                        }
-                        //Get all values from the forms
-                        $question = $obj->sanitize($conn, $_POST['question']);
-                        $first_answer = $obj->sanitize($conn, $_POST['first_answer']);
-                        $second_answer = $obj->sanitize($conn, $_POST['second_answer']);
-                        $third_answer = $obj->sanitize($conn, $_POST['third_answer']);
-                        $fourth_answer = $obj->sanitize($conn, $_POST['fourth_answer']);
-                        $fifth_answer = $obj->sanitize($conn, $_POST['fifth_answer']);
-
-                        // $faculty = $obj->sanitize($conn, $_POST['faculty']);
-                        if (isset($_POST['is_active'])) {
-                            $is_active = $_POST['is_active'];
-                        } else {
-                            $is_active = 'yes';
-                        }
-                        $answer = $obj->sanitize($conn, $_POST['answer']);
-                        $reason = $obj->sanitize($conn, $_POST['reason']);
-                        $exam_code = $_GET['exam_code'];
-                        $marks = $obj->sanitize($conn, $_POST['marks']);
-                        // $category = $obj->sanitize($conn, $_POST['category']);
-                        $added_date = date('Y-m-d');
-
-                        $tbl_name = 'tbl_question';
-                        $data = "question='$question',
-                                    first_answer='$first_answer',
-                                    second_answer='$second_answer',
-                                    third_answer='$third_answer',
-                                    fourth_answer='$fourth_answer',
-                                    fifth_answer='$fifth_answer',
-                                    answer='$answer',
-                                    reason='$reason',
-                                    exam_code='$exam_code',
-                                    marks='$marks',
-                                    is_active='$is_active',
-                                    added_date='$added_date',
-                                    updated_date='',
-                                    image_name='$image_name'
-                                    ";
-                        $query = $obj->insert_data($tbl_name, $data);
-                        $res = $obj->execute_query($conn, $query);
-                        if ($res === true) {
-                            $_SESSION['add'] = "<div class='success'>Question successfully added.</div>";
-                            header('location:' . SITEURL . 'teacher/index.php?page=questions');
-                        } else {
-                            $_SESSION['add'] = "<div class='error'>Failed to add question. Try again.</div>";
-                            header('location:' . SITEURL . 'teacher/index.php?page=add_question');
-                        }
-                    }
-                    ?>
+                    </div>
                 </div>
-                <!-- </div> -->
+
             </div>
+            <div class="footer">
+                <div class="float-right">
+                    Home
+                </div>
+                <div>
+                    <strong>Copyright</strong> DTU &copy; <?php echo date("Y") ?>
+                </div>
+            </div>
+
         </div>
-
-
-    </div>
     </div>
 
     <?php include("includes/scripts3.php") ?>
+    <!-- Steps -->
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/steps/jquery.steps.js"></script>
+
+    <!-- Jquery Validate -->
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/validate/jquery.validate.min.js"></script>
 </body>
+
+<style>
+    .wizard>.content>.body {
+        float: left;
+        width: 97%;
+        /* height: auto; */
+
+    }
+
+    .wizard>.content {
+        /* background: #eee;s */
+        display: block;
+        margin: 0.5em;
+
+        /*min-height: 35em;*/
+
+        overflow: hidden;
+        position: relative;
+        /* width: 100%; */
+        border-radius: 5px;
+    }
+
+    fieldset {
+        min-width: 0;
+        padding: 0;
+        margin: 10px;
+        margin-bottom: 30px;
+        border: 0;
+    }
+</style>
 <script>
     $(document).ready(function() {
+        $("#choice_form").steps({
+            bodyTag: "fieldset",
+            onStepChanging: function(event, currentIndex, newIndex) {
+                // Always allow going backward even if the current step contains invalid fields!
+                if (currentIndex > newIndex) {
+                    return true;
+                }
+
+                // Forbid suppressing "Warning" step if the user is to young
+                if (newIndex === 3 && Number($("#age").val()) < 18) {
+                    return false;
+                }
+
+                var form = $(this);
+
+                // Clean up if user went backward before
+                if (currentIndex < newIndex) {
+                    // To remove error styles
+                    $(".body:eq(" + newIndex + ") label.error", form).remove();
+                    $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                }
+
+                // Disable validation on fields that are disabled or hidden.
+                form.validate().settings.ignore = ":disabled,:hidden";
+
+                // Start validation; Prevent going forward if false
+                return form.valid();
+            },
+            onStepChanged: function(event, currentIndex, priorIndex) {
+                // Suppress (skip) "Warning" step if the user is old enough.
+                if (currentIndex === 2 && Number($("#age").val()) >= 18) {
+                    $(this).steps("next");
+                }
+                if (currentIndex == 3) {
+                    document.getElementById("option1").innerHTML = $('#first_answer').val();
+                    document.getElementById("option2").innerHTML = $('#second_answer').val();
+                    document.getElementById("option3").innerHTML = $('#third_answer').val();
+                    document.getElementById("option4").innerHTML = $('#fourth_answer').val();
+                    document.getElementById("option5").innerHTML = $('#fifth_answer').val();
+                    document.getElementById("ques").innerHTML = CKEDITOR.instances['question'].getData();
+                    document.getElementById("desc").innerHTML = CKEDITOR.instances['reason'].getData()
+                }
+
+                // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                if (currentIndex === 2 && priorIndex === 3) {
+                    $(this).steps("previous");
+                }
+
+            },
+            onFinishing: function(event, currentIndex) {
+                var form = $(this);
+                form.validate().settings.ignore = ":disabled";
+
+                // Start validation; Prevent form submission if false
+                return form.valid();
+            },
+            onFinished: function(event, currentIndex) {
+                var form = $(this);
+
+                // Submit form input send ajax
+                // form.submit();
+                var data = new FormData(this);
+                data.append('question', CKEDITOR.instances['question'].getData());
+                data.append('reason', CKEDITOR.instances['reason'].getData());
+
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                    data: data,
+                    type: 'POST',
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    beforeSend: function() {},
+                    complete: function(response, status) {
+                        if (status != "error" && status != "timeout") {
+                            // update the question lists here.
+                            $('#questions_list').html(response.responseText);
+                            // alert("questions list updated");
+                        }
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            }
+        }).validate({
+            errorPlacement: function(error, element) {
+                element.before(error);
+            },
+            rules: {
+                confirm: {
+                    equalTo: "#password"
+                }
+            }
+        });
+        $(".select2_answer").select2({
+            theme: 'bootstrap4',
+            placeholder: "Select a right Answer",
+            allowClear: true,
+        });
 
         $('.custom-file-input').on('change', function() {
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
-        $('.select2_answer').select2({
-            theme: 'bootstrap4',
-            placeholder: "Select an answer",
-            allowClear: true
+        $(document).on('click', '.edit_question', function() {
+            var question_id = $(this).data('question_id');
+            //send an ajax request to bring all the question details and place them in the question area.
         });
+        // $.ajax({
+        //     url:"<?php echo SITEURL ?>teacher/ajax_teacher.php";
+        //     data: {page:"question",action:"edit_fetch"},
+        //     type: "POST",
+        //     contentType:false,
+        //     cache: false,
+        // });
+
+        CKEDITOR.replace('question');
+        CKEDITOR.replace('reason');
+
+        // ClassicEditor
+        //     .create(document.querySelector('#question'))
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
+
     });
 </script>
 
-
 </html>
-
-<!--Body Ends Here-->

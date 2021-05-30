@@ -1,5 +1,6 @@
 <?php
 include('check.php');
+// include_once('config/apply.php');
 ?>
 <!--Body Starts Here-->
 <div class="main">

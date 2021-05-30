@@ -1,3 +1,7 @@
+<?php
+// include_once('../config/apply.php');
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher Login </title>
+    <title>DTU Exam | Teacher | Login </title>
 
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -30,7 +34,7 @@
             <ul class="nav navbar-nav mr-auto">
 
                 <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle bg-primary text-white" data-toggle="dropdown"> Login</a>
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle text-white bg-primary" data-toggle="dropdown"> Login</a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="<?php echo SITEURL; ?>admin/index.php?page=login">Admin</a></li>
                         <li><a href="<?php echo SITEURL; ?>faculty/index.php?page=login">Faculty</a></li>
@@ -55,7 +59,7 @@
         <div class="row">
 
             <div class="col-md-6">
-                <h2 class="font-bold">Teacher</h2>
+                <h2 class="font-bold">Student</h2>
 
                 <p>
                     Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
@@ -87,7 +91,7 @@
                         </div>
                         <!-- <center><input type="submit" name="submit" value="Log In" class="btn btn-lg btn-primary btn-rounded btn-outline " /></center> -->
                         <div class="form-group">
-                            <input type="hidden" name="page" value="teacher" />
+                            <input type="hidden" name="page" value="student" />
                             <input type="hidden" name="action" value="login" />
                             <input type="submit" name="submit" value="Sign In" id="teacher_login" class="btn btn-lg btn-primary btn-rounded btn-outline " />
                         </div>
@@ -163,7 +167,7 @@
             $('#password').attr('required', 'required');
             if ($('#teacher_login_form').parsley().validate()) {
                 $.ajax({
-                    url: "ajax_teacher.php",
+                    url: "<?php echo SITEURL ?>student/ajax_student.php",
                     method: "POST",
                     data: $(this).serialize(),
                     dataType: "json",
@@ -173,7 +177,7 @@
                     },
                     success: function(data) {
                         if (data.success) {
-                            location.href = "<?php echo SITEURL ?>teacher/index.php?page=dashboard";
+                            location.href = "<?php echo SITEURL ?>student/index.php?page=welcome";
                         } else {
                             $('#message').html('<div class="alert alert-danger">' + data.error + '</div>');
                         }

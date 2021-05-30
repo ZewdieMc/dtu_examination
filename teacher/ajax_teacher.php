@@ -253,6 +253,7 @@ if ($_POST['action'] == 'fetch') {
             $where .= 'OR course_name LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= 'OR first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR exam_date LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= 'OR year LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= ")";
         }

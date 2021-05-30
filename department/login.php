@@ -30,7 +30,7 @@
             <ul class="nav navbar-nav mr-auto">
 
                 <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <font color="aqua">Login</font></a>
+                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle text-white bg-primary" data-toggle="dropdown"> Login</a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="<?php echo SITEURL; ?>admin/index.php?page=login">Admin</a></li>
                         <li><a href="<?php echo SITEURL; ?>faculty/index.php?page=login">Faculty</a></li>
@@ -43,7 +43,7 @@
             </ul>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a href="http://www.dtu.edu.et" target="blank">
+                    <a class = "text-white bg-primary"href="http://www.dtu.edu.et" target="blank">
                         <i class="fa fa-sign-out active"></i> Univeristy website
                     </a>
                 </li>

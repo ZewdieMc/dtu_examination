@@ -12,31 +12,37 @@
 
     <?php //include('./includes/css3.php') 
     ?>
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/dataTables/datatables.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet"> -->
+    <!-- <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet"> -->
+
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
-
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
 </head>
 
@@ -195,7 +201,13 @@
                             <div class="card ">
                                 <div class="card-header ">Question</div>
                                 <div class="card-body">
-                                    <div id="single_question_area"></div>
+                                    <div id="single_question_area">
+
+                                    </div>
+                                    <!-- <div id="wfsfsfs">
+
+                                    </div> -->
+
                                 </div>
                             </div>
                             <br />
@@ -220,19 +232,37 @@
             </div>
         </div>
 
-        <?php include("includes/scripts3.php") ?>
+        <!-- <?php //include("includes/scripts3.php") 
+                ?> -->
         <!-- <script src="<?php echo SITEURL ?>asset2/js/jquery.min.js"></script> -->
+        <script src="<?php echo SITEURL ?>asset2/js/jquery-3.1.1.min.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/popper.min.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/bootstrap.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="<?php echo SITEURL ?>asset2/js/inspinia.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/plugins/pace/pace.min.js"></script>
+
+        <!-- iCheck -->
+        <script src="<?php echo SITEURL ?>asset2/js/plugins/iCheck/icheck.min.js"></script>
+        <script src="<?php echo SITEURL ?>asset2/js/plugins/sweetalert/sweetalert.min.js"></script>
+
 
 </body>
 
 <script>
     $(document).ready(function() {
+
         $("body").tooltip({
             selector: '[data-toggle=tooltip]'
         });
+
         var exam_id = "<?php echo $_GET['exam_code']; ?>";
         question_navigation();
         load_question();
+
 
         function load_question(question_id = '') {
             $.ajax({
@@ -247,14 +277,22 @@
                 },
                 success: function(data) {
                     var res = JSON.parse(data);
-                    var prev = question_id-1;
-                    $('#single_question_area').html(res.question);
+                    var prev = question_id - 1;
+                    if (res.question_id != "") {
+                        $('#single_question_area').html(res.question);
+                    } else {
+                        $('#single_question_area').html("<font color='red'><b>No Question exists for this examination.</b></font>");
+                    }
                     $('#prev_next').html(res.nav);
                     $('#question_navigation_area .btn').removeClass("active");
                     $('#question_navigation_area #' + res.question_id).addClass("active");
+                    $('#single_question_area').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green',
+                    });
                 },
                 error: function(response) {
-                    $('#single_question_area').html("response.responseText");
+                    $('#single_question_area').html(response.responseText);
                 }
             })
         }
@@ -348,6 +386,7 @@
         $(document).on('click', '#ajax_button', function() {
             load_question();
             question_navigation();
+
         });
         $(document).on('click', '.question_navigation', function() {
             var question_id = $(this).data('question_id');

@@ -33,6 +33,7 @@
     <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/TimeCircles.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
 
@@ -191,7 +192,31 @@
                 <div class="animated fadeInRightBig">
                     <div class="row">
                         <div class="col-lg-12">
-                           <!-- add home content here. -->
+                            <!-- add home content here. -->
+                            <?php
+                            date_default_timezone_set('Africa/Nairobi');
+
+                            $tbl_name = "tbl_exam";
+                            $where = 'exam_id = 1';
+                            $query = $obj->select_data($tbl_name, $where);
+                            $res = $obj->execute_query($conn, $query);
+                            if ($res) {
+                                $row = $obj->fetch_data($res);
+                                $exam_star_time  = $row['exam_date'];
+                                $duration = $row['time_duration'] . ' minute';
+                                $exam_end_time = strtotime($exam_star_time . '+' . $duration);
+
+                                $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
+                                $remaining_minutes = strtotime($exam_end_time) - time();
+                            }
+                            ?>
+                            <div><?php echo $duration; ?></div>
+                            <div><?php echo $exam_star_time; ?></div>
+                            <div><?php echo $exam_end_time; ?></div>
+                            <div><?php echo $remaining_minutes; ?></div>
+                            <div><?php echo $duration * 60; ?></div>
+                            <div></div>
+                            <div id="exam_timer" data-timer="<?php echo $duration * 60 ?>" style="max-width:400px; width: 50%; height: 100px;"></div>
                         </div>
                     </div>
                 </div>
@@ -211,8 +236,43 @@
 
     <?php include("includes/scripts3.php") ?>
     <script src="<?php echo SITEURL ?>asset2/js/bootstrap-datetimepicker.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/TimeCircles.js"></script>
 
 </body>
+<script>
+    $(document).ready(function nme() {
 
+        $("#exam_timer").TimeCircles({
+            time: {
+                Days: {
+                    show: false,
+                    color: "#1AB394"
+                },
+                Hours: {
+                    show: true,
+                    color: "#1AB394"
+                },
+                Minutes: {
+                    color: "#1AB394"
+                },
+                Seconds: {
+                    color: "#1AB394"
+                }
+            },
+
+            circle_bg_color: "#FFF",
+            use_background: false
+
+        });
+
+        setInterval(function() {
+            var remaining_second = $("#exam_timer").TimeCircles().getTime();
+            if (remaining_second < 1) {
+                alert('Exam time over');
+                // location.reload();
+            }
+        }, 1000);
+    });
+</script>
 
 </html>

@@ -2,6 +2,7 @@
 #global variables
 // session_destroy();
 #echo $_SESSION['sn'];
+date_default_timezone_set('Africa/Nairobi');
 
 if (!isset($_SESSION['prev_disabled'])) {
     $_SESSION['prev_disabled'] = "disabled";
@@ -64,7 +65,8 @@ if (!isset($_SESSION['next'])) {
     ?>
 
     <div class="row  bd-callout bd-callout-info" style="margin-top: 10px">
-        Examinee: <span class="heavy"><?php echo $full_name;$_SESSION['exam'] ?></span>&nbsp;&nbsp;
+        Examinee: <span class="heavy"><?php echo $full_name;
+                                        $_SESSION['exam'] ?></span>&nbsp;&nbsp;
         Course: <span class="heavy"><?php echo $course_name; ?></span>&nbsp;&nbsp;
         Start Time: <span class="heavy"><?php echo $_SESSION['strt_time']; ?></span>&nbsp;&nbsp;
         End Time: <span class="heavy"><?php echo $_SESSION['end_time']; ?></span>&nbsp;&nbsp;
@@ -156,7 +158,7 @@ if (!isset($_SESSION['next'])) {
             <div class="col"><button id="prev" <?php echo $_SESSION['prev_disabled']; ?> name="previous" class="btn btn-lg btn-success btn-rounded" formnovalidate>&laquo; Previous</button></div>
             <div class="col"><button <?php echo $_SESSION['next_disabled']; ?> name="next" class="btn btn-lg btn-success btn-rounded">&nbsp;&nbsp;&nbsp;&nbsp;Next&nbsp; &raquo; </button></div>
             <div class="col">
-                <a href="<?php echo SITEURL; ?>index.php?page=logout">
+                <a href="<?php echo SITEURL; ?>student/index.php?page=logout">
                     <button type="button" class="btn btn-lg btn-danger" onclick="return confirm('Are you sure you want to Quit?')">&nbsp; Quit &nbsp;</button>
                 </a>
             </div>

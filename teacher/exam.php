@@ -198,6 +198,7 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Exam Date</th>
                                                 <th>Study Year</th>
                                                 <th>Question</th>
+                                                <th></th>
                                             </tr>
                                              </thead>
                           
@@ -212,7 +213,7 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Total Date</th>
                                                 <th>Study Year</th>
                                                 <th>Question</th>
-
+                                                <th></th>
                                             </tr>
                                         </tfoot>
                                     </table>

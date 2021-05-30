@@ -9,9 +9,9 @@ if (isset($_REQUEST['id']) && $_REQUEST['direction']) {
 $tbl_name = "tbl_question";
 if ($direction == 'Next') {
     #save answer to database.
-    $where = "is_active='yes' && category='Math' && question_id >" . $id . " order by question_id asc";
+    $where = "is_active='yes' && question_id >" . $id . " order by question_id asc";
 } elseif ($direction == 'Previous') {
-    $where = "is_active='yes' && category='Math' && question_id <" . $id . " order by question_id desc";
+    $where = "is_active='yes'  && question_id <" . $id . " order by question_id desc";
 }
 $limit = 1;
 $query =  $obj->select_random_row($tbl_name, $where, $limit);

@@ -158,7 +158,7 @@ if ($_POST['action'] == 'Add') {
             $counter  = 0;
             while ($row = $obj->fetch_data($res)) {
                 $counter++;
-                $output .= '<button class="btn btn-primary btn-circle btn-outline btn-sm edit-question" data-question_id = "'.$row['question_id'].'">'.$counter.'</button>&nbsp;';
+                $output .= '<button class="btn btn-primary btn-circle btn-outline btn-sm edit-question" data-question_id = "' . $row['question_id'] . '">' . $counter . '</button>&nbsp;';
             }
             $counter = 0;
         } else {
@@ -173,11 +173,11 @@ if ($_POST['action'] == 'update') {
 }
 // delete
 if ($_POST['action'] == 'delete') {
-    if ($_POST['page']=='question') {
+    if ($_POST['page'] == 'question') {
         $tbl_name = "tbl_question";
-        $where = "question_id = '".$_POST['question_id']."' and exam_id = '".$_POST['exam_id']."'";
-        $query = $obj->delete_data($tbl_name,$where);
-        $res = $obj->execute_query($conn,$query);
+        $where = "question_id = '" . $_POST['question_id'] . "' and exam_id = '" . $_POST['exam_id'] . "'";
+        $query = $obj->delete_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
         if ($res) {
             $response['status'] = 'success';
             $response['message'] = 'Entity deleted successfully';
@@ -185,8 +185,7 @@ if ($_POST['action'] == 'delete') {
             $response['status'] = "error";
             $response['message'] = "unable to delete the Entity";
         }
-                echo json_encode($response);
-
+        echo json_encode($response);
     }
 }
 
@@ -295,6 +294,7 @@ if ($_POST['action'] == 'fetch') {
             } else {
                 $sub_array[] .= '<button type="button" class="btn btn-danger  btn-circle view-question" data-toggle="tooltip" data-placement="top" title="Click to view Questions" id="' . $row['exam_id'] . '"><i class="fa fa-eye "> </i></button>';
             }
+            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>';
 
             $data[] = $sub_array;
         }
@@ -322,55 +322,47 @@ if ($_POST['action'] == 'fetch') {
         }
         $query  = $obj->select_data($tbl_name, $where, $other);
         $res = $obj->execute_query($conn, $query);
-
-
         $output = '';
         $prev_next = '';
+        $var = '';
         while ($row = $obj->fetch_data($res)) {
             $output .= ' <h4>' . $row["question"] . '(<font color = "green">' . $row['marks'] . ' marks</font>)
             <a class="delete_question" id="' . $row['question_id'] . '"><i class="fa fa-trash fa-lg "data-toggle="tooltip" data-placement="top"  title="Click to delete the question" style="color:red"></i></a>
             </h4>
 				<hr />
 				<br />';
-                if ($row['image_name']!="") {
-                    $output .= '<img src="'.SITEURL.'images/questions/'.$row['image_name']. '" class="rounded" alt="Supplementary Image" height="100%" width = "100%"/><hr>';
-                }
-				$output .= '<div class="row">';
+            if ($row['image_name'] != "") {
+                $output .= '<img src="' . SITEURL . 'images/questions/' . $row['image_name'] . '" class="rounded" alt="Supplementary Image" height="100%" width = "100%"/><hr>';
+            }
+            $output .= '<div class="row">';
 
-            $output .= '
-                        <div class="col-md-6" style="margin-bottom:32px;">
-                            <div class="radio">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" data-id="1"/>&nbsp;' . $row["first_answer"] . '</h4></label>
+            $output .= '<div class="col-md-6" >
+                            <div class="i-checks">
+                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required = "true"/>&nbsp;' . $row["first_answer"] . '</h4></label>
                             </div>
                         </div>';
-            $output .= '
-                        <div class="col-md-6" style="margin-bottom:32px;">
-                            <div class="radio">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" data-id="1"/>&nbsp;' . $row["second_answer"] . '</h4></label>
+            $output .= '<div class="col-md-6">
+                            <div class="i-checks">
+                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["second_answer"] . '</h4></label>
                             </div>
                         </div>';
-            $output .= '
-                        <div class="col-md-6" style="margin-bottom:32px;">
-                            <div class="radio">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" data-id="1"/>&nbsp;' . $row["third_answer"] . '</h4></label>
+            $output .= '<div class="col-md-6">
+                            <div class="i-checks">
+                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true" />&nbsp;' . $row["third_answer"] . '</h4></label>
                             </div>
                         </div>';
-            $output .= '
-                        <div class="col-md-6" style="margin-bottom:32px;">
-                            <div class="radio">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" data-id="1"/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
+            $output .= '<div class="col-md-6">
+                            <div class="i-checks">
+                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true"/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
                             </div>
                         </div>';
-            $output .= '
-                        <div class="col-md-6" style="margin-bottom:32px;">
-                            <div class="radio">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" data-id="1"/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
+            $output .= '<div class="col-md-6">
+                            <div class="i-checks">
+                                <label ><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
                             </div>
                         </div>';
 
-            $output .= '
-				</div>
-				';
+            $output .= '</div>';
             $tbl_name = "tbl_question";
             $where = "
 				question_id < '" . $row['question_id'] . "' 
@@ -406,20 +398,21 @@ if ($_POST['action'] == 'fetch') {
             }
 
             $prev_next = '
-					<br /><br />
+					<br />
 				  	<div align="center">
 				   		<button type="button" name="previous" class="btn btn-sm btn-primary btn-outline btn-rounded btn-lg previous" id="' . $previous_id . '" ' . $if_previous_disable . '>Previous</button>
 				   		<button type="button" name="next" class="btn btn-primary btn-sm btn-lg btn-outline btn-rounded next" id="' . $next_id . '" ' . $if_next_disable . '>Next</button>
 				  	</div>
-				  	<br /><br />';
-                      $output .= $prev_next;
-                      $var = $row['question_id'];
+				  	<br />';
+            $output .= $prev_next;
+            $var = $row['question_id'];
         }
         $data = array(
-            "question" =>$output,
+            "question" => $output,
             "nav" => $prev_next,
-            "question_id"=>$var
+            "question_id" => $var
         );
+
 
         echo json_encode($data);
     }
@@ -441,14 +434,21 @@ if ($_POST['action'] == 'fetch') {
 			';
         $count = 1;
         while ($row = $obj->fetch_data($res)) {
-            $output .= '
-				<div class="col-sm-2" style="margin-bottom:10px;">
-					<button type="button" class="btn btn-primary btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
-				</div>
-				';
-            $count++;
+            if ($row['question_id']) {
+                $output .= '
+                    <div class="col-sm-2" style="margin-bottom:10px;">
+                        <button type="button" class="btn btn-primary btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
+                    </div>
+                    ';
+                $count++;
+            } else {
+                break;
+            }
         }
-        $output .= '
+        if ($count == 1)
+            $output = '';
+        else
+            $output .= '
 				</div>
 			</div></div>
 			';
@@ -457,7 +457,7 @@ if ($_POST['action'] == 'fetch') {
 }
 // edit_fetch
 if ($_POST['action'] == 'edit_fetch') {
-    if ($_POST['page']='question') {
+    if ($_POST['page'] = 'question') {
         # code...
     }
 }

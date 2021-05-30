@@ -10,7 +10,14 @@
 
     <title>INSPINIA | Empty Page</title>
 
-    <?php include('./includes/css3.php') ?>
+    <!-- <?php include('./includes/css3.php') ?> -->
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
 
 
 </head>
@@ -401,8 +408,16 @@
                 <div class="middle-box text-center animated fadeInRightBig">
                     <h3 class="font-bold">This is page content</h3>
                     <div class="error-desc">
-                        You can create here any grid layout you want. And any variation layout you imagine:) Check out
-                        main dashboard and other site. It use many different layout.
+                        <div class="col-sm-10">
+                            <div class="i-checks"><label> <input type="checkbox" value=""> <i></i> Option one </label></div>
+                            <div class="i-checks"><label> <input type="checkbox" value="" checked=""> <i></i> Option two checked </label></div>
+                            <div class="i-checks"><label> <input type="checkbox" value="" disabled="" checked=""> <i></i> Option three checked and disabled </label></div>
+                            <div class="i-checks"><label> <input type="checkbox" value="" disabled=""> <i></i> Option four disabled </label></div>
+                            <div class="i-checks"><label> <input type="radio" value="option1" name="a"> <i></i> Option one </label></div>
+                            <div class="i-checks"><label> <input type="radio" checked="" value="option2" name="a"> <i></i> Option two checked </label></div>
+                            <div class="i-checks"><label> <input type="radio" disabled="" checked="" value="option2"> <i></i> Option three checked and disabled </label></div>
+                            <div class="i-checks"><label> <input type="radio" disabled="" name="a"> <i></i> Option four disabled </label></div>
+                        </div>
                         <br /><a href="index-2.html" class="btn btn-primary m-t">Dashboard</a>
                     </div>
                 </div>
@@ -419,10 +434,29 @@
         </div>
     </div>
 
-    <?php include("includes/scripts3.php") ?>
+    <!-- <?php include("includes/scripts3.php") ?> -->
+    <!-- Mainly scripts -->
+    <script src="<?php echo SITEURL ?>asset2/js/jquery-3.1.1.min.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/popper.min.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/bootstrap.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="<?php echo SITEURL ?>asset2/js/inspinia.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/pace/pace.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="<?php echo SITEURL ?>asset2/js/plugins/iCheck/icheck.min.js"></script>
 </body>
+<script>
+    $().ready(function() {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    });
+</script>
 
-
-<!-- Mirrored from webapplayers.com/inspinia_admin-v2.9.4/empty_page.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 27 Apr 2021 11:44:36 GMT -->
 
 </html>

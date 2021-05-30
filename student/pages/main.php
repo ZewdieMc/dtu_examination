@@ -55,7 +55,7 @@ switch ($page) {
                 $res3 = $obj->execute_query($conn, $query3);
                 if ($res3 === true) {
                     session_destroy();
-                    header('location:' . SITEURL . 'index.php?page=login');
+                    header('location:' . SITEURL . 'student/index.php?page=login');
                 } else {
                     echo "Error";
                 }

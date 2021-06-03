@@ -12,7 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher | Login </title>
+    <title>DTU Exam | Student | Login </title>
 
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -101,35 +101,7 @@
                         </a>
                     </form>
 
-                    <!-- <?php
-                            if (isset($_POST['submit'])) {
-                                //echo "Clicked";
-                                $username = $obj->sanitize($conn, $_POST['username']);
-                                // $password_db = md5($obj->sanitize($conn, $_POST['password']));
-                                $password_db = $obj->sanitize($conn, $_POST['password']);
 
-                                if (($username == "") or ($password = "")) {
-                                    $_SESSION['validation'] = "<div class='alert alert-danger'>Username or Password is Empty</div>";
-                                    header('location:' . SITEURL . 'teacher/index.php?page=login');
-                                }
-                                $tbl_name = "tbl_teacher";
-                                $where = "username='$username' AND password='$password_db'";
-                                $query = $obj->select_data($tbl_name, $where);
-                                $res = $obj->execute_query($conn, $query);
-                                $row = $obj->fetch_data($res);
-                                $count_rows = $obj->num_rows($res);
-                                if ($count_rows == 1) {
-                                    $_SESSION['user'] = $username;
-                                    $_SESSION['teacher_id'] = $row['id'];
-                                    $_SESSION['dept_id'] = $row['department_id'];
-                                    $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
-                                    header('location:' . SITEURL . 'teacher/index.php?page=dashboard');
-                                } else {
-                                    $_SESSION['fail'] = "<div class='alert alert-danger'>Username or Password is invalid. Please try again.</div>";
-                                    header('location:' . SITEURL . 'teacher/index.php?page=login');
-                                }
-                            }
-                            ?> -->
                 </div>
             </div>
         </div>

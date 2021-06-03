@@ -11,6 +11,10 @@
     <title>DTU Exam | Teacher | Questions</title>
 
     <?php //include('./includes/css3.php') 
+    if (!isset($_SESSION['teacher'])) {
+        header('location:' . SITEURL . 'teacher/index.php?page=login');
+    }
+
     ?>
     <!-- <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">

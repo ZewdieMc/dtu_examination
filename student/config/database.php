@@ -51,6 +51,7 @@
             $query="UPDATE $tbl_name SET $data WHERE $where";
             return $query;
         }
+
         public function delete_data($tbl_name,$where)
         {
             $query="DELETE FROM $tbl_name WHERE $where";

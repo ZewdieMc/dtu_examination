@@ -1,50 +1,19 @@
 <!DOCTYPE html>
 <html>
-
-
-
 <head>
-
+    <link rel="shortcut icon" HREF="<?php SITEURL?>images/logo.jpg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher</title>
-
-    <?php //include('./includes/css3.php') 
-    ?>
-    <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/TimeCircles.css" rel="stylesheet">
-    <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
-
-
+    <title>DTU Exam | Student | Exams</title>
+    <?php include('./includes/css3.php') ?>
 </head>
 
 <body class="md-skin pace-done">
 
     <div id="wrapper">
-        <?php include('sidenav.php'); ?>
 
+        <?php include('sidenav.php'); ?>
 
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
@@ -159,7 +128,7 @@
 
 
                         <li>
-                            <a href="<?php echo SITEURL ?>teacher/index.php?page=logout">
+                            <a href="<?php echo SITEURL ?>student/index.php?page=logout">
                                 <i class="fa fa-sign-out"></i> Log out
                             </a>
                         </li>
@@ -173,10 +142,10 @@
                     <h4><span class="label label-info"><?php echo $_SESSION['dept_name'] ?></span></h4>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
+                            <a href="<?php echo SITEURL; ?>student/index.php?page=dashboard">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Courses
+                            Exams
                         </li>
 
                     </ol>
@@ -187,92 +156,144 @@
                     </div>
                 </div>
             </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
 
-            <div class="wrapper wrapper-content">
-                <div class="animated fadeInRightBig">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <!-- add home content here. -->
-                            <?php
-                            // date_default_timezone_set('Africa/Nairobi');
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
 
-                            $tbl_name = "tbl_exam";
-                            $where = 'exam_id = 1';
-                            $query = $obj->select_data($tbl_name, $where);
-                            $res = $obj->execute_query($conn, $query);
-                            if ($res) {
-                                $row = $obj->fetch_data($res);
-                                $exam_star_time  = $row['exam_date'];
-                                $duration = $row['time_duration'] . ' minute';
-                                $exam_end_time = strtotime($exam_star_time . '+' . $duration);
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
 
-                                $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
-                                $remaining_minutes = strtotime($exam_end_time) - time();
-                            }
-                            ?>
-                            <div><?php echo $duration; ?></div>
-                            <div><?php echo $exam_star_time; ?></div>
-                            <div><?php echo $exam_end_time; ?></div>
-                            <div><?php echo $remaining_minutes; ?></div>
-                            <div><?php echo $duration * 60; ?></div>
-                            <div></div>
-                            <div id="exam_timer" data-timer="<?php echo $duration * 60 ?>" style="max-width:400px; width: 50%; height: 100px;"></div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th>Exam Code</th> -->
+                                                <th>Course Name</th>
+                                                <!-- <th>Invigilator</th> -->
+                                                <th>Total Questions</th>
+                                                <th>Status</th>
+                                                <th>Total Time</th>
+                                                <th>Exam Date</th>
+                                                <th>Study Year</th>
+                                                <th>Result</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tfoot>
+                                            <tr>
+                                                <!-- <th>Exam Code</th> -->
+                                                <th>Course Name</th>
+                                                <!-- <th>Invigilator</th> -->
+                                                <th>Total Questions</th>
+                                                <th>Status</th>
+                                                <th>Total Time</th>
+                                                <th>Exam Date</th>
+                                                <th>Study Year</th>
+                                                <th>Result</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </div>
+
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="footer">
-                <div class="float-right">
-                    Home
-                </div>
-                <div>
-                    <strong>Copyright</strong> DTU &copy; <?php echo date("Y") ?>
-                </div>
-            </div>
-
         </div>
+
+
     </div>
 
-    <?php include("includes/scripts3.php") ?>
-    <script src="<?php echo SITEURL ?>asset2/js/bootstrap-datetimepicker.js"></script>
-    <script src="<?php echo SITEURL ?>asset2/js/TimeCircles.js"></script>
 
-</body>
-<script>
-    $(document).ready(function nme() {
+    <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
 
-        $("#exam_timer").TimeCircles({
-            time: {
-                Days: {
-                    show: false,
-                    color: "#1AB394"
-                },
-                Hours: {
-                    show: true,
-                    color: "#1AB394"
-                },
-                Minutes: {
-                    color: "#1AB394"
-                },
-                Seconds: {
-                    color: "#1AB394"
-                }
-            },
+    </div>
+    <?php include("./includes/scripts3.php") ?>
 
-            circle_bg_color: "#FFF",
-            use_background: false
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
+        $(document).ready(function() {
+            // $('[data-toggle="tooltip"]').tooltip();
+            $("body").tooltip({
+                selector: '[data-toggle=tooltip]'
+            });
+
+            $('.dataTables-example').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                responsive: true,
+                "ajax": {
+                    url: "<?php echo SITEURL; ?>student/ajax_student.php",
+                    type: "POST",
+                    data: {
+                        action: 'fetch',
+                        page: 'exam'
+                    }
+                },
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [{
+                        extend: 'copy'
+                    },
+                    {
+                        extend: 'csv'
+                    },
+                    {
+                        extend: 'excel',
+                        title: 'ExampleFile'
+                    },
+                    {
+                        extend: 'pdf',
+                        title: 'ExampleFile'
+                    },
+
+                    {
+                        extend: 'print',
+                        customize: function(win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                .addClass('compact')
+                                .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });
+            // $(document).on('click', '.add-question', function() {
+            //     var id = $(this).attr('id');
+            //     location.href = "<?php echo SITEURL; ?>teacher/index.php?page=add_question&exam_code=" + id;
+            // });
+            // $(document).on('click', '.view-question', function() {
+            //     var id = $(this).attr('id');
+            //     location.href = "<?php echo SITEURL; ?>teacher/index.php?page=question&exam_code=" + id;
+            // });
 
         });
+    </script>
 
-        setInterval(function() {
-            var remaining_second = $("#exam_timer").TimeCircles().getTime();
-            if (remaining_second < 1) {
-                alert('Exam time over');
-                // location.reload();
-            }
-        }, 1000);
-    });
-</script>
+</body>
 
 </html>

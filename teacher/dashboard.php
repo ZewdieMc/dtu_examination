@@ -11,6 +11,9 @@
     <title>DTU Exam | Teacher</title>
 
     <?php //include('./includes/css3.php') 
+    if (!isset($_SESSION['teacher'])) {
+        header('location:' . SITEURL . 'teacher/index.php?page=login');
+    }
     ?>
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -175,9 +178,7 @@
                         <li class="breadcrumb-item">
                             <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">
-                            Courses
-                        </li>
+
 
                     </ol>
                 </div>
@@ -190,34 +191,8 @@
 
             <div class="wrapper wrapper-content">
                 <div class="animated fadeInRightBig">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <!-- add home content here. -->
-                            <?php
-                            // date_default_timezone_set('Africa/Nairobi');
+                    <div id="courses_list" class="row">
 
-                            $tbl_name = "tbl_exam";
-                            $where = 'exam_id = 1';
-                            $query = $obj->select_data($tbl_name, $where);
-                            $res = $obj->execute_query($conn, $query);
-                            if ($res) {
-                                $row = $obj->fetch_data($res);
-                                $exam_star_time  = $row['exam_date'];
-                                $duration = $row['time_duration'] . ' minute';
-                                $exam_end_time = strtotime($exam_star_time . '+' . $duration);
-
-                                $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
-                                $remaining_minutes = strtotime($exam_end_time) - time();
-                            }
-                            ?>
-                            <div><?php echo $duration; ?></div>
-                            <div><?php echo $exam_star_time; ?></div>
-                            <div><?php echo $exam_end_time; ?></div>
-                            <div><?php echo $remaining_minutes; ?></div>
-                            <div><?php echo $duration * 60; ?></div>
-                            <div></div>
-                            <div id="exam_timer" data-timer="<?php echo $duration * 60 ?>" style="max-width:400px; width: 50%; height: 100px;"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -242,36 +217,21 @@
 <script>
     $(document).ready(function nme() {
 
-        $("#exam_timer").TimeCircles({
-            time: {
-                Days: {
-                    show: false,
-                    color: "#1AB394"
-                },
-                Hours: {
-                    show: true,
-                    color: "#1AB394"
-                },
-                Minutes: {
-                    color: "#1AB394"
-                },
-                Seconds: {
-                    color: "#1AB394"
-                }
+        $.ajax({
+            url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+            method: "POST",
+            data: {
+                page: "dashboard",
+                action: "fetch"
             },
-
-            circle_bg_color: "#FFF",
-            use_background: false
-
-        });
-
-        setInterval(function() {
-            var remaining_second = $("#exam_timer").TimeCircles().getTime();
-            if (remaining_second < 1) {
-                alert('Exam time over');
-                // location.reload();
+            success: function(data) {
+                $('#courses_list').html(data);
+            },
+            error: function(responseObj) {
+                alert("Something went wrong while processing your request.\n\nError => " +
+                    responseObj.responseText);
             }
-        }, 1000);
+        });
     });
 </script>
 

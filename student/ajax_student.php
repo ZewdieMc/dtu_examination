@@ -28,8 +28,9 @@ function change_exam_status($student_id, $conn, $obj)
     $where = "tbl_student_exam_enrol.student_id = '$student_id'"; //thinnk of the where clause the next time.
     $query = $obj->select_data($tbl_name, $where);
     $res = $obj->execute_query($conn, $query);
-
+    $tbl_name = "tbl_exam";
     while ($row = $obj->fetch_data($res)) {
+        $where = "exam_id = '" . $row['exam_id'] . "'";
         $exam_start_time  = $row['exam_date'];
         $duration = $row['time_duration'] . ' minute';
         $exam_end_time = strtotime($exam_start_time . '+' . $duration);
@@ -86,6 +87,7 @@ if ($_POST['action'] == 'login') {
         if ($count_rows == 1) {
             $_SESSION['student'] = $username;
             $_SESSION['student_id'] = $row['student_id'];
+            change_exam_status($_SESSION['student_id'], $conn, $obj);
             $_SESSION['dept_id'] = $row['department_id'];
             $_SESSION['full_name'] = $row['first_name'] . " " . $row['last_name'];
             $_SESSION['study_year'] = $row['study_year'];
@@ -107,8 +109,8 @@ if ($_POST['action'] == 'login') {
     }
 }
 if ($_POST['action'] == "fetch") {
+    change_exam_status($_SESSION['student_id'],$conn,$obj);
     if ($_POST['page'] == "load_question") {
-        change_exam_status($_SESSION['student_id'], $conn, $obj);
         $tbl_name = "tbl_question";
         $other = "";
         if ($_POST['question_id'] == '') {
@@ -257,7 +259,7 @@ if ($_POST['action'] == "fetch") {
                       join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id
                       join tbl_student_exam_enrol on tbl_exam.exam_id = tbl_student_exam_enrol.exam_id";
         //   left join tbl_invigilator on tbl_exam.examiner_id=tbl_invigilator.examiner_id";
-        $where = "tbl_course.department_id = '" . $_SESSION['dept_id'] . "' and tbl_student_exam_enrol.student_id='".$_SESSION['student_id']."' AND ";
+        $where = "tbl_course.department_id = '" . $_SESSION['dept_id'] . "' and tbl_student_exam_enrol.student_id='" . $_SESSION['student_id'] . "' AND ";
         if (isset($_POST['search']['value'])) {
             $where .= "(";
             // $where .= 'exam_id LIKE "%' . $_POST["search"]["value"] . '%" ';
@@ -313,7 +315,8 @@ if ($_POST['action'] == "fetch") {
             } elseif ($row['status'] == "created") {
                 # code...
                 $sub_array[] .= '';
-                $sub_array[] .= '';
+                // $sub_array[] .= '';
+                $sub_array[] .= '<a href = "' . SITEURL . 'student/index.php?page=Questions&exam_code=' . $row['exam_id'] . '" class="btn btn-primary  btn-circle start_exam" data-toggle="tooltip" data-placement="top" title="Click to see Questions" ><i class="fa fa-eye "> </i></a>';
             }
 
             $data[] = $sub_array;
@@ -399,8 +402,9 @@ if ($_POST['action'] == "fetch") {
         echo $output;
     }
     if ($_POST['page'] == 'user_detail') {
-        $tbl_name = 'tbl_student';
-        $where = 'student_id = "' . $_SESSION['student_id'] . '"';
+        $tbl_name = 'tbl_student_exam_enrol join tbl_student on tbl_student_exam_enrol.student_id = tbl_student.student_id join tbl_exam on tbl_student_exam_enrol.exam_id =tbl_exam.exam_id
+        join tbl_course on tbl_exam.course_id=tbl_course.course_id';
+        $where = 'tbl_student.student_id = "' . $_SESSION['student_id'] . '" and tbl_exam.exam_id = "'.$_POST['exam_id'].'"';
         $query = $obj->select_data($tbl_name, $where);
         $res = $obj->execute_query($conn, $query);
         $output = '
@@ -427,6 +431,14 @@ if ($_POST['action'] == "fetch") {
 							<th>Gendar</th>
 							<td>' . $row["gender"] . '</td>
 						</tr>
+						<tr>
+							<th>Total Time</th>
+							<td><b>' . $row["time_duration"] ." Minutes". '</b></td>
+						</tr>
+						<tr>
+							<th>Course Name</th>
+							<td><b>' . $row["course_name"] . '</b></td>
+						</tr>
 					</table>
 				</div>
 				';
@@ -451,8 +463,7 @@ if ($_POST['action'] == 'Add') {
             } else {
                 echo "Enrollement failed";
             }
-        }
-        else{
+        } else {
             echo "Your are already enrolled for this course.";
         }
     }

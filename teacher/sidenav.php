@@ -36,10 +36,10 @@
                     <li><a href="<?php echo SITEURL ?>teacher/index.php?page=exams"><i class="fa fa-users"></i>Your Exams</a>
                     <!-- <li><a href="<?php echo SITEURL ?>department/index.php?page=examiner"><i class="fa fa-users"></i>Invigilators</a> -->
 
-                    <!-- <li> -->
+                    <li>
 
-                        <!-- <a href="#"><i class="fa fa-plus"></i>Courses<span class="fa arrow"></span></a> -->
-                        <!-- <ul class="nav nav-third-level">
+                        <a href="#"><i class="fa fa-book"></i>Results<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
                           <?php
                             $tbl_name = "tbl_course";
                             $where = "teacher_id = '" . $_SESSION['teacher_id'] . "'";
@@ -51,8 +51,8 @@
                             <?php
                             }
                             ?>
-                        </ul> -->
-                    <!-- </li> -->
+                        </ul> 
+                    </li>
                     <!-- <li>
 
                         <a href="#"><i class="fa fa-plus"></i>Exams<span class="fa arrow"></span></a>

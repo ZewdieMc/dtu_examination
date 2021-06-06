@@ -225,6 +225,8 @@
                                     <p>
                                         Carefully fill each fields
                                         <br>
+                                        <button class="btn btn-primary btn-md btn-outline btn-rounded float-right" id="new_questionn"><i class="fa fa-plus"></i> Question</button>
+                                        <br>
                                         <small>Question Lists</small><br>
                                     <div id="questions_list">
                                         <?php
@@ -284,7 +286,7 @@
 
 
                                                         <span class="name">Answer</span>
-                                                        <select name="answer" class="form-control select2_answer" required="true" style="width: 100%;">
+                                                        <select name="answer" class="form-control select2_answer" id="right_answer" required="true" style="width: 100%;">
                                                             <option value=""></option>
                                                             <option value="1">First Answer</option>
                                                             <option value="2">Second Answer</option>
@@ -293,9 +295,10 @@
                                                             <option value="5">Fifth Answer</option>
                                                         </select>
                                                         <span class="name">Marks</span>
-                                                        <input type="number" name="marks" class="form-control" required="true" placeholder="Marks for this question" />
+                                                        <input type="number" name="marks" id="marks" class="form-control" required="true" placeholder="Marks for this question" />
                                                         <input type="hidden" name="exam_id" id="exam_id" value="<?php echo $_GET['exam_code'] ?>" />
                                                         <input type="hidden" name="page" value="question" />
+                                                        <input type="hidden" name="question_id" id='question_id'value="" />
                                                         <input type="hidden" name="action" id="action" value="Add" />
                                                         <br />
                                                     </div>
@@ -318,16 +321,16 @@
                                             <span id="ques"></span>
                                             <hr>
                                             <h4>Multiple Choice Options</h4>
-                                            <div class="row">
-                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option1"></span></div>
+                                            <div class=" review_question row" style="margin-left: 10px;">
+                                                <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option1"></span></div>
                                                 <hr>
-                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option2"></span></div>
+                                                <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option2"></span></div>
                                                 <hr>
-                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option3"></span></div>
+                                                <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option3"></span></div>
                                                 <hr>
-                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option4"></span></div>
+                                                <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option4"></span></div>
                                                 <hr>
-                                                <div class="col-lg-6"><input type="radio" class="radio"><span id="option5"></span></div>
+                                                <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option5"></span></div>
                                                 <hr>
                                             </div>
 
@@ -436,7 +439,10 @@
                     document.getElementById("ques").innerHTML = CKEDITOR.instances['question'].getData();
                     document.getElementById("desc").innerHTML = CKEDITOR.instances['reason'].getData()
                 }
-
+                $('.review_question').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
                 // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
                 if (currentIndex === 2 && priorIndex === 3) {
                     $(this).steps("previous");
@@ -500,17 +506,47 @@
             let fileName = $(this).val().split('\\').pop();
             $(this).next('.custom-file-label').addClass("selected").html(fileName);
         });
-        $(document).on('click', '.edit_question', function() {
+        $(document).on('click', '#new_questionn', function() {
+            location.reload();
+        });
+        $(document).on('click', '.edit-question', function() {
             var question_id = $(this).data('question_id');
+            // alert(question_id);
+            $.ajax({
+                url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                method: "POST",
+                data: {
+                    page: "question",
+                    action: "edit_fetch",
+                    question_id: question_id
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#question_id').val(question_id);
+                    CKEDITOR.instances['question'].setData(data.question)
+                    $('#action').val("update");
+                    $('#first_answer').val(data.first_answer);
+                    $('#second_answer').val(data.second_answer);
+                    $('#second_answer').val(data.second_answer);
+                    $('#third_answer').val(data.third_answer);
+                    $('#fourth_answer').val(data.fourth_answer);
+                    $('#fifth_answer').val(data.fifth_answer);
+                    $('#marks').attr('value', data.marks);
+                    $("#right_answer").val(data.answer);
+                    $('#right_answer').select2({
+                        theme: 'bootstrap4'
+                    }).trigger('change');
+                    CKEDITOR.instances['reason'].setData(data.reason)
+
+                },
+                error: function(responseObj) {
+                    alert("Something went wrong while processing your request.\n\nError => " +
+                        responseObj.responseText);
+                }
+            });
             //send an ajax request to bring all the question details and place them in the question area.
         });
-        // $.ajax({
-        //     url:"<?php echo SITEURL ?>teacher/ajax_teacher.php";
-        //     data: {page:"question",action:"edit_fetch"},
-        //     type: "POST",
-        //     contentType:false,
-        //     cache: false,
-        // });
+
 
         CKEDITOR.replace('question');
         CKEDITOR.replace('reason');

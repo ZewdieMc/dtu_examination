@@ -33,6 +33,36 @@ function Is_allowed_add_question($exam_id, $conn, $obj)
     }
     return true;
 }
+
+function change_exam_status($teacher_id, $conn, $obj)
+{
+    $current_datetime = date('Y-m-d H:i:s');
+    $tbl_name = "tbl_exam inner join tbl_course on tbl_exam.course_id = tbl_course.course_id";
+    $where = "tbl_course.teacher_id = '$teacher_id'"; //thinnk of the where clause the next time.
+    $query = $obj->select_data($tbl_name, $where);
+    $res = $obj->execute_query($conn, $query);
+    $tbl_name = "tbl_exam";
+    while ($row = $obj->fetch_data($res)) {
+        $where = "exam_id = '" . $row['exam_id'] . "'";
+        $exam_start_time  = $row['exam_date'];
+        $duration = $row['time_duration'] . ' minute';
+        $exam_end_time = strtotime($exam_start_time . '+' . $duration);
+        $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
+        if ($current_datetime >= $exam_start_time && $current_datetime <= $exam_end_time) {
+            $data = "status = 'started'";
+            $query = $obj->update_data($tbl_name, $data, $where);
+            $ress = $obj->execute_query($conn, $query);
+        } elseif ($current_datetime > $exam_end_time) {
+            $data = "status='completed'";
+            $query = $obj->update_data($tbl_name, $data, $where);
+            $ress = $obj->execute_query($conn, $query);
+        } elseif ($current_datetime < $exam_start_time) {
+            $data = "status='created'";
+            $query = $obj->update_data($tbl_name, $data, $where);
+            $ress = $obj->execute_query($conn, $query);
+        }
+    }
+}
 // login
 if ($_POST['action'] == 'login') {
     if ($_POST['page'] == 'teacher') {
@@ -48,6 +78,7 @@ if ($_POST['action'] == 'login') {
         if ($count_rows == 1) {
             $_SESSION['teacher'] = $username;
             $_SESSION['teacher_id'] = $row['id'];
+            change_exam_status($_SESSION['teacher_id'], $conn, $obj);
             $_SESSION['dept_id'] = $row['department_id'];
             $_SESSION['full_name'] = $row['first_name'] . " " . $row['last_name'];
             $output = array(
@@ -170,6 +201,108 @@ if ($_POST['action'] == 'Add') {
 
 // update
 if ($_POST['action'] == 'update') {
+    if ($_POST['page'] == 'exam') {
+        $tbl_name = "tbl_exam";
+        $data = "
+        time_duration='" . $_POST['online_exam_duration'] . "',
+        qns_per_set='" . $_POST['total_questions'] . "',
+        status='created',
+        added_date='" . date('y-m-d') . "',
+        exam_date='" . $_POST['online_exam_datetime'] . "'
+        ";
+        $where = "exam_id = '" . $_POST['exam_id'] . "'";
+        $query = $obj->update_data($tbl_name, $data, $where);
+        $res = $obj->execute_query($conn, $query);
+        if ($res) {
+            # code...
+            $output = array(
+                'success'    =>    'Exam updated'
+            );
+            echo json_encode($output);
+        } else {
+            echo json_encode(array("error" => "action failed"));
+        }
+    }
+    if ($_POST['page'] == 'question') {
+        $output = "";
+        if ($_FILES['question_image']['name'] != "") {
+            //Getting File Extension
+            $value = explode('.', $_FILES['question_image']['name']);
+            $ext = end($value);
+            //Checking if the file type is valid or not
+            $valid_file = $obj->check_image_type($ext);
+            if ($valid_file == false) {
+                $output = "<div class='error'>Invalid Image type. Please use JPG or PNG or GIF file type.</div>";
+                die();
+            }
+            //Uploading if the file is valid
+            //first changing image name
+            $new_name = 'DTU_exam_' . $obj->uniqid();
+            $image_name = $new_name . '.' . $ext;
+            //Adding Watermark to the image fie too
+            $source = $_FILES['question_image']['tmp_name'];
+            $destination = "../images/questions/" . $image_name;
+            $upload = $obj->upload_file($source, $destination);
+            if ($upload == false) {
+                $output = "<div class='error'>Failed to upload question image. Try again.</div>";
+                // header('location:' . SITEURL . 'teacher/index.php?page=add_question&exam_code=' . $_GET['exam_code'] . '');
+                die();
+            }
+        } else {
+            $image_name = "";
+        }
+        //Get all values from the forms
+        $question = $obj->sanitize($conn, $_POST['question']);
+        $first_answer = $obj->sanitize($conn, $_POST['first_answer']);
+        $second_answer = $obj->sanitize($conn, $_POST['second_answer']);
+        $third_answer = $obj->sanitize($conn, $_POST['third_answer']);
+        $fourth_answer = $obj->sanitize($conn, $_POST['fourth_answer']);
+        $fifth_answer = $obj->sanitize($conn, $_POST['fifth_answer']);
+        $answer = $obj->sanitize($conn, $_POST['answer']);
+        $reason = $obj->sanitize($conn, $_POST['reason']);
+        $exam_code = $_POST['exam_id'];
+        $marks = $obj->sanitize($conn, $_POST['marks']);
+        // $category = $obj->sanitize($conn, $_POST['category']);
+        $added_date = date('Y-m-d');
+
+        $tbl_name = 'tbl_question';
+        $data = "question='$question',
+                                    first_answer='$first_answer',
+                                    second_answer='$second_answer',
+                                    third_answer='$third_answer',
+                                    fourth_answer='$fourth_answer',
+                                    fifth_answer='$fifth_answer',
+                                    answer='$answer',
+                                    reason='$reason',
+                                    exam_id='$exam_code',
+                                    marks='$marks',
+                                    is_active='yes',
+                                    added_date='$added_date',
+                                    updated_date='',
+                                    image_name='$image_name'
+                                    ";
+        $where = ' exam_id = "'.$exam_code.'" and question_id = "' . $_POST['question_id'] . '"';
+        $query = $obj->update_data($tbl_name, $data, $where);
+        $res = $obj->execute_query($conn, $query);
+        if ($res === true) {
+            $where = "exam_id = '" . $_POST['exam_id'] . "'";
+            $query = $obj->select_data($tbl_name, $where);
+            $res = $obj->execute_query($conn, $query);
+            $counter  = 0;
+            while ($row = $obj->fetch_data($res)) {
+                $counter++;
+                if($row['question_id']==$_POST['question_id'])
+                $class = 'btn-warning';
+                else
+                $class = 'btn-primary';
+                $output .= '<button class="btn btn-circle btn-outline btn-sm edit-question  ' . $class . ' " data-question_id = "' . $row['question_id'] . '">' . $counter . '</button>&nbsp;';
+            }
+            $counter = 0;
+        } else {
+            $output =  "Failed to add the question. Please try again";
+        }
+        echo $output;
+    }
 }
 // delete
 if ($_POST['action'] == 'delete') {
@@ -242,6 +375,7 @@ if ($_POST['action'] == 'fetch') {
         echo json_encode($output);
     }
     if ($_POST['page'] == 'exam') {
+        change_exam_status($_SESSION['teacher_id'], $conn, $obj);
         $tbl_name = "(tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id)
                       join tbl_year_study on tbl_course.study_year=tbl_year_study.study_year_id
                       join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id";
@@ -295,7 +429,7 @@ if ($_POST['action'] == 'fetch') {
             } else {
                 $sub_array[] .= '<button type="button" class="btn btn-danger  btn-circle view-question" data-toggle="tooltip" data-placement="top" title="Click to view Questions" id="' . $row['exam_id'] . '"><i class="fa fa-eye "> </i></button>';
             }
-            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>';
+            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." data-course-id ="' . $row['course_id'] . '" data-exam-id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>';
 
             $data[] = $sub_array;
         }
@@ -333,7 +467,7 @@ if ($_POST['action'] == 'fetch') {
 				<hr />
 				<br />';
             if ($row['image_name'] != "") {
-                $output .= '<img src="' . SITEURL . 'images/questions/' . $row['image_name'] . '" class="rounded" alt="Supplementary Image" height="100%" width = "100%"/><hr>';
+                $output .= '<center><img src="' . SITEURL . 'images/questions/' . $row['image_name'] . '" class="rounded center-block" alt="Supplementary Image" height="50%" width = "50%"/></center><hr>';
             }
             $output .= '<div class="row">';
 
@@ -455,10 +589,64 @@ if ($_POST['action'] == 'fetch') {
 			';
         echo $output;
     }
+    if ($_POST['page'] == 'dashboard') {
+        $tbl_name = "tbl_course join tbl_teacher on tbl_course.teacher_id = tbl_teacher.id join tbl_year_study on tbl_course.study_year=tbl_year_study.study_year_id
+        join tbl_department on tbl_course.department_id=tbl_department.dept_id";
+        $where = "tbl_course.teacher_id = '" . $_SESSION['teacher_id'] . "' ";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $output = '';
+        while ($row = $obj->fetch_data($res)) {
+            $output .= '
+                        <div class="col-md-3">
+                            <div class="ibox">
+                                <div class="ibox-content product-box">
+                                    <div class="product-imitation">
+                                        ' . $row['course_name'] . '
+                                    </div>
+                                    <div class="product-desc">
+                                        <span class="product-price">
+                                            ' . $row['department_name'] . '
+                                        </span>
+                                        <small class="text-muted">' . $row['year'] . '</small>
+                                        <a href="' . SITEURL . '/teacher/index.php?page=results&course_id=' . $row['course_id'] . '&exam_id=???" class="product-name"> Results</a>
+                                        <div class="small m-t-xs">
+                                            Click the button below to add exam for the course.
+                                        </div>
+                                        <div class="m-t text-righ">
+                                            <a href="#" class="btn btn-xs btn-outline btn-rounded btn-primary add_exam" id = ' . $row['course_id'] . '>Exam <i class="fa fa-long-arrow-right"></i> </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            ';
+        }
+        echo $output;
+    }
 }
 // edit_fetch
 if ($_POST['action'] == 'edit_fetch') {
-    if ($_POST['page'] = 'question') {
-        # code...
+    if ($_POST['page'] == 'question') {
+        $tbl_name = "tbl_question";
+        $where = "question_id = '" . $_POST['question_id'] . "'";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $row = $obj->fetch_data($res);
+        if ($row) {
+            echo json_encode($row);
+        }
+    }
+    if ($_POST['page'] == 'exam') {
+        $tbl_name = 'tbl_exam';
+        $where = "exam_id = '" . $_POST['exam_id'] . "'";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        while ($row = $obj->fetch_data($res)) {
+            $output['total_question'] = $row['qns_per_set'];
+            $output['exam_date'] = $row['exam_date'];
+            $output['time_duration'] = $row['time_duration'];
+        }
+        echo json_encode($output);
     }
 }

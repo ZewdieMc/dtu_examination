@@ -150,7 +150,7 @@ att:
 						(form_advanced.html) in inspinia theme.(timecircles jquery used instead.)
 
 						upon completion of the examination, a new page("EXAM TIME OVER.") /other feasible option must be put.
-						disable browsing on new tab.
+						Disable browsing on new tab while the question page is active.
 						teachers must have a unique identifier across the system other than id, email for example.(used by dpt head when assigninng a course...
 						a list of all teachers must be visible, however, the must be a search key for the teacher using the unique identifier.)
 						
@@ -159,4 +159,6 @@ att:
 						and enter a question for a course that he doesn't own.
 						the exam.php page should only fetch the examination of the courses that only belong to the student fetching it(and it should also show
 						examinations which are eihter started or created.i.e completed examination questions shouldnt be displayed.).
+
+						When a student enrolls to an exam, the ALERADY ENROLLED message should consider to what TYPE(mid, final, or other) and EXAM_DATE of exam they are enrolled to.
 			  	*/

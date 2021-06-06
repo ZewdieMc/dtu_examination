@@ -14,7 +14,29 @@ if (!isset($_SESSION['teacher'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Exam | Teacher | Exams</title>
-    <?php include('./includes/css3.php') ?>
+
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
 </head>
 
 <body class="md-skin pace-done">
@@ -200,8 +222,8 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Question</th>
                                                 <th></th>
                                             </tr>
-                                             </thead>
-                          
+                                        </thead>
+
                                         <tfoot>
                                             <tr>
                                                 <th>Exam Code</th>
@@ -231,14 +253,53 @@ if (!isset($_SESSION['teacher'])) {
 
     </div>
 
+    <div class="modal inmodal fade" id="add_exam" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Edit Exam</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" class="wizard-big" id="insert_form">
+                        <!-- <div class="form-group"><label>Course Code</label>
+                                    <input class="form-control input-sm validate[required]" name="course_code" id="course_code" type="text" placeholder=" Enter Course Code">
+                                </div> -->
+                        <div class="form-group"><label>Total Questions</label>
+                            <input class="form-control input-sm validate[required]" name="total_questions" id="total_questions" type="number" placeholder=" Enter total questions">
+                        </div>
+                        <div class="form-group"><label>Exam Date and Time</label>
+                            <input type="text" name="online_exam_datetime" id="online_exam_datetime" class="form-control" readonly />
 
-    <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
+                        </div>
+                        <div class="form-group"><label> Time Duration</label>
+                            <select name="online_exam_duration" id="online_exam_duration" class="form-control" style="width: 100%">
+                                <option value=""></option>
+                                <option value="5">5 Minute</option>
+                                <option value="30">30 Minute</option>
+                                <option value="60">1 Hour</option>
+                                <option value="120">2 Hour</option>
+                                <option value="180">3 Hour</option>
+                            </select>
+                        </div>
+                        <div id="add_information" class="form-group"></div>
+                        <input type="hidden" name="exam_id" id="exam_id" value="" />
+                        <input type="hidden" name="page" value="exam" />
+                        <input type="hidden" name="action" id="action" value="Add" />
+                        <input type="submit" name="insert" value="Insert Exam" id="insert" class="btn  btn-outline  btn-primary btn-rounded" />
+                    </form>
+                </div>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
     <?php include("./includes/scripts3.php") ?>
+    <script src="<?php echo SITEURL ?>asset2/js/bootstrap-datetimepicker.js"></script>
 
 
-    <!-- Page-Level Scripts -->
     <script>
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
         $(document).ready(function() {
@@ -297,6 +358,76 @@ if (!isset($_SESSION['teacher'])) {
             $(document).on('click', '.view-question', function() {
                 var id = $(this).attr('id');
                 location.href = "<?php echo SITEURL; ?>teacher/index.php?page=question&exam_code=" + id;
+            });
+            $(document).on('click', '.edit_exam', function() {
+                var exam_id = $(this).data('exam-id');
+                var course_id = $(this).data('course-id');
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                    method: "POST",
+                    data: {
+                        page: "exam",
+                        action: "edit_fetch",
+                        exam_id: exam_id
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        $('#exam_id').val(exam_id);
+                        $('#online_exam_datetime').val(data.exam_date);
+                        $('#online_exam_duration').val(data.time_duration);
+                        $('#total_questions').val(data.total_question);
+                        $('#insert').val("Update Exam");
+                        // alert($('#deanid').attr("value"));
+                        $('#action').val("update");
+                        $('#add_exam').modal('show');
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            });
+
+            $('#insert').on("click", function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                    data: $('#insert_form').serialize(),
+                    type: 'POST',
+                    cache: false,
+                    beforeSend: function() {
+                        //$("#insert").val("Inserting");
+                    },
+                    complete: function(status) {
+                        if (status != "error" && status != "timeout") {
+                            //$("#insert").val("Inserted");
+                            $('#add_information').html("Operation successful");
+                            $('.dataTables-example').DataTable().ajax.reload();
+                            // $("#add_faculty").modal('toggle');
+
+                        }
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.error);
+                    }
+                });
+
+            });
+
+            var date = new Date();
+            date.setDate(date.getDate());
+            $('#online_exam_datetime').datetimepicker({
+                startDate: date,
+                format: 'yyyy-mm-dd hh:ii',
+                autoclose: true
+            });
+            $('#online_exam_duration').select2({
+                theme: 'bootstrap4',
+                placeholder: "Select a Time duration",
+                allowClear: true,
+                dropdownParent: $('#add_exam'),
+                width: 'resolve',
             });
 
         });

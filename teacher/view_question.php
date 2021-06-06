@@ -186,7 +186,7 @@
                             <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Courses
+                            Exams
                         </li>
 
                     </ol>

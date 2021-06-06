@@ -25,7 +25,7 @@
     $exam_status = '';
     $exam_date = '';
 
-    $tbl_name = "tbl_exam";
+    $tbl_name = "tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id";
     $where = "exam_id = '" . $_GET['exam_code'] . "'";
     $query = $obj->select_data($tbl_name, $where);
     $res = $obj->execute_query($conn, $query);
@@ -36,7 +36,7 @@
         $exam_status = $row['status'];
         $duration = $row['time_duration'] . ' minute';
         $exam_end_time = strtotime($exam_star_time . '+' . $duration);
-
+        $_SESSION['exam_cocurse_name'] = $row['course_name'];
         $exam_end_time = date('Y-m-d H:i:s', $exam_end_time);
         $remaining_minutes = strtotime($exam_end_time) - time();
         $until_start = strtotime($exam_star_time) - time();
@@ -55,7 +55,7 @@
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a class="bg-primary text-white" href="<?php echo SITEURL; ?>student/index.php?page=login">
+                    <a class="bg-primary text-white " href="<?php echo SITEURL; ?>student/index.php?page=logout">
                         <i class="fa fa-sign-out active"></i> Logout
                     </a>
                 </li>
@@ -72,6 +72,7 @@
                         <div class="card">
                             <div class="card-header ">Question</div>
                             <div class="card-body">
+                                <div><button class="btn btn-outline btn-rounded btn-primary" id="full_screen">Full Screen</button></div>
                                 <div id="single_question_area">
                                     <!--The question gets displayed here. -->
                                 </div>
@@ -103,7 +104,7 @@
     <?php } elseif ($exam_status == "completed") {
     ?>
 
-        <div class="middle-box text-center" id="exam_notifier" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"><?php echo "<h3><font color='red'>Exam time Over!</font></h3> " ?><a class="btn btn-primary btn-rounded text-white" href="<?php echo SITEURL?>student/index.php?page=exams">Exams</a></div>
+        <div class="middle-box text-center" id="exam_notifier" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"><?php echo "<h3><font color='red'>Exam time Over!</font></h3> " ?><a class="btn btn-primary btn-rounded text-white" href="<?php echo SITEURL ?>student/index.php?page=exams">Exams</a></div>
     <?php  } else {
     ?>
         <div class="middle-box alert alert-danger text-center" id="exam_countdown" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"></div>
@@ -172,6 +173,14 @@
                             ?>";
         question_navigation();
         load_question();
+        $(document).on('click', '#full_screen', function name(params) {
+            document.documentElement.requestFullscreen();
+        });
+        //disable exitFullScreen
+        $(document).on("keydown", function(ev) {
+            console.log(ev.keyCode);
+            if (ev.keyCode === 18 || ev.keyCode === 122) return false
+        })
 
         function remaining_seconds(exam_id) {
             $.ajax({
@@ -199,7 +208,7 @@
                 type: 'POST',
                 cache: false,
                 data: {
-                    exam_id: exam_id,
+                    exam_id: "<?php echo $_GET['exam_code'] ?>",
                     question_id: question_id,
                     page: 'load_question',
                     action: 'fetch'
@@ -230,7 +239,7 @@
                 url: "<?php echo SITEURL; ?>student/ajax_student.php",
                 type: "POST",
                 data: {
-                    exam_id: 1,
+                    exam_id: "<?php echo $_GET['exam_code'] ?>",
                     page: 'navigation',
                     action: 'fetch'
                 },
@@ -245,6 +254,7 @@
                 url: "<?php echo SITEURL ?>student/ajax_student.php",
                 method: "POST",
                 data: {
+                    exam_id: "<?php echo $_GET['exam_code'] ?>",
                     page: 'user_detail',
                     action: 'fetch'
                 },
@@ -270,13 +280,14 @@
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 // Display the result in the element with id="demo"
+                // if (distance >= 0)
                 document.getElementById("exam_countdown").innerHTML = "<h3>Exam will start after<br>" + days + " days : " + hours + " hours : " +
                     minutes + " minutes : " + seconds + " seconds </h3>";
 
                 // If the count down is finished, write some text
                 if (distance < 0) {
                     clearInterval(x);
-                   location.reload();
+                    location.reload();
                 }
             }, 1000);
         }

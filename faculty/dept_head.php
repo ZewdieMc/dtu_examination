@@ -11,7 +11,7 @@
     <?php include('./includes/css2.php') ?>
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
     <div id="wrapper">
 
@@ -362,7 +362,7 @@
                             })
                             .done(function(response) {
                                 swal('Deleted!', response.message, response.status);
-                                
+
                             })
                             .fail(function() {
                                 swal('Oops...', 'Something went wrong with ajax !', 'error');

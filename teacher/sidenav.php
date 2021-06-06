@@ -9,7 +9,7 @@
                         // $pic=$row["image"];
                         ?>
 
-                        <img class='img-circle' alt="image" style="width:80px;height:80px;" ; src="<?php echo SITEURL; ?>images/logo.jpg" /><span></span>
+                        <img class='img-circle' alt="image" style="width:80px;height:80px;" ; src="<?php echo SITEURL; ?>images/teacher.jpg" /><span></span>
                     </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $_SESSION['teacher'] ?></strong>

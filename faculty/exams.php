@@ -15,7 +15,7 @@ if (!isset($_SESSION['user'])) {
     <?php include('./includes/css2.php') ?>
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
     <div id="wrapper">
 

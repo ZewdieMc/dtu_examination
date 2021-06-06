@@ -13,7 +13,7 @@
 
 </head>
 
-<body>
+<body class="md-skin pace-done">
     <div id="wrapper">
         <?php include('sidenav.php'); ?>
 
@@ -280,8 +280,8 @@
                 ga('create', 'UA-4625583-2', 'webapplayers.com');
                 ga('send', 'pageview');
             </script>
-</body>
+            </body>
 
-<!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 May 2016 03:55:13 GMT -->
+            <!-- Mirrored from webapplayers.com/inspinia_admin-v2.5/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 06 May 2016 03:55:13 GMT -->
 
 </html>

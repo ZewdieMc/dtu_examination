@@ -12,6 +12,7 @@
     <link href="<?php echo SITEURL ?>asset2/css/TimeCircles.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/toastr/toastr.min.css" rel="stylesheet">
 
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
@@ -70,7 +71,7 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="card">
-                            <div class="card-header ">Question</div>
+                            <div class="card-header "><b>Question</b></div>
                             <div class="card-body">
                                 <div><button class="btn btn-outline btn-rounded btn-primary" id="full_screen">Full Screen</button></div>
                                 <div id="single_question_area">
@@ -124,6 +125,7 @@
 <script src="<?php echo SITEURL ?>asset2/js/bootstrap.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="<?php echo SITEURL ?>asset2/js/plugins/toastr/toastr.min.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/TimeCircles.js"></script>
 
 <!-- Custom and plugin javascript -->
@@ -267,7 +269,6 @@
         function countdown_timer() {
             var countDownDate = new Date('<?php echo $exam_date; ?>').getTime();
             var x = setInterval(function() {
-                // alert(<>);
                 // Get today's date and time
                 var now = new Date().getTime();
 
@@ -279,7 +280,6 @@
                 var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Display the result in the element with id="demo"
                 // if (distance >= 0)
                 document.getElementById("exam_countdown").innerHTML = "<h3>Exam will start after<br>" + days + " days : " + hours + " hours : " +
                     minutes + " minutes : " + seconds + " seconds </h3>";
@@ -306,6 +306,42 @@
             var question_id = $(this).data('question_id');
             load_question(question_id);
         });
+        $(document).on('ifClicked', '.answer_option', function() {
+            var exam_id = "<?php echo $_GET['exam_code'] ?>";
+            var question_id = $(this).data('question_id');
+            var user_answer = $(this).val();
+            var right_answer = $('#right_answer').val();
+            var marks = $('#marks').val();
+            $.ajax({
+                url: "<?php echo SITEURL ?>student/ajax_student.php",
+                method: "POST",
+                dataType: 'json',
+                data: {
+                    exam_id: exam_id,
+                    question_id: question_id,
+                    user_answer: user_answer,
+                    right_answer: right_answer,
+                    marks: marks,
+                    page: 'answer_option',
+                    action: 'Add'
+                },
+                success: function(data) {
+                    toastr.options = {
+                        'closeButton': true,
+                        'debug': false,
+                        "timeOut": "3000",
+                        'positionClass': 'toast-top-right'
+                    }
+                    if (data.success == 'insert')
+                        toastr.success('Your answer is saved!.');
+                    else
+                        toastr.warning("You updated your answer!");
+
+                }
+            })
+        });
+
+
     });
 </script>
 

@@ -72,6 +72,21 @@ function If_user_already_enroll_exam($conn, $obj, $exam_id, $student_id)
     }
     return false;
 }
+function if_question_is_answered($conn, $obj, $student_id, $exam_id, $question_id)
+{
+    $tbl_name = "tbl_result";
+    $where = "
+    student_id = '" . $student_id . "'
+    AND exam_id = '" . $exam_id . "'
+    AND question_id = '" . $question_id . "'
+    ";
+    $query = $obj->select_data($tbl_name, $where);
+    $res = $obj->execute_query($conn, $query);
+    if ($obj->num_rows($res)) {
+        return true;
+    }
+    return false;
+}
 // login
 if ($_POST['action'] == 'login') {
     if ($_POST['page'] == 'student') {
@@ -109,7 +124,7 @@ if ($_POST['action'] == 'login') {
     }
 }
 if ($_POST['action'] == "fetch") {
-    change_exam_status($_SESSION['student_id'],$conn,$obj);
+    change_exam_status($_SESSION['student_id'], $conn, $obj);
     if ($_POST['page'] == "load_question") {
         $tbl_name = "tbl_question";
         $other = "";
@@ -136,30 +151,31 @@ if ($_POST['action'] == "fetch") {
 
             $output .= '<div class="col-md-6" >
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required = "true"/>&nbsp;' . $row["first_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1" value ="1" class="answer_option" data-question_id="' . $row["question_id"] . '" required = "true"/>&nbsp;' . $row["first_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["second_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1" value ="2" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["second_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true" />&nbsp;' . $row["third_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1" value ="3" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true" />&nbsp;' . $row["third_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true"/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1" value ="4" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true"/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label ><h4><input type="radio" name="option_1" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
+                                <label ><h4><input type="radio" name="option_1" value ="5" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
                             </div>
                         </div>';
-
+            $output .= '<input type="hidden" name="right_answer" id = "right_answer" value="' . $row['answer'] . '" />';
+            $output .= '<input type="hidden" name="marks" id = "marks" value="' . $row['marks'] . '" />';
             $output .= '</div>';
             $tbl_name = "tbl_question";
             $where = "
@@ -226,7 +242,7 @@ if ($_POST['action'] == "fetch") {
         // $result = $obj->fetch_data($res);
         $output = '
 			<div class="card">
-				<div class="card-header bg-info .b-r-md">Question Navigation</div>
+				<div class="card-header .b-r-md"><b>Question Navigation</b></div>
 				<div class="card-body">
 					<div class="row">
 			';
@@ -404,12 +420,12 @@ if ($_POST['action'] == "fetch") {
     if ($_POST['page'] == 'user_detail') {
         $tbl_name = 'tbl_student_exam_enrol join tbl_student on tbl_student_exam_enrol.student_id = tbl_student.student_id join tbl_exam on tbl_student_exam_enrol.exam_id =tbl_exam.exam_id
         join tbl_course on tbl_exam.course_id=tbl_course.course_id';
-        $where = 'tbl_student.student_id = "' . $_SESSION['student_id'] . '" and tbl_exam.exam_id = "'.$_POST['exam_id'].'"';
+        $where = 'tbl_student.student_id = "' . $_SESSION['student_id'] . '" and tbl_exam.exam_id = "' . $_POST['exam_id'] . '"';
         $query = $obj->select_data($tbl_name, $where);
         $res = $obj->execute_query($conn, $query);
         $output = '
 			<div class="card">
-				<div class="card-header bg-primary text-white">User Details</div>
+				<div class="card-header "><b>User Details</b></div>
 				<div class="card-body">
 					<div class="row">
 			';
@@ -433,7 +449,7 @@ if ($_POST['action'] == "fetch") {
 						</tr>
 						<tr>
 							<th>Total Time</th>
-							<td><b>' . $row["time_duration"] ." Minutes". '</b></td>
+							<td><b>' . $row["time_duration"] . " Minutes" . '</b></td>
 						</tr>
 						<tr>
 							<th>Course Name</th>
@@ -466,5 +482,44 @@ if ($_POST['action'] == 'Add') {
         } else {
             echo "Your are already enrolled for this course.";
         }
+    }
+    if ($_POST['page'] == 'answer_option') {
+        $tbl_name = "tbl_result";
+        $data = "";
+        $query = "";
+        $response_message = '';
+        if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id'])) {
+            $data = "
+            user_answer = '" . $_POST['user_answer'] . "',
+            added_date = '" . date('Y-m-d ') . "'
+            "; // update ONLY   user answer.
+            $where = "
+            exam_id = '" . $_POST['exam_id'] . "'
+            AND question_id = '" . $_POST['question_id'] . "'
+            AND student_id = '" . $_SESSION['student_id'] . "'
+            ";
+            $query = $obj->update_data($tbl_name, $data, $where);
+            $response_message = 'update';
+        } else {
+            $data = "
+            exam_id = '" . $_POST['exam_id'] . "',
+            question_id = '" . $_POST['question_id'] . "',
+            student_id = '" . $_SESSION['student_id'] . "',
+            user_answer = '" . $_POST['user_answer'] . "',
+            right_answer = '" . $_POST['right_answer'] . "',
+            marks = '" . $_POST['marks'] . "',
+            added_date = '" . date('Y-m-d') . "'
+        ";
+            $query = $obj->insert_data($tbl_name, $data);
+            $response_message = 'insert';
+        }
+        $res = $obj->execute_query($conn, $query);
+        $response = array();
+        if ($res) {
+            $response = array('success' =>  $response_message);
+        } else {
+            $response = array('failer' => 'Operartion failed');
+        }
+        echo json_encode($response);
     }
 }

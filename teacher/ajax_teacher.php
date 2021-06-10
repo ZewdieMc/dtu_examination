@@ -423,7 +423,7 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['time_duration'] . " minutes";;
             $sub_array[] .= $row['exam_date'];
             $sub_array[] .= $row['year'];
-            if (Is_allowed_add_question($row['exam_id'], $conn, $obj)) {
+            if (Is_allowed_add_question($row['exam_id'], $conn, $obj) && $row['status']=='created') {
                 # code...
                 $sub_array[] .= '<button type="button" class="btn btn-primary btn-outline btn-circle add-question" data-toggle="tooltip" data-placement="top" title="Click to add Question" id="' . $row['exam_id'] . '"><i class="fa fa-plus "> </i></button>';
             } else {

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="shortcut icon" HREF="<?php SITEURL?>images/logo.jpg" />
+    <link rel="shortcut icon" HREF="<?php SITEURL ?>images/logo.jpg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -218,6 +219,27 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal inmodal fade" id="result_modal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h1 class="modal-title"><i class="fa fa-check-circle fa-lg" style="color: green;"></i></h1>
+                        </div>
+                        <div class="modal-body">
+                            <h3>
+                                <div id="course_name" class="alert alert-info"></div><br>
+                            </h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                            <a id="detailed_result" data-exam-id-detail="" class="btn  btn-rounded btn-primary text-white">See Detailed Result</a>
+                            <!-- this button has to be changed to anchor and the href should include exam_id and student_id -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -234,7 +256,6 @@
     <script>
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
         $(document).ready(function() {
-            // $('[data-toggle="tooltip"]').tooltip();
             $("body").tooltip({
                 selector: '[data-toggle=tooltip]'
             });
@@ -282,15 +303,31 @@
                 ]
 
             });
-            // $(document).on('click', '.add-question', function() {
-            //     var id = $(this).attr('id');
-            //     location.href = "<?php echo SITEURL; ?>teacher/index.php?page=add_question&exam_code=" + id;
-            // });
-            // $(document).on('click', '.view-question', function() {
-            //     var id = $(this).attr('id');
-            //     location.href = "<?php echo SITEURL; ?>teacher/index.php?page=question&exam_code=" + id;
-            // });
 
+            $(document).on('click', '#view_result', function() {
+                var exam_id = $(this).data('exam-id');
+                var student_id = '<?php echo $_SESSION['student_id']; ?>';
+                $.ajax({
+                    url: "<?php echo SITEURL ?>student/ajax_student.php",
+                    method: "POST",
+                    dataType: 'json',
+                    data: {
+                        exam_id: exam_id,
+                        page: 'student_result',
+                        action: 'fetch'
+                    },
+                    success: function(data) {
+                        $('#course_name').html(data.course + "<br><hr> You  scored <br>" + data.score + " out of " + data.total);
+                        $('#detailed_result').data('exam-id-detail', exam_id);
+
+                        $('#result_modal').modal('show');
+                    }
+                })
+            });
+            $(document).on('click', '#detailed_result', function(params) {
+               var exam_id = $(this).data('exam-id-detail');
+                location.href = "<?php echo SITEURL?>student/index.php?page=result_detail&exam_id="+exam_id;
+            })
         });
     </script>
 

@@ -330,7 +330,7 @@
                         'closeButton': true,
                         'debug': false,
                         "timeOut": "3000",
-                        'positionClass': 'toast-top-right'
+                        'positionClass': 'toast-bottom-left'
                     }
                     if (data.success == 'insert')
                         toastr.success('Your answer is saved!.');
@@ -340,6 +340,7 @@
                 }
             })
         });
+
 
 
     });

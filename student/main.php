@@ -11,8 +11,8 @@ switch ($page) {
         }
         break;
 
-    case "question": {
-            include('question.php');
+    case "result_detail": {
+            include('result_detail.php');
         }
         break;
 
@@ -22,6 +22,7 @@ switch ($page) {
         break;
 
     case "login": {
+        session_destroy();
             include('login.php');
         }
         break;

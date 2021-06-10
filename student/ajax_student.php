@@ -326,7 +326,7 @@ if ($_POST['action'] == "fetch") {
                 // $sub_array[] .= '<button type="button" class="btn btn-primary btn-sm btn-rounded btn-outline view_exam" data-toggle="tooltip" data-placement="top" title="Click to see your result" id="' . $row['exam_id'] . '">View Result</button>';
             } elseif ($row['status'] == "completed") {
                 # code...
-                $sub_array[] .= '<button type="button" class="btn btn-primary btn-sm btn-rounded btn-outline view_exam" data-toggle="tooltip" data-placement="top" title="Click to see your result" id="' . $row['exam_id'] . '"> Result</button>';
+                $sub_array[] .= '<button type="button" class="btn btn-primary btn-sm btn-rounded btn-outline view_exam" data-toggle="tooltip" id = "view_result" data-placement="top" title="Click to see your result" data-exam-id="' . $row['exam_id'] . '"> Result</button>';
                 $sub_array[] .= '';
             } elseif ($row['status'] == "created") {
                 # code...
@@ -462,6 +462,26 @@ if ($_POST['action'] == "fetch") {
         $output .= '</div></div></div>';
         echo $output;
     }
+    if ($_POST['page'] == 'student_result') {
+        $tbl_name  = 'tbl_result join tbl_exam on tbl_result.exam_id = tbl_exam.exam_id join tbl_course on tbl_exam.course_id = tbl_course.course_id';
+        $where1 = '
+        tbl_result.exam_id = "' . $_POST['exam_id'] . '" 
+        AND tbl_result.student_id = "' . $_SESSION['student_id'] . '"
+        AND user_answer = right_answer
+        ';
+        $where2 = '
+        tbl_result.exam_id = "' . $_POST['exam_id'] . '" 
+        AND tbl_result.student_id = "' . $_SESSION['student_id'] . '"
+        ';
+        $query  = $obj->select_sum_of_column($tbl_name, 'marks', $where1, $where2);
+        $res = $obj->execute_query($conn, $query);
+        $output = array();
+        if ($res) {
+            $row = $obj->fetch_data($res);
+            $output  = array('total' => $row['total'], 'score' => $row['score'],'course'=>$row['course_name']);
+        }
+        echo json_encode($output);
+    }
 }
 
 if ($_POST['action'] == 'Add') {
@@ -491,6 +511,7 @@ if ($_POST['action'] == 'Add') {
         if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id'])) {
             $data = "
             user_answer = '" . $_POST['user_answer'] . "',
+            marks = '" . $_POST['marks'] . "',
             added_date = '" . date('Y-m-d ') . "'
             "; // update ONLY   user answer.
             $where = "

@@ -194,68 +194,68 @@
 
             <div class="wrapper wrapper-content">
                 <div class="animated fadeInRightBig">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="ibox float-e-margins">
-                            <div class="ibox-title">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    Write course name and exam type here.
+                                    <div class="ibox-tools">
+                                        <a class="collapse-link">
+                                            <i class="fa fa-chevron-up"></i>
+                                        </a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <i class="fa fa-wrench"></i>
+                                        </a>
 
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-up"></i>
-                                    </a>
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                        <i class="fa fa-wrench"></i>
-                                    </a>
-
-                                    <a class="close-link">
-                                        <i class="fa fa-times"></i>
-                                    </a>
+                                        <a class="close-link">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="ibox-content">
+                                <div class="ibox-content">
 
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover dataTables-example">
-                                        <thead>
-                                            <tr>
-                                                <th>Exam Code</th>
-                                                <th>Course Name</th>
-                                                <th>Invigilator</th>
-                                                <th>Total Questions</th>
-                                                <th>Status</th>
-                                                <th>Total Time</th>
-                                                <th>Exam Date</th>
-                                                <th>Study Year</th>
-                                                <th>Result</th>
-                                                <th>Question</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th>Exam Code</th>
+                                                    <th>Course Name</th>
+                                                    <th>Invigilator</th>
+                                                    <th>Total Questions</th>
+                                                    <th>Status</th>
+                                                    <th>Total Time</th>
+                                                    <th>Exam Date</th>
+                                                    <th>Study Year</th>
+                                                    <th>Result</th>
+                                                    <th>Question</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
 
-                                        <tfoot>
-                                            <tr>
-                                                <th>Exam Code</th>
-                                                <th>Course Name</th>
-                                                <th>Invigilator</th>
-                                                <th>Total Questions</th>
-                                                <th>Status</th>
-                                                <th>Total Time</th>
-                                                <th>Total Date</th>
-                                                <th>Study Year</th>
-                                                <th>Result</th>
-                                                <th>Question</th>
-                                                <th></th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Exam Code</th>
+                                                    <th>Course Name</th>
+                                                    <th>Invigilator</th>
+                                                    <th>Total Questions</th>
+                                                    <th>Status</th>
+                                                    <th>Total Time</th>
+                                                    <th>Total Date</th>
+                                                    <th>Study Year</th>
+                                                    <th>Result</th>
+                                                    <th>Question</th>
+                                                    <th></th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    </div>
 
                                 </div>
 
                             </div>
-
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -279,10 +279,52 @@
 </body>
 
 <script>
+    $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
     $(document).ready(function nme() {
 
-        $.ajax({
-            //add code to popoulate the datatables
+        $('.dataTables-example').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            responsive: true,
+            "ajax": {
+                url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                type: "POST",
+                data: {
+                    action: 'fetch',
+                    exam_id: '<?php echo $_GET['exam_id'] ?>',
+                    page: 'student_result'
+                }
+            },
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [{
+                    extend: 'copy'
+                },
+                {
+                    extend: 'csv'
+                },
+                {
+                    extend: 'excel',
+                    title: 'ExampleFile'
+                },
+                {
+                    extend: 'pdf',
+                    title: 'ExampleFile'
+                },
+
+                {
+                    extend: 'print',
+                    customize: function(win) {
+                        $(win.document.body).addClass('white-bg');
+                        $(win.document.body).css('font-size', '10px');
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
+                    }
+                }
+            ]
+
         });
     });
 </script>

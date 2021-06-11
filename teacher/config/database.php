@@ -152,4 +152,3 @@
             return $faculty_name;
         }
     }
-?>

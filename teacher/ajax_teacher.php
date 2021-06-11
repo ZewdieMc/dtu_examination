@@ -629,6 +629,31 @@ if ($_POST['action'] == 'fetch') {
         }
         echo $output;
     }
+    if ($_POST['page'] == 'student_result') {
+        $tbl_name = 'tbl_result 
+        inner join tbl_exam on tbl_result.exam_id = tbl_exam.exam_id
+        inner join tbl_course on tbl_exam.course_id = tbl_course.course_id
+        inner join tbl_student on tbl_result.student_id = tbl_student.student_id
+        ';
+        $where = '
+        tbl_result.exam_id ="' . $_POST['exam_id'] . '" and right_answer = user_answer
+        AND
+        ';
+        if (isset($_POST['search']['value'])) {
+            $where .= "(";
+            $where .= 'first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= ")";
+        }
+        if (isset($_POST['order'])) {
+            $where .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
+        } else {
+            $where .= 'ORDER BY score ASC ';
+        }
+       $where .= 'group by tbl_result.student_id, tbl_result.exam_id';
+
+    }
 }
 // edit_fetch
 if ($_POST['action'] == 'edit_fetch') {

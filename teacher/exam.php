@@ -219,6 +219,7 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Total Time</th>
                                                 <th>Exam Date</th>
                                                 <th>Study Year</th>
+                                                <th>Result</th>
                                                 <th>Question</th>
                                                 <th></th>
                                             </tr>
@@ -234,6 +235,7 @@ if (!isset($_SESSION['teacher'])) {
                                                 <th>Total Time</th>
                                                 <th>Total Date</th>
                                                 <th>Study Year</th>
+                                                <th>Result</th>
                                                 <th>Question</th>
                                                 <th></th>
                                             </tr>

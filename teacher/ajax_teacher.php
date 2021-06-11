@@ -281,7 +281,7 @@ if ($_POST['action'] == 'update') {
                                     updated_date='',
                                     image_name='$image_name'
                                     ";
-        $where = ' exam_id = "'.$exam_code.'" and question_id = "' . $_POST['question_id'] . '"';
+        $where = ' exam_id = "' . $exam_code . '" and question_id = "' . $_POST['question_id'] . '"';
         $query = $obj->update_data($tbl_name, $data, $where);
         $res = $obj->execute_query($conn, $query);
         if ($res === true) {
@@ -291,10 +291,10 @@ if ($_POST['action'] == 'update') {
             $counter  = 0;
             while ($row = $obj->fetch_data($res)) {
                 $counter++;
-                if($row['question_id']==$_POST['question_id'])
-                $class = 'btn-warning';
+                if ($row['question_id'] == $_POST['question_id'])
+                    $class = 'btn-warning';
                 else
-                $class = 'btn-primary';
+                    $class = 'btn-primary';
                 $output .= '<button class="btn btn-circle btn-outline btn-sm edit-question  ' . $class . ' " data-question_id = "' . $row['question_id'] . '">' . $counter . '</button>&nbsp;';
             }
             $counter = 0;
@@ -423,7 +423,12 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['time_duration'] . " minutes";;
             $sub_array[] .= $row['exam_date'];
             $sub_array[] .= $row['year'];
-            if (Is_allowed_add_question($row['exam_id'], $conn, $obj) && $row['status']=='created') {
+            if ($row['status'] == 'completed') {
+                $sub_array[] .= '<button type="button" class="btn btn-primary btn-sm btn-rounded btn-outline view_result" data-toggle="tooltip" id = "view_result" data-placement="top" title="Click to see students\' result" data-exam-id="' . $row['exam_id'] . '"> Result</button>';
+            } else {
+                $sub_array[] .= '';
+            }
+            if (Is_allowed_add_question($row['exam_id'], $conn, $obj) && $row['status'] == 'created') {
                 # code...
                 $sub_array[] .= '<button type="button" class="btn btn-primary btn-outline btn-circle add-question" data-toggle="tooltip" data-placement="top" title="Click to add Question" id="' . $row['exam_id'] . '"><i class="fa fa-plus "> </i></button>';
             } else {

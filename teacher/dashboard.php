@@ -213,7 +213,9 @@
     <script src="<?php echo SITEURL ?>asset2/js/bootstrap-datetimepicker.js"></script>
     <script src="<?php echo SITEURL ?>asset2/js/TimeCircles.js"></script>
 
+
 </body>
+
 <script>
     $(document).ready(function nme() {
 

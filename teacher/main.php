@@ -40,9 +40,9 @@
         }
         break;
         
-        case "add_student":
+        case "student_result":
         {
-            include('add_student.php');
+            include('student_result.php');
         }
         break;
         

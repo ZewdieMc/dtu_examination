@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<?php
-if (!isset($_SESSION['teacher'])) {
-    header('location:' . SITEURL . 'teacher/index.php?page=login');
-}
-
-
-?>
 <html>
 
+
+
 <head>
-    <link rel="shortcut icon" HREF="img/dtu.png" />
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Teacher | Exams</title>
+    <title>DTU Exam | Teacher</title>
 
+    <?php //include('./includes/css3.php') 
+    if (!isset($_SESSION['teacher'])) {
+        header('location:' . SITEURL . 'teacher/index.php?page=login');
+    }
+    ?>
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">
@@ -36,14 +36,18 @@ if (!isset($_SESSION['teacher'])) {
     <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/TimeCircles.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+
 </head>
 
 <body class="md-skin pace-done">
 
     <div id="wrapper">
-
         <?php include('sidenav.php'); ?>
+
 
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
@@ -174,9 +178,10 @@ if (!isset($_SESSION['teacher'])) {
                         <li class="breadcrumb-item">
                             <a href="<?php echo SITEURL; ?>teacher/index.php?page=dashboard">Home</a>
                         </li>
-                        <li class="breadcrumb-item active">
-                            Exams
+                        <li class="breadcrumb-item">
+                            <a href="#">Student Result</a>
                         </li>
+
 
                     </ol>
                 </div>
@@ -186,7 +191,9 @@ if (!isset($_SESSION['teacher'])) {
                     </div>
                 </div>
             </div>
-            <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="wrapper wrapper-content">
+                <div class="animated fadeInRightBig">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
@@ -249,196 +256,35 @@ if (!isset($_SESSION['teacher'])) {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-    </div>
-
-    <div class="modal inmodal fade" id="add_exam" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Edit Exam</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" class="wizard-big" id="insert_form">
-                        <!-- <div class="form-group"><label>Course Code</label>
-                                    <input class="form-control input-sm validate[required]" name="course_code" id="course_code" type="text" placeholder=" Enter Course Code">
-                                </div> -->
-                        <div class="form-group"><label>Total Questions</label>
-                            <input class="form-control input-sm validate[required]" name="total_questions" id="total_questions" type="number" placeholder=" Enter total questions">
-                        </div>
-                        <div class="form-group"><label>Exam Date and Time</label>
-                            <input type="text" name="online_exam_datetime" id="online_exam_datetime" class="form-control" readonly />
-
-                        </div>
-                        <div class="form-group"><label> Time Duration</label>
-                            <select name="online_exam_duration" id="online_exam_duration" class="form-control" style="width: 100%">
-                                <option value=""></option>
-                                <option value="5">5 Minute</option>
-                                <option value="30">30 Minute</option>
-                                <option value="60">1 Hour</option>
-                                <option value="120">2 Hour</option>
-                                <option value="180">3 Hour</option>
-                            </select>
-                        </div>
-                        <div id="add_information" class="form-group"></div>
-                        <input type="hidden" name="exam_id" id="exam_id" value="" />
-                        <input type="hidden" name="page" value="exam" />
-                        <input type="hidden" name="action" id="action" value="Add" />
-                        <input type="submit" name="insert" value="Insert Exam" id="insert" class="btn  btn-outline  btn-primary btn-rounded" />
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
+
+            <div class="footer">
+                <div class="float-right">
+                    Home
+                </div>
+                <div>
+                    <strong>Copyright</strong> DTU &copy; <?php echo date("Y") ?>
+                </div>
+            </div>
+
         </div>
     </div>
-    <?php include("./includes/scripts3.php") ?>
+
+    <?php include("includes/scripts3.php") ?>
     <script src="<?php echo SITEURL ?>asset2/js/bootstrap-datetimepicker.js"></script>
+    <script src="<?php echo SITEURL ?>asset2/js/TimeCircles.js"></script>
 
-
-    <script>
-        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
-        $(document).ready(function() {
-            // $('[data-toggle="tooltip"]').tooltip();
-            $("body").tooltip({
-                selector: '[data-toggle=tooltip]'
-            });
-
-            $('.dataTables-example').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-                responsive: true,
-                "ajax": {
-                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
-                    type: "POST",
-                    data: {
-                        action: 'fetch',
-                        page: 'exam'
-                    }
-                },
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [{
-                        extend: 'copy'
-                    },
-                    {
-                        extend: 'csv'
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'ExampleFile'
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'ExampleFile'
-                    },
-
-                    {
-                        extend: 'print',
-                        customize: function(win) {
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                .addClass('compact')
-                                .css('font-size', 'inherit');
-                        }
-                    }
-                ]
-
-            });
-            $(document).on('click', '.add-question', function() {
-                var id = $(this).attr('id');
-                location.href = "<?php echo SITEURL; ?>teacher/index.php?page=add_question&exam_code=" + id;
-            });
-            $(document).on('click', '.view-question', function() {
-                var id = $(this).attr('id');
-                location.href = "<?php echo SITEURL; ?>teacher/index.php?page=question&exam_code=" + id;
-            });
-            $(document).on('click', '.edit_exam', function() {
-                var exam_id = $(this).data('exam-id');
-                var course_id = $(this).data('course-id');
-                $.ajax({
-                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
-                    method: "POST",
-                    data: {
-                        page: "exam",
-                        action: "edit_fetch",
-                        exam_id: exam_id
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                        $('#exam_id').val(exam_id);
-                        $('#online_exam_datetime').val(data.exam_date);
-                        $('#online_exam_duration').val(data.time_duration);
-                        $('#total_questions').val(data.total_question);
-                        $('#insert').val("Update Exam");
-                        // alert($('#deanid').attr("value"));
-                        $('#action').val("update");
-                        $('#add_exam').modal('show');
-                    },
-                    error: function(responseObj) {
-                        alert("Something went wrong while processing your request.\n\nError => " +
-                            responseObj.responseText);
-                    }
-                });
-            });
-
-            $('#insert').on("click", function(event) {
-                event.preventDefault();
-                $.ajax({
-                    url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
-                    data: $('#insert_form').serialize(),
-                    type: 'POST',
-                    cache: false,
-                    beforeSend: function() {
-                        //$("#insert").val("Inserting");
-                    },
-                    complete: function(status) {
-                        if (status != "error" && status != "timeout") {
-                            //$("#insert").val("Inserted");
-                            $('#add_information').html("Operation successful");
-                            $('.dataTables-example').DataTable().ajax.reload();
-                            // $("#add_faculty").modal('toggle');
-
-                        }
-                    },
-                    error: function(responseObj) {
-                        alert("Something went wrong while processing your request.\n\nError => " +
-                            responseObj.error);
-                    }
-                });
-
-            });
-
-            var date = new Date();
-            date.setDate(date.getDate());
-            $('#online_exam_datetime').datetimepicker({
-                startDate: date,
-                format: 'yyyy-mm-dd hh:ii',
-                autoclose: true
-            });
-            $('#online_exam_duration').select2({
-                theme: 'bootstrap4',
-                placeholder: "Select a Time duration",
-                allowClear: true,
-                dropdownParent: $('#add_exam'),
-                width: 'resolve',
-            });
-            $(document).on('click','#view_result',function () {
-                alert("view result button is clicked");
-                location.href = '<?php echo SITEURL?>teacher/index.php?page=student_result&exam_id=1';
-            });
-
-        });
-    </script>
 
 </body>
+
+<script>
+    $(document).ready(function nme() {
+
+        $.ajax({
+            //add code to popoulate the datatables
+        });
+    });
+</script>
 
 </html>

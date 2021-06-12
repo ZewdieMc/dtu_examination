@@ -218,7 +218,7 @@ if ($_POST['action'] == "fetch") {
 				   		<button type="button" name="next" class="btn btn-primary  btn-lg btn-outline btn-rounded next" id="' . $next_id . '" ' . $if_next_disable . '>Next</button>
 				  	</div>
 				  	<br />';
-            // $output .= $prev_next;
+            $output .= $prev_next;
             $var = $row['question_id'];
         }
         $data = array(

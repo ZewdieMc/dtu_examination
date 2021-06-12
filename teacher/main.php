@@ -1,125 +1,100 @@
-<?php 
-    if(isset($_GET['page']))
-    {
-        $page=$_GET['page'];
-    }
-    else
-    {
-        $page='home';
-    }
-    
-    switch($page)
-    {
-        case "dashboard":
-        {
+<?php
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+    $page = 'home';
+}
+
+switch ($page) {
+    case "dashboard": {
             include('dashboard.php');
         }
         break;
-        
-        case "login":
-        {
+
+    case "login": {
             include('login.php');
         }
         break;
-        
-        case "exams":
-        {
+
+    case "exams": {
             include('exam.php');
         }
         break;
-        
-        case "question":
-        {
+
+    case "question": {
             include('view_question.php');
         }
         break;
-        
-        case "courses":
-        {
+
+    case "courses": {
             include('course.php');
         }
         break;
-        
-        case "student_result":
-        {
+
+    case "student_result": {
             include('student_result.php');
         }
         break;
-        
-        case "update_student":
-        {
+
+    case "update_student": {
             include('update_student.php');
         }
         break;
-        
-        case "faculties":
-        {
+
+    case "faculties": {
             include('faculties.php');
         }
         break;
-        
-        case "add_faculty":
-        {
+
+    case "add_faculty": {
             include('add_faculty.php');
         }
         break;
-        
-        case "update_faculty":
-        {
+
+    case "update_faculty": {
             include('update_faculty.php');
         }
         break;
-        
-        case "questions":
-        {
+
+    case "questions": {
             include('questions.php');
         }
         break;
-        
-        case "add_question":
-        {
+
+    case "add_question": {
             include('add_question.php');
         }
         break;
-        
-        case "update_question":
-        {
+
+    case "update_question": {
             include('update_question.php');
         }
         break;
-        
-        case "results":
-        {
+
+    case "results": {
             include('results.php');
         }
         break;
-        
-        case "view_result":
-        {
+
+    case "view_result": {
             include('view_result.php');
         }
         break;
-        
-        case "settings":
-        {
+
+    case "settings": {
             include('settings.php');
         }
         break;
-        
-        case "logout":
-        {
-            if(isset($_SESSION['teacher']))
-            {
-                unset($_SESSION['teacher']);
-            header('location:'.SITEURL.'teacher/index.php?page=login');
+
+    case "logout": {
+            if (isset($_SESSION['teacher'])) {
+                session_destroy();
+                header('location:' . SITEURL . 'teacher/index.php?page=login');
             }
-            
         }
         break;
-        
-        default:
-        {
+
+    default: {
             include('dashboard.php');
         }
-    }
-?>
+}

@@ -218,33 +218,20 @@
                                         <table class="table table-striped table-bordered table-hover dataTables-example">
                                             <thead>
                                                 <tr>
-                                                    <th>Exam Code</th>
-                                                    <th>Course Name</th>
-                                                    <th>Invigilator</th>
-                                                    <th>Total Questions</th>
-                                                    <th>Status</th>
-                                                    <th>Total Time</th>
-                                                    <th>Exam Date</th>
-                                                    <th>Study Year</th>
-                                                    <th>Result</th>
-                                                    <th>Question</th>
-                                                    <th></th>
+                                                    <th>Student ID</th>
+                                                    <th>Name</th>
+                                                    <th>Father's name</th>
+                                                    <th>Score</th>
+
                                                 </tr>
                                             </thead>
 
                                             <tfoot>
                                                 <tr>
-                                                    <th>Exam Code</th>
-                                                    <th>Course Name</th>
-                                                    <th>Invigilator</th>
-                                                    <th>Total Questions</th>
-                                                    <th>Status</th>
-                                                    <th>Total Time</th>
-                                                    <th>Total Date</th>
-                                                    <th>Study Year</th>
-                                                    <th>Result</th>
-                                                    <th>Question</th>
-                                                    <th></th>
+                                                    <th>Student ID</th>
+                                                    <th>Name</th>
+                                                    <th>Father's name</th>
+                                                    <th>Score</th>
                                                 </tr>
                                             </tfoot>
                                         </table>

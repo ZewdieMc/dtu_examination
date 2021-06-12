@@ -43,7 +43,7 @@
         }
         public function get_student_result($tbl_name,$where)
         {
-            $query = "SELECT first_name, last_name, sum(marks) as score from $tbl_name WHERE $where";
+            $query = "SELECT re.student_id, first_name, last_name, sum(marks) as score from $tbl_name WHERE $where";
             return $query;
         }
         public function insert_data($tbl_name,$data)

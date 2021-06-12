@@ -386,7 +386,7 @@ if ($_POST['action'] == "fetch") {
 				</tr>
 				<tr>
 					<td><b>Exam Duration</b></td>
-					<td>' . $row["time_duration"] . ' Minute</td>
+					<td>' . $row["time_duration"] . ' Minutes</td>
 				</tr>
 				<tr>
 					<td><b>Exam Total Question</b></td>

@@ -431,9 +431,9 @@ if (!isset($_SESSION['teacher'])) {
                 dropdownParent: $('#add_exam'),
                 width: 'resolve',
             });
-            $(document).on('click','#view_result',function () {
-                alert("view result button is clicked");
-                location.href = '<?php echo SITEURL?>teacher/index.php?page=student_result&exam_id=1';
+            $(document).on('click', '#view_result', function() {
+                var exam_id = $(this).data('exam-id');
+                location.href = '<?php echo SITEURL ?>teacher/index.php?page=student_result&exam_id='+exam_id;
             });
 
         });

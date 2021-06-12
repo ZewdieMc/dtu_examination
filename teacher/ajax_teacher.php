@@ -630,29 +630,50 @@ if ($_POST['action'] == 'fetch') {
         echo $output;
     }
     if ($_POST['page'] == 'student_result') {
-        $tbl_name = 'tbl_result 
-        inner join tbl_exam on tbl_result.exam_id = tbl_exam.exam_id
-        inner join tbl_course on tbl_exam.course_id = tbl_course.course_id
-        inner join tbl_student on tbl_result.student_id = tbl_student.student_id
+        $tbl_name = 'tbl_result as re inner join tbl_exam as ex on re.exam_id = ex.exam_id 
+        inner join tbl_course as co on ex.course_id = co.course_id 
+        inner join tbl_student st on re.student_id = st.student_id
         ';
-        $where = '
-        tbl_result.exam_id ="' . $_POST['exam_id'] . '" and right_answer = user_answer
-        AND
-        ';
+        $where = ' re.exam_id ="' . $_POST['exam_id'] . '" and re.right_answer = re.user_answer
+        AND ';
         if (isset($_POST['search']['value'])) {
             $where .= "(";
             $where .= 'first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+            $where .= 'OR re.student_id LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
+            // $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= ")";
         }
-        if (isset($_POST['order'])) {
-            $where .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
-        } else {
-            $where .= 'ORDER BY score ASC ';
+    
+        $where .= ' GROUP BY re.student_id, re.exam_id ';
+        $other = '';
+        if ($_POST['length'] != -1) {
+            $other .= ' LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
         }
-       $where .= 'group by tbl_result.student_id, tbl_result.exam_id';
 
+        $query = $obj->get_student_result($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $filtered_rows = $obj->num_rows($res);
+        $data = array();
+        while ($row = $obj->fetch_data($res)) {
+            $sub_array = array();
+            $sub_array[] .= $row['student_id'] ;
+            $sub_array[] .= $row['first_name'] ;
+            $sub_array[] .= $row['last_name'];
+            $sub_array[] .= $row['score'];
+            $data[] = $sub_array;
+        }
+        $where = "";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $total_rows = $obj->num_rows($res);
+        $output = array(
+            "draw"                =>    intval($_POST["draw"]),
+            "recordsTotal"        =>    $total_rows,
+            "recordsFiltered"    =>    $filtered_rows,
+            "data"                =>    $data
+        );
+        echo json_encode($output);
     }
 }
 // edit_fetch

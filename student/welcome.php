@@ -193,11 +193,12 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <h3>Choose an exam to enrol to.</h3>
+                            <div class="alet alert-info b-r-lg" style="padding:10px; margin-bottom: 20px;"> <b>Note:</b> Only active exams will be available in the option below.Exams of which time expired will not avail.</div>
                             <select name="exam_to_enrol" id="select2_exam" class="form-control" required='true'>
                                 <option></option>
                             </select>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <div id="enrollement_area">
                             </div>
                         </div>
@@ -228,7 +229,11 @@
             theme: 'bootstrap4',
             placeholder: "Choose a course to enrol",
             allowClear: false,
-
+            "language": {
+       "noResults": function(){
+           return "No Active Exams found for <?php echo $_SESSION['student']?>";
+       }
+   },
         });
         load_question();
 
@@ -245,7 +250,7 @@
                 }
             })
         }
-        $('#select2_exam').change(function() {
+        $('#select2_exam').on('change.select2',function() {
 
             // $('#exam_list').attr('required', 'required');
 
@@ -265,7 +270,7 @@
             });
             // }
         });
-        $(document).click( '#enroll_button', function() {
+        $(document).on('click','#enroll_button', function() {
             exam_id = $('#enroll_button').data('exam_id');
             $.ajax({
                 url: "<?php echo SITEURL ?>student/ajax_student.php",

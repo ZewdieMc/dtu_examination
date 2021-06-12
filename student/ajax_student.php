@@ -358,6 +358,7 @@ if ($_POST['action'] == "fetch") {
         $res = $obj->execute_query($conn, $query);
         $result = '<option></option>';
         while ($row = $obj->fetch_data($res)) {
+            if($row['status']!='completed')
             $result .= "<option value = " . $row['exam_id'] . ">" . $row['course_name'] . "</option>";
         }
         echo $result;
@@ -369,7 +370,7 @@ if ($_POST['action'] == "fetch") {
         $res = $obj->execute_query($conn, $query);
         $output = '
 			<div class="card">
-				<div class="card-header">Exam Details</div>
+				<div class="card-header bg-primary">Exam Details</div>
 				<div class="card-body">
 					<table class="table table-striped table-hover table-bordered">
 			';
@@ -377,7 +378,7 @@ if ($_POST['action'] == "fetch") {
             $row = $obj->fetch_data($res);
             $output .= '
 				<tr>
-					<td><b>Exam Title</b></td>
+					<td><b>Examination Name</b></td>
 					<td>' . $row["course_name"] . '</td>
 				</tr>
 				<tr>
@@ -385,7 +386,7 @@ if ($_POST['action'] == "fetch") {
 					<td>' . $row["exam_date"] . '</td>
 				</tr>
 				<tr>
-					<td><b>Exam Duration</b></td>
+					<td><b>Time allowed</b></td>
 					<td>' . $row["time_duration"] . ' Minutes</td>
 				</tr>
 				<tr>
@@ -406,7 +407,7 @@ if ($_POST['action'] == "fetch") {
                 $enroll_button = '
 					<tr>
 						<td colspan="2" align="center">
-							<button type="button" name="enroll_button" id="enroll_button" class="btn btn-success btn-rounded btn-outline" data-exam_id="' . $row['exam_id'] . '">Enroll </button>
+							<button type="button" name="enroll_button" id="enroll_button" class="btn btn-success btn-rounded btn-outline" data-exam_id="' . $row['exam_id'] . '">Enroll To This Exam </button>
 						</td>
 					</tr>
 					';
@@ -414,7 +415,7 @@ if ($_POST['action'] == "fetch") {
             $output .= $enroll_button;
             $output .= '</table></div></div></div>';
         } else
-            $output = "";
+            $output = "You have no active exam";
         echo $output;
     }
     if ($_POST['page'] == 'user_detail') {

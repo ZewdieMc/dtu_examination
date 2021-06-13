@@ -414,11 +414,11 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['first_name'] . " " . $row['last_name'];
             $sub_array[] .= $row['qns_per_set'];
             if ($row['status'] == "created") {
-                $sub_array[] .= "<span class='badge badge-success'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-success'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "started") {
-                $sub_array[] .= "<span class='badge badge-primary'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-primary'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "completed") {
-                $sub_array[] .= "<span class='badge badge-danger'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-danger'>" . $row['status'] . "</span>";
             }
             $sub_array[] .= $row['time_duration'] . " minutes";;
             $sub_array[] .= $row['exam_date'];
@@ -644,7 +644,7 @@ if ($_POST['action'] == 'fetch') {
             // $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
             $where .= ")";
         }
-    
+
         $where .= ' GROUP BY re.student_id, re.exam_id ';
         $other = '';
         if ($_POST['length'] != -1) {
@@ -657,8 +657,8 @@ if ($_POST['action'] == 'fetch') {
         $data = array();
         while ($row = $obj->fetch_data($res)) {
             $sub_array = array();
-            $sub_array[] .= $row['student_id'] ;
-            $sub_array[] .= $row['first_name'] ;
+            $sub_array[] .= $row['student_id'];
+            $sub_array[] .= $row['first_name'];
             $sub_array[] .= $row['last_name'];
             $sub_array[] .= $row['score'];
             $data[] = $sub_array;

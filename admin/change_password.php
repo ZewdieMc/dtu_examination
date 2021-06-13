@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Examination | password</title>
-    <?php include('./includes/css2.php'); ?>
+    <?php include('./includes/css3.php'); ?>
     <link href="<?php echo SITEURL ?>asset/copy/css/form.min.css" rel="stylesheet">
     <style type="text/css">
         .c-block {
@@ -22,7 +22,7 @@
 
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
     <div id="wrapper">
 
@@ -68,7 +68,7 @@
                                         <?php
                                         if (isset($_POST['Change_password'])) {
                                             $tbl_name = "tbl_admin";
-                                            $user_id = $_SESSION['user_id'];
+                                            $user_id = $_SESSION['admin_id'];
                                             $where = "id='$user_id'";
                                             $query = $obj->select_data($tbl_name, $where);
                                             $res = $obj->execute_query($conn, $query);
@@ -122,7 +122,7 @@
         </div>
     </div>
     </div>
-    <?php include('./includes/scripts2.php'); ?>
+    <?php include('./includes/scripts3.php'); ?>
 
 
 

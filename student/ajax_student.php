@@ -87,6 +87,7 @@ function if_question_is_answered($conn, $obj, $student_id, $exam_id, $question_i
     }
     return false;
 }
+
 // login
 if ($_POST['action'] == 'login') {
     if ($_POST['page'] == 'student') {
@@ -117,7 +118,7 @@ if ($_POST['action'] == 'login') {
             $_SESSION['dept_name'] = $row['department_name'];
         } else {
             $output = array(
-                "error" => "Username or Password is invalid. Please try againn."
+                "error" => "Username or Password is invalid. Please try again."
             );
         }
         echo json_encode($output);
@@ -140,6 +141,7 @@ if ($_POST['action'] == "fetch") {
         $output = '';
         $prev_next = '';
         $var = '';
+        $class = '';
         while ($row = $obj->fetch_data($res)) {
             $output .= ' <h4>' . $row["question"] . '(<font color = "green">' . $row['marks'] . ' marks</font>)</h4>
 				<div class = "hr-line-solid"></div>
@@ -220,11 +222,17 @@ if ($_POST['action'] == "fetch") {
 				  	<br />';
             $output .= $prev_next;
             $var = $row['question_id'];
+            if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $row['question_id'])) {
+                $class = 'btn-primary';
+            } else
+                $class = 'btn-warning';
+
         }
         $data = array(
             "question" => $output,
             "nav" => $prev_next,
-            "question_id" => $var
+            "question_id" => $var,
+            "class" => $class
         );
 
 
@@ -249,9 +257,13 @@ if ($_POST['action'] == "fetch") {
         $count = 1;
         while ($row = $obj->fetch_data($res)) {
             if ($row['question_id']) {
+                if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $row['question_id'])) {
+                    $class = 'btn-primary';
+                } else
+                    $class = 'btn-danger';
                 $output .= '
                     <div class="col-sm-2" style="margin-bottom:10px;">
-                        <button type="button" class="btn btn-primary btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
+                        <button type="button" class="btn '.$class.' btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
                     </div>
                     ';
                 $count++;
@@ -358,8 +370,8 @@ if ($_POST['action'] == "fetch") {
         $res = $obj->execute_query($conn, $query);
         $result = '<option></option>';
         while ($row = $obj->fetch_data($res)) {
-            if($row['status']!='completed')
-            $result .= "<option value = " . $row['exam_id'] . ">" . $row['course_name'] . "</option>";
+            if ($row['status'] != 'completed')
+                $result .= "<option value = " . $row['exam_id'] . ">" . $row['course_name'] . "</option>";
         }
         echo $result;
     }
@@ -475,14 +487,14 @@ if ($_POST['action'] == "fetch") {
         ';
         $where2 = 'exam_id = "' . $_POST['exam_id'] . '" ';
         $where3 = '
-        STUDENT_ID ="'.$_SESSION['student_id'].'" AND EXAM_ID ="'.$_POST['exam_id'].'" AND USER_ANSWER=RIGHT_ANSWER
+        STUDENT_ID ="' . $_SESSION['student_id'] . '" AND EXAM_ID ="' . $_POST['exam_id'] . '" AND USER_ANSWER=RIGHT_ANSWER
         ';
-        $query  = $obj->select_sum_of_column($tbl_name1,$tbl_name2,$tbl_name3, 'marks', $where1, $where2,$where3);
+        $query  = $obj->select_sum_of_column($tbl_name1, $tbl_name2, $tbl_name3, 'marks', $where1, $where2, $where3);
         $res = $obj->execute_query($conn, $query);
         $output = array();
         if ($res) {
             $row = $obj->fetch_data($res);
-            $output  = array('weight' => $row['exam_weight'], 'score' => $row['your_score'], 'ques_attempted'=>$row['ques_attempted'],'ques_total'=>$row['ques_total'], 'course'=>$row['course_name']);
+            $output  = array('weight' => $row['exam_weight'], 'score' => $row['your_score'], 'ques_attempted' => $row['ques_attempted'], 'ques_total' => $row['ques_total'], 'course' => $row['course_name']);
         }
         echo json_encode($output);
     }
@@ -512,6 +524,7 @@ if ($_POST['action'] == 'Add') {
         $data = "";
         $query = "";
         $response_message = '';
+        $class ='btn-primary';
         if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id'])) {
             $data = "
             user_answer = '" . $_POST['user_answer'] . "',
@@ -541,7 +554,7 @@ if ($_POST['action'] == 'Add') {
         $res = $obj->execute_query($conn, $query);
         $response = array();
         if ($res) {
-            $response = array('success' =>  $response_message);
+            $response = array('success' =>  $response_message,'class'=>$class);
         } else {
             $response = array('failer' => 'Operartion failed');
         }

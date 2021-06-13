@@ -224,6 +224,9 @@
                     }
                     $('#prev_next').html(res.nav);
                     $('#question_navigation_area .btn').removeClass("active");
+                    if ($('#question_navigation_area #' + res.question_id).hasClass('btn-danger'))
+                        $('#question_navigation_area #' + res.question_id).removeClass('btn-danger');
+                    $('#question_navigation_area #' + res.question_id).addClass(res.class);
                     $('#question_navigation_area #' + res.question_id).addClass("active");
                     $('#single_question_area').iCheck({
                         checkboxClass: 'icheckbox_square-green',
@@ -304,6 +307,10 @@
 
         $(document).on('click', '.question_navigation', function() {
             var question_id = $(this).data('question_id');
+            if ($('#question_navigation_area #' + question_id).hasClass('btn-danger')) {
+                $('#question_navigation_area #' + question_id).removeClass("btn-danger");
+                $('#question_navigation_area #' + question_id).addClass("btn-warning");
+            }
             load_question(question_id);
         });
         $(document).on('ifClicked', '.answer_option', function() {
@@ -336,6 +343,11 @@
                         toastr.success('Your answer is saved!.');
                     else
                         toastr.warning("You updated your answer!");
+                    if ($('#question_navigation_area #' + question_id).hasClass('btn-warning')) {
+                        $('#question_navigation_area #' + question_id).removeClass('btn-warning');
+                    }
+                    $('#question_navigation_area #' + question_id).addClass(data.class);
+
 
                 }
             })

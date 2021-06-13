@@ -9,11 +9,11 @@
 
   <title>DTU Examination</title>
 
-  <?php include('./includes/css2.php') ?>
+  <?php include('./includes/css3.php') ?>
 
 </head>
 
-<body>
+<body class="md-skin pace-done">
   <div id="wrapper">
     <?php include('sidenav.php'); ?>
 
@@ -29,7 +29,7 @@
         <div class="col-lg-10">
           <h2>Admin</h2>
           <ol class="breadcrumb">
-            <li>
+            <li class="breadcrumb-item active">
               <a href="<?php echo SITEURL ?>admin/index.php?page=dashboard">Home</a>
             </li>
 
@@ -102,7 +102,7 @@
           ?>
         </div>
       </div>
-      <?php include('includes/scripts2.php') ?>
+      <?php include('includes/scripts3.php') ?>
 
       <script>
         $(document).ready(function() {

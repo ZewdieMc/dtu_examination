@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['admin'])) {
     header('location:' . SITEURL . 'admin/index.php?page=login');
 }
 ?>
@@ -12,10 +12,10 @@ if (!isset($_SESSION['user'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Examination</title>
-    <?php include('./includes/css2.php') ?>
+    <?php include('./includes/css3.php') ?>
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
     <div id="wrapper">
 
@@ -32,11 +32,11 @@ if (!isset($_SESSION['user'])) {
                 <div class="col-lg-10">
                     <h2>Admin</h2>
                     <ol class="breadcrumb">
-                        <li>
+                        <li class="breadcrumb-item">
                             <a href="index.php">Home</a>
                         </li>
 
-                        <li class="active">
+                        <li class=" breadcrumb-item active">
                             <strong>Exam lists</strong>
                         </li>
                     </ol>
@@ -80,7 +80,7 @@ if (!isset($_SESSION['user'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $tbl_name = "tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.id";
+                                            $tbl_name = "tbl_exam join tbl_course on tbl_exam.course_id=tbl_course.course_id";
                                             $query = $obj->select_data($tbl_name);
                                             $res = $obj->execute_query($conn, $query);
                                             $count_rows = $obj->num_rows($res);
@@ -140,11 +140,12 @@ if (!isset($_SESSION['user'])) {
     <div class="middle-box text-center loginscreen animated fadeInDown" style="width:300px;">
 
     </div>
-    <?php include("./includes/scripts2.php") ?>
+    <?php include("./includes/scripts3.php") ?>
 
 
     <!-- Page-Level Scripts -->
     <script>
+        $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
         $(document).ready(function() {
             $('.dataTables-example').DataTable({
                 dom: '<"html5buttons"B>lTfgitp',

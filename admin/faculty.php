@@ -11,7 +11,7 @@
   <?php include('./includes/css2.php') ?>
 </head>
 
-<body>
+<body class="md-skin pace-done">
 
   <div id="wrapper">
 
@@ -127,6 +127,7 @@
 
   <!-- Page-Level Scripts -->
   <script>
+    $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
     $(document).ready(function() {
       var dataTable = $('#data-faculty').DataTable({
         "processing": true,

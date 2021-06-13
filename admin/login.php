@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>DTU Exam | Department Login </title>
+    <title>DTU Exam | Admin Login </title>
 
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -83,20 +83,14 @@
                         <div class="form-group">
                             <input type="password" class="form-control" name="password" placeholder="Password" required="">
                         </div>
-                        <center><input type="submit" name="submit" value="Log In" class="btn btn-lg btn-primary btn-rounded btn-outline " /></center>
+                        <center><input type="submit" name="submit" value="Sign In" class="btn btn-lg btn-primary btn-rounded btn-outline " /></center>
                         <br>
                         <a href="#">
                             <small>Forgot password?</small>
                         </a>
-                        <!-- 
-                        <p class="text-muted text-center">
-                            <small>Do not have an account?</small>
-                        </p>
-                        <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> -->
+      
                     </form>
-                    <!-- <p class="m-t">
-                        <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
-                    </p> -->
+
                     <?php
                     if (isset($_POST['submit'])) {
                         //echo "Clicked";
@@ -105,8 +99,7 @@
                         // $password_db = $obj->sanitize($conn, $_POST['password']);
 
                         if (($username == "") or ($password = "")) {
-                            $_SESSION['validation'] = "<div class='alert alert-danger'>Username or Password is Empty</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=login');
+                            header('location:' . SITEURL . 'admin/index.php?page=login');
                         }
                         $tbl_name = "tbl_admin";
                         $where = "username='$username' AND password='$password_db'";

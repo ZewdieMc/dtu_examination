@@ -277,11 +277,19 @@ if (!isset($_SESSION['teacher'])) {
                         <div class="form-group"><label> Time Duration</label>
                             <select name="online_exam_duration" id="online_exam_duration" class="form-control" style="width: 100%">
                                 <option value=""></option>
-                                <option value="5">5 Minute</option>
-                                <option value="30">30 Minute</option>
+                                <option value="5">5 Minutes</option>
+                                <option value="30">30 Minutes</option>
+                                <option value="45">45 Minutes</option>
                                 <option value="60">1 Hour</option>
-                                <option value="120">2 Hour</option>
-                                <option value="180">3 Hour</option>
+                                <option value="90">1:30 Minutes</option>
+                                <option value="105">1:45 Minutes</option>
+                                <option value="120">2 Hours</option>
+                                <option value="135">2:15 Minutes</option>
+                                <option value="150">2:30 Minutes</option>
+                                <option value="165">2:45 Minutes</option>
+                                <option value="180">3 Hours</option>
+                                <option value="210">3፡30 Minutes</option>
+                                <option value="240">4 Hours</option>
                             </select>
                         </div>
                         <div id="add_information" class="form-group"></div>

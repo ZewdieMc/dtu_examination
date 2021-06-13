@@ -115,7 +115,7 @@
                         $row = $obj->fetch_data($res);
                         $count_rows = $obj->num_rows($res);
                         if ($count_rows == 1) {
-                            $_SESSION['user'] = $username;
+                            $_SESSION['head'] = $username;
                             $_SESSION['head_id'] = $row['id'];
                             $_SESSION['dept_id'] = $row['department_id'];
                             $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";

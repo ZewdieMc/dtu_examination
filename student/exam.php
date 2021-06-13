@@ -221,7 +221,7 @@
             </div>
 
             <div class="modal inmodal fade" id="result_modal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
+                <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -230,6 +230,9 @@
                         <div class="modal-body">
                             <h3>
                                 <div id="course_name" class="alert alert-info"></div><br>
+                                <div>
+                                    <canvas id="myChart" ></canvas>
+                                </div>
                             </h3>
                         </div>
                         <div class="modal-footer">
@@ -317,7 +320,32 @@
                         action: 'fetch'
                     },
                     success: function(data) {
-                        $('#course_name').html(data.course + "<br><hr> You  scored <br>" + data.score + " out of " + data.total);
+                        var ctx = $('#myChart');
+                        var unattempted = parseInt(data.ques_total) - parseInt(data.ques_attempted);
+                        var data_chart = {
+                            labels: [
+                                'Attempted Qns',
+                                'Total Qns',
+                                'Unattempted Qns'
+                            ],
+                            datasets: [{
+                                label: 'My First Dataset',
+                                data: [data.ques_attempted, data.ques_total, unattempted],
+                                backgroundColor: [
+                                    '#1bb394',
+                                    '#727d7b',
+                                    '#bd527f'
+                                ],
+                                hoverOffset: 4
+                            }]
+                        };
+
+                        var myChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: data_chart
+
+                        });
+                        $('#course_name').html( "You Scored "+data.score + " out of " + data.weight);
                         $('#detailed_result').data('exam-id-detail', exam_id);
 
                         $('#result_modal').modal('show');
@@ -325,8 +353,8 @@
                 })
             });
             $(document).on('click', '#detailed_result', function(params) {
-               var exam_id = $(this).data('exam-id-detail');
-                location.href = "<?php echo SITEURL?>student/index.php?page=result_detail&exam_id="+exam_id;
+                var exam_id = $(this).data('exam-id-detail');
+                location.href = "<?php echo SITEURL ?>student/index.php?page=result_detail&exam_id=" + exam_id;
             })
         });
     </script>

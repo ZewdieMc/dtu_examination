@@ -309,11 +309,11 @@ if ($_POST['action'] == "fetch") {
             // $sub_array[] .= $row['first_name'] . " " . $row['last_name'];
             $sub_array[] .= $row['qns_per_set'];
             if ($row['status'] == "created") {
-                $sub_array[] .= "<span class='badge badge-success'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-success'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "started") {
-                $sub_array[] .= "<span class='badge badge-primary'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-primary'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "completed") {
-                $sub_array[] .= "<span class='badge badge-danger'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-danger'>" . $row['status'] . "</span>";
             }
             $sub_array[] .= $row['time_duration'] . " minutes";;
             $sub_array[] .= $row['exam_date'];
@@ -464,22 +464,25 @@ if ($_POST['action'] == "fetch") {
         echo $output;
     }
     if ($_POST['page'] == 'student_result') {
-        $tbl_name  = 'tbl_result join tbl_exam on tbl_result.exam_id = tbl_exam.exam_id join tbl_course on tbl_exam.course_id = tbl_course.course_id';
+        $tbl_name1  = 'TBL_RESULT AS R
+        INNER JOIN TBL_EXAM AS E ON R.EXAM_ID = E.EXAM_ID
+        INNER JOIN TBL_COURSE AS C ON E.COURSE_ID = C.COURSE_ID';
+        $tbl_name2 = 'TBL_QUESTION ';
+        $tbl_name3 = 'TBL_RESULT';
         $where1 = '
-        tbl_result.exam_id = "' . $_POST['exam_id'] . '" 
-        AND tbl_result.student_id = "' . $_SESSION['student_id'] . '"
-        AND user_answer = right_answer
+        R.exam_id = "' . $_POST['exam_id'] . '" 
+        AND R.student_id = "' . $_SESSION['student_id'] . '"
         ';
-        $where2 = '
-        tbl_result.exam_id = "' . $_POST['exam_id'] . '" 
-        AND tbl_result.student_id = "' . $_SESSION['student_id'] . '"
+        $where2 = 'exam_id = "' . $_POST['exam_id'] . '" ';
+        $where3 = '
+        STUDENT_ID ="'.$_SESSION['student_id'].'" AND EXAM_ID ="'.$_POST['exam_id'].'" AND USER_ANSWER=RIGHT_ANSWER
         ';
-        $query  = $obj->select_sum_of_column($tbl_name, 'marks', $where1, $where2);
+        $query  = $obj->select_sum_of_column($tbl_name1,$tbl_name2,$tbl_name3, 'marks', $where1, $where2,$where3);
         $res = $obj->execute_query($conn, $query);
         $output = array();
         if ($res) {
             $row = $obj->fetch_data($res);
-            $output  = array('total' => $row['total'], 'score' => $row['score'],'course'=>$row['course_name']);
+            $output  = array('weight' => $row['exam_weight'], 'score' => $row['your_score'], 'ques_attempted'=>$row['ques_attempted'],'ques_total'=>$row['ques_total'], 'course'=>$row['course_name']);
         }
         echo json_encode($output);
     }

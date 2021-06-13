@@ -35,7 +35,7 @@
  <!-- Sparkline demo data  -->
  <!-- <script src="<?php echo SITEURL ?>asset2/js/demo/sparkline-demo.js"></script> -->
  <!-- ChartJS-->
- <!-- <script src="<?php echo SITEURL ?>asset2/js/plugins/chartJs/Chart.min.js"></script> -->
+ <script src="<?php echo SITEURL ?>asset2/js/plugins/chartJs/Chart.min.js"></script>
  <!-- Toastr -->
  <script src="<?php echo SITEURL ?>asset2/js/plugins/toastr/toastr.min.js"></script>
  <!-- Mainly scripts -->

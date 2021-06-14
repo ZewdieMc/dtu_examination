@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>DTU Exam</title>
-    <!-- <?php include('./includes/css2.php') ?> -->
+   
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/plugins/iCheck/custom.css" rel="stylesheet">

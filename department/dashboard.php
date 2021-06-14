@@ -9,7 +9,7 @@
 
     <title>DTU Examination</title>
 
-    <?php include('./includes/css2.php') ?>
+    <?php include('includes/css2.php') ?>
 
 </head>
 

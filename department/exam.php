@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['head'])) {
     header('location:' . SITEURL . 'department/index.php?page=login');
 }
 ?>

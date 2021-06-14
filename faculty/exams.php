@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-if (!isset($_SESSION['user'])) {
+if (!isset($_SESSION['dean'])) {
     header('location:' . SITEURL . 'faculty/index.php?page=login');
 }
 ?>

@@ -345,7 +345,7 @@
                             data: data_chart
 
                         });
-                        $('#course_name').html( "You Scored "+data.score + " out of " + data.weight);
+                        $('#course_name').html( data.course+"<hr>You Scored "+data.score + " out of " + data.weight);
                         $('#detailed_result').data('exam-id-detail', exam_id);
 
                         $('#result_modal').modal('show');

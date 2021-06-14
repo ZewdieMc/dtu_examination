@@ -226,7 +226,6 @@ if ($_POST['action'] == "fetch") {
                 $class = 'btn-primary';
             } else
                 $class = 'btn-warning';
-
         }
         $data = array(
             "question" => $output,
@@ -250,7 +249,7 @@ if ($_POST['action'] == "fetch") {
         // $result = $obj->fetch_data($res);
         $output = '
 			<div class="card">
-				<div class="card-header .b-r-md"><b>Question Navigation</b></div>
+				<div class="card-header b-r-md"><b>Question Navigation</b></div>
 				<div class="card-body">
 					<div class="row">
 			';
@@ -263,7 +262,7 @@ if ($_POST['action'] == "fetch") {
                     $class = 'btn-danger';
                 $output .= '
                     <div class="col-sm-2" style="margin-bottom:10px;">
-                        <button type="button" class="btn '.$class.' btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
+                        <button type="button" class="btn ' . $class . ' btn-sm btn-circle btn-outline question_navigation" data-question_id="' . $row["question_id"] . '" id="' . $row["question_id"] . '">' . $count . '</button>
                     </div>
                     ';
                 $count++;
@@ -273,11 +272,18 @@ if ($_POST['action'] == "fetch") {
         }
         if ($count == 1)
             $output = '';
-        else
+        else {
             $output .= '
-				</div>
-			</div></div>
+            </div>
+			</div>
+            <div class="card-footer">
+            <label><button class ="btn btn-outline btn-sm btn-circle btn-primary ">i</button> Answered</label>
+            <label><button class ="btn btn-outline btn-circle btn-danger ">i</button>  Unvisited</label>
+            <label><button class ="btn btn-outline btn-circle btn-warning ">i</button> Not Answered</label>
+			</div>
+            </div>
 			';
+        }
         echo $output;
     }
     if ($_POST['page'] == 'exam') {
@@ -524,7 +530,7 @@ if ($_POST['action'] == 'Add') {
         $data = "";
         $query = "";
         $response_message = '';
-        $class ='btn-primary';
+        $class = 'btn-primary';
         if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id'])) {
             $data = "
             user_answer = '" . $_POST['user_answer'] . "',
@@ -554,7 +560,7 @@ if ($_POST['action'] == 'Add') {
         $res = $obj->execute_query($conn, $query);
         $response = array();
         if ($res) {
-            $response = array('success' =>  $response_message,'class'=>$class);
+            $response = array('success' =>  $response_message, 'class' => $class);
         } else {
             $response = array('failer' => 'Operartion failed');
         }

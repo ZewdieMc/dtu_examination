@@ -87,8 +87,8 @@ switch ($page) {
         break;
 
     case "logout": {
-            if (isset($_SESSION['user'])) {
-                unset($_SESSION['user']);
+            if (isset($_SESSION['head'])) {
+                unset($_SESSION['head']);
                 header('location:' . SITEURL . 'department/index.php?page=login');
             }
         }

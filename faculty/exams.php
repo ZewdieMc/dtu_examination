@@ -106,8 +106,18 @@ if (!isset($_SESSION['dean'])) {
                                                         <td>
                                                             <?php echo $row['qns_per_set'] ?>
                                                         </td>
-                                                        <td><?php echo $row['status'] ?></td>
-                                                        <td><?php echo $row['time_duration'] ?></td>
+                                                        <td><?php 
+                                                        if ($row['status']=='completed') {
+                                                            echo "<span class='label label-danger'>" . $row['status'] . "</span>";
+                                                        }
+                                                        elseif ($row['status']=='created') {
+                                                            echo "<span class='label label-success'>" . $row['status'] . "</span>";
+                                                        }
+                                                        elseif ($row['status']=='start') {
+                                                            echo "<span class='label label-primary'>" . $row['status'] . "</span>";
+                                                        }
+                                                        ?></td>
+                                                        <td><?php echo $row['time_duration']." Minutes" ?></td>
                                                         <td><?php echo $row['exam_date'] ?></td>
                                                     </tr>
 

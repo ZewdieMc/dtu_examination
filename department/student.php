@@ -184,7 +184,7 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group"><label> Gender</label>
-                  <select class="form-control" name="gender">
+                  <select class="form-control" name="gender" id="select2_gender">
                     <option>Male</option>
                     <option>Female</option>
                     <option>Other</option>
@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="form-group"><label> Study Year</label>
-                  <select class="form-control" name="study_year">
+                  <select class="form-control" name="study_year" id="select2_study_year">
                     <option></option>
                     <?php
                     $tbl_name  = "tbl_year_study";

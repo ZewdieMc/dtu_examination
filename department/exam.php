@@ -114,11 +114,11 @@ if (!isset($_SESSION['head'])) {
                                                         </td>
                                                         <td><?php
                                                             if ($row['status'] == "created") {
-                                                                echo "<span class='badge badge-success'>" . $row['status'] . "</span>";
+                                                                echo "<span class='label label-success'>" . $row['status'] . "</span>";
                                                             } elseif ($row['status'] == "started") {
-                                                                echo "<span class='badge badge-primary'>" . $row['status'] . "</span>";
+                                                                echo "<span class='label label-primary'>" . $row['status'] . "</span>";
                                                             } elseif ($row['status'] == "completed") {
-                                                                echo "<span class='badge badge-danger'>" . $row['status'] . "</span>";
+                                                                echo "<span class='label label-danger'>" . $row['status'] . "</span>";
                                                             }
                                                             ?></td>
                                                         <td><?php echo $row['time_duration'] . " minutes"; ?></td>

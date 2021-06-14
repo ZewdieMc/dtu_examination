@@ -32,8 +32,8 @@ switch ($page) {
         break;
 
     case "logout": {
-            if (isset($_SESSION['user'])) {
-                unset($_SESSION['user']);
+            if (isset($_SESSION['dean'])) {
+                unset($_SESSION['dean']);
                 header('location:' . SITEURL . 'faculty/index.php?page=login');
             }
         }

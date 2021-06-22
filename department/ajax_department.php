@@ -1,5 +1,39 @@
 <?php
 include('config/apply.php');
+// login
+if ($_POST['action'] == 'login') {
+    if ($_POST['page'] == 'department') {
+        # code...
+        $username = $obj->sanitize($conn, $_POST['username']);
+        $password = md5($obj->sanitize($conn, $_POST['password']));
+        $tbl_name = "tbl_department_head";
+        $where = "username='$username' and password ='$password'";
+        $query = $obj->select_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        $row = $obj->fetch_data($res);
+        $count_rows = $obj->num_rows($res);
+        if ($count_rows == 1) {
+            $_SESSION['head'] = $username;
+            $_SESSION['head_id'] = $row['id'];
+            $_SESSION['dept_id'] = $row['department_id'];
+            $_SESSION['full_name'] = $row['first_name'] . " " . $row['last_name'];
+            $output = array(
+                'success'    =>    true
+            );
+            $tbl_name = "tbl_department";
+            $where = "dept_id= '" . $_SESSION['dept_id'] . "'";
+            $query = $obj->select_data($tbl_name, $where);
+            $res = $obj->execute_query($conn, $query);
+            $row = $obj->fetch_data($res);
+            $_SESSION['dept_name'] = $row['department_name'];
+        } else {
+            $output = array(
+                "error" => "Username or Password is invalid. Please try again."
+            );
+        }
+        echo json_encode($output);
+    }
+}
 // Read Operation
 if ($_POST['action'] == 'fetch') {
     if ($_POST['page'] == 'student') {
@@ -206,11 +240,11 @@ if ($_POST['action'] == 'fetch') {
             $sub_array[] .= $row['first_name'] . " " . $row['last_name'];
             $sub_array[] .= $row['qns_per_set'];
             if ($row['status'] == "created") {
-                $sub_array[] .= "<span class='badge badge-success'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-success'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "started") {
-                $sub_array[] .= "<span class='badge badge-primary'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-primary'>" . $row['status'] . "</span>";
             } elseif ($row['status'] == "completed") {
-                $sub_array[] .= "<span class='badge badge-danger'>" . $row['status'] . "</span>";
+                $sub_array[] .= "<span class='label label-danger'>" . $row['status'] . "</span>";
             }
             $sub_array[] .= $row['time_duration'] . " minutes";;
             $sub_array[] .= $row['exam_date'];

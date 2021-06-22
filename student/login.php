@@ -82,7 +82,7 @@
                 <center><img src="<?php echo SITEURL; ?>images/logo.jpg" class="img-circle" height="100" width="100"></center>
                 <div class="ibox-content">
                     <span id="message"></span>
-                    <form class="m-t" role="form" data-parsley-validate id="teacher_login_form" action="" method="POST">
+                    <form class="m-t" role="form" id="teacher_login_form" action="" method="POST">
                         <div class="form-group">
                             <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
                         </div>
@@ -118,7 +118,7 @@
 
 </body>
 <script src="<?php echo SITEURL ?>asset2/js/jquery-3.1.1.min.js"></script>
-<script src="<?php echo SITEURL ?>asset2/js/parsley.js"></script>
+<!-- <script src="<?php echo SITEURL ?>asset2/js/parsley.js"></script> -->
 <script src="<?php echo SITEURL ?>asset2/js/popper.min.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/bootstrap.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/plugins/metisMenu/jquery.metisMenu.js"></script>
@@ -128,20 +128,25 @@
 <script src="<?php echo SITEURL ?>asset2/js/inspinia.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/plugins/pace/pace.min.js"></script>
 
-
-
+<script src="<?php echo SITEURL ?>asset2/js/plugins/validate/jquery.validate.min.js"></script>
 <script>
     $(document).ready(function() {
-        // $('#admin_login_form').parsley();
-        $('#teacher_login_form').on('submit', function(event) {
-            event.preventDefault();
-            $('#username').attr('required', 'required');
-            $('#password').attr('required', 'required');
-            if ($('#teacher_login_form').parsley().validate()) {
+        // var form = $('#teacher_login_form');
+        $("#teacher_login_form").validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                username: {
+                    required: true
+                }
+            },
+            submitHandler: function(form) {
                 $.ajax({
                     url: "<?php echo SITEURL ?>student/ajax_student.php",
                     method: "POST",
-                    data: $(this).serialize(),
+                    data: $(form).serialize(),
                     dataType: "json",
                     beforeSend: function() {
                         $('#teacher_login').attr('disabled', 'disabled');
@@ -149,7 +154,7 @@
                     },
                     success: function(data) {
                         if (data.success) {
-                            location.href = "<?php echo SITEURL ?>student/index.php?page=welcome";
+                            location.href = "<?php echo SITEURL ?>student/index.php?page=dashboard";
                         } else {
                             $('#message').html('<div class="alert alert-danger">' + data.error + '</div>');
                         }
@@ -161,8 +166,17 @@
                             responseObj.responseText);
                     }
                 });
-            }
+            },
         });
+        // $('#admin_login_form').parsley();
+        // $('#teacher_login_form').on('submit', function(event) {
+        // event.preventDefault();
+        // $('#username').attr('required', 'required');
+        // $('#password').attr('required', 'required');
+        // if ($('#teacher_login_form').parsley().validate()) {
+        // $.ajax();
+        // }
+        // });
 
     });
 </script>

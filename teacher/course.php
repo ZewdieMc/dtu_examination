@@ -4,7 +4,7 @@
 
 
 <head>
-
+    <link rel="shortcut icon" href="<?php echo SITEURL ?>images/logo.jpg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 

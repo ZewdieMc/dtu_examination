@@ -83,57 +83,8 @@ if (!isset($_SESSION['head'])) {
                                                 <th>Study Year</th>
                                                 <th>Invigilator</th>
                                             </tr>
-                                            <!-- </thead>
-                                        <tbody>
-                                            <?php
-                                            $tbl_name = "(tbl_exam join tbl_course on
-                                            tbl_exam.course_id=tbl_course.course_id)join tbl_year_study on 
-                                            tbl_course.study_year=tbl_year_study.study_year_id join
-                                            tbl_teacher on tbl_course.teacher_id = tbl_teacher.id";
-                                            $department_id = $_SESSION['dept_id'];
-                                            $where = "tbl_course.department_id=$department_id";
-                                            $query = $obj->select_data($tbl_name);
-                                            $res = $obj->execute_query($conn, $query);
-                                            $count_rows = $obj->num_rows($res);
-                                            if ($count_rows > 0) {
-                                                while ($row = $obj->fetch_data($res)) {
-                                            ?>
-                                                    <tr class="gradeX">
+                                            </thead>
 
-                                                        <td>
-                                                            <?php echo $row['exam_id'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['course_name'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['first_name'] . " " . $row['last_name'] ?>
-                                                        </td>
-                                                        <td>
-                                                            <?php echo $row['qns_per_set'] ?>
-                                                        </td>
-                                                        <td><?php
-                                                            if ($row['status'] == "created") {
-                                                                echo "<span class='label label-success'>" . $row['status'] . "</span>";
-                                                            } elseif ($row['status'] == "started") {
-                                                                echo "<span class='label label-primary'>" . $row['status'] . "</span>";
-                                                            } elseif ($row['status'] == "completed") {
-                                                                echo "<span class='label label-danger'>" . $row['status'] . "</span>";
-                                                            }
-                                                            ?></td>
-                                                        <td><?php echo $row['time_duration'] . " minutes"; ?></td>
-                                                        <td><?php echo $row['exam_date'] ?></td>
-                                                        <td><?php echo $row['year'] ?></td>
-                                                    </tr>
-
-
-                                            <?php }
-                                            } else
-                                                echo "no data";
-                                            ?>
-
-
-                                        </tbody> -->
                                         <tfoot>
                                             <tr>
                                                 <th>Exam Code</th>

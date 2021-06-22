@@ -161,4 +161,9 @@ att:
 						examinations which are eihter started or created.i.e completed examination questions shouldnt be displayed.).
 
 						When a student enrolls to an exam, the ALERADY ENROLLED message should consider to what TYPE(mid, final, or other) and EXAM_DATE of exam they are enrolled to.
+			  
+			  			============faculty department head selection should be automated using select box
+						=============faculty examination details should be aupdated.  
+						============system communication notification messages should be worked out.
+			  
 			  	*/

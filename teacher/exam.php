@@ -9,7 +9,7 @@ if (!isset($_SESSION['teacher'])) {
 <html>
 
 <head>
-    <link rel="shortcut icon" HREF="img/dtu.png" />
+    <link rel="shortcut icon" href="<?php echo SITEURL ?>images/logo.jpg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -36,7 +36,11 @@ if (!isset($_SESSION['teacher'])) {
     <link href="<?php echo SITEURL ?>asset2/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/animate.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/style.css" rel="stylesheet">
+    <link href="<?php echo SITEURL ?>asset2/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="<?php echo SITEURL ?>asset2/css/bootstrap-datetimepicker.css" rel="stylesheet">
+
+
+
 </head>
 
 <body class="md-skin pace-done">
@@ -211,10 +215,10 @@ if (!isset($_SESSION['teacher'])) {
                                     <table class="table table-striped table-bordered table-hover dataTables-example">
                                         <thead>
                                             <tr>
-                                                <th>Exam Code</th>
-                                                <th>Course Name</th>
+                                                <th>Code</th>
+                                                <th>Course</th>
                                                 <th>Invigilator</th>
-                                                <th>Total Questions</th>
+                                                <th>Total Qns</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>
                                                 <th>Exam Date</th>
@@ -227,10 +231,10 @@ if (!isset($_SESSION['teacher'])) {
 
                                         <tfoot>
                                             <tr>
-                                                <th>Exam Code</th>
-                                                <th>Course Name</th>
+                                                <th>Code</th>
+                                                <th>Course</th>
                                                 <th>Invigilator</th>
-                                                <th>Total Questions</th>
+                                                <th>Total Qns</th>
                                                 <th>Status</th>
                                                 <th>Total Time</th>
                                                 <th>Total Date</th>
@@ -276,7 +280,7 @@ if (!isset($_SESSION['teacher'])) {
                         </div>
                         <div class="form-group"><label> Time Duration</label>
                             <select name="online_exam_duration" id="online_exam_duration" class="form-control" style="width: 100%">
-                                <option value=""></option>
+
                                 <option value="5">5 Minutes</option>
                                 <option value="30">30 Minutes</option>
                                 <option value="45">45 Minutes</option>
@@ -397,7 +401,10 @@ if (!isset($_SESSION['teacher'])) {
                     }
                 });
             });
-
+            $(document).on('click', '.delete_exam', function() {
+                var exam_id = $(this).data('exam-id');
+                confirmDelete(exam_id);
+            });
             $('#insert').on("click", function(event) {
                 event.preventDefault();
                 $.ajax({
@@ -441,10 +448,44 @@ if (!isset($_SESSION['teacher'])) {
             });
             $(document).on('click', '#view_result', function() {
                 var exam_id = $(this).data('exam-id');
-                location.href = '<?php echo SITEURL ?>teacher/index.php?page=student_result&exam_id='+exam_id;
+                location.href = '<?php echo SITEURL ?>teacher/index.php?page=student_result&exam_id=' + exam_id;
             });
 
         });
+
+        function confirmDelete(exam_id) {
+            swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to undo this.",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "green",
+                    cancelButtonColor: "red",
+                    confirmButtonText: "Delete!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",
+                            method: "POST",
+                            data: {
+                                page: "exam",
+                                action: "delete",
+                                exam_id: exam_id
+                            },
+                            dataType: "json",
+                            success: function(response) {
+                                swal("Done!", response.message, response.status);
+                                $('.dataTables-example').DataTable().ajax.reload();
+                            },
+                        });
+                    } else {
+                        swal("Cancelled", "Operation cancelled! :)", "error");
+                    }
+                })
+        }
     </script>
 
 </body>

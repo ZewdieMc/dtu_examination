@@ -81,8 +81,8 @@ switch ($page) {
         }
         break;
 
-    case "settings": {
-            include('settings.php');
+    case "forgot_password": {
+            include('forgot_password.php');
         }
         break;
 

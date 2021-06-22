@@ -195,10 +195,21 @@
             <div class="wrapper wrapper-content">
                 <div class="animated fadeInRightBig">
                     <div class="row">
+
                         <div class="col-lg-12">
                             <div class="ibox float-e-margins">
                                 <div class="ibox-title">
-                                    Write course name and exam type here.
+                                    <div class="label label-primary">
+                                        <?php
+                                        $tbl_name  = "tbl_exam join tbl_course on tbl_exam.course_id = tbl_course.course_id ";
+                                        $where =  "exam_id = '" . $_GET['exam_id'] . "'";
+                                        $query = $obj->select_data($tbl_name, $where);
+                                        $res = $obj->execute_query($conn, $query);
+                                        $row = $obj->fetch_data($res);
+                                        echo $row['course_name'];
+                                        ?>
+                                    
+                                    </div>
                                     <div class="ibox-tools">
                                         <a class="collapse-link">
                                             <i class="fa fa-chevron-up"></i>
@@ -222,6 +233,7 @@
                                                     <th>Name</th>
                                                     <th>Father's name</th>
                                                     <th>Score</th>
+                                                    <th>Weight</th>
 
                                                 </tr>
                                             </thead>
@@ -232,6 +244,7 @@
                                                     <th>Name</th>
                                                     <th>Father's name</th>
                                                     <th>Score</th>
+                                                    <th>Weight</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -281,22 +294,27 @@
                     action: 'fetch',
                     exam_id: '<?php echo $_GET['exam_id'] ?>',
                     page: 'student_result'
-                }
+                },
+
             },
             dom: '<"html5buttons"B>lTfgitp',
             buttons: [{
-                    extend: 'copy'
+                    extend: 'copy',
+                    title: 'Student_Result'
+
                 },
                 {
-                    extend: 'csv'
+                    extend: 'csv',
+                    title: 'Student_Result'
+
                 },
                 {
                     extend: 'excel',
-                    title: 'ExampleFile'
+                    title: 'Student_Result'
                 },
                 {
                     extend: 'pdf',
-                    title: 'ExampleFile'
+                    title: 'Student_Result'
                 },
 
                 {
@@ -313,6 +331,8 @@
             ]
 
         });
+
+
     });
 </script>
 

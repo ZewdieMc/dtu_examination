@@ -88,17 +88,17 @@
                         </div>
                         <div id="prev_next"></div>
                         <div id="user_details_area"></div>
-                        <?php
-                        if ($until_start > 0) {
-                        ?>
-                            <div id="exam_notifier" style="max-width:400px; width: 100%; height: 200px;"><?php echo "<h3>Exam will start in <b>" . round($until_start / 60) . " </b>Minutes</h3>" ?></div>
+                        <div id="exam_timer" data-timer="<?php echo $remaining_minutes ?>" style="max-width:400px; width: 100%; height: 200px;">
+                        </div>
+                        <script>
+                            setInterval(function() {
+                                var remaining_second = $("#exam_timer").TimeCircles().getTime();
+                                if (remaining_second < 1) {
+                                    location.reload();
+                                }
+                            }, 1000);
+                        </script>
 
-                        <?php
-                        } else {
-                        ?>
-                            <div id="exam_timer" data-timer="<?php echo $remaining_minutes ?>" style="max-width:400px; width: 100%; height: 200px;">
-                            </div>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -106,12 +106,34 @@
     <?php } elseif ($exam_status == "completed") {
     ?>
 
-        <div class="middle-box text-center" id="exam_notifier" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"><?php echo "<h3><font color='red'>Exam time Over!</font></h3> " ?><a class="btn btn-primary btn-rounded text-white" href="<?php echo SITEURL ?>student/index.php?page=exams">Exams</a></div>
+        <div class="middle-box text-center" id="exam_notifier" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"><?php echo "<h3><font color='red'>Exam time Over!</font></h3> " ?><a class="btn btn-primary btn-rounded text-white" href="<?php echo SITEURL ?>student/index.php?page=exams">Click here to see result</a></div>
     <?php  } else {
     ?>
-        <div class="middle-box alert alert-danger text-center" id="exam_countdown" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"></div>
+        <div class="middle-box alert alert-success text-center" id="exam_countdown" style=" margin-top: 20px;; max-width:400px; width: 100%; height: 200px;"></div>
         <script>
+            var countDownDate = new Date('<?php echo $exam_date; ?>').getTime();
+            var x = setInterval(function() {
+                var now = new Date().getTime();
 
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // hours = hours < 10 ? "0" + hours : hours;
+                // days = days < 10 ? "0" + days : days;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                // if (distance >= 0)
+                document.getElementById("exam_countdown").innerHTML = "<h3>Exam will start after<br>" + days + " days : " + hours + " hours : " +
+                    minutes + " minutes : " + seconds + " seconds </h3>";
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    location.reload();
+                }
+            }, 1000);
         </script>
     <?php } ?>
     </div>
@@ -164,20 +186,14 @@
 
         });
 
-        setInterval(function() {
-            var remaining_second = $("#exam_timer").TimeCircles().getTime();
-            if (remaining_second < 1) {
-                // alert('Exam time over');
-                location.reload();
-            }
-        }, 1000);
 
-        var exam_id = 1; //"<?php // echo $_GET['exam_code']; ex
-                            ?>";
+        // toggleFullScreen();
+        // fullScreenListener();
         question_navigation();
         load_question();
+
         $(document).on('click', '#full_screen', function name(params) {
-            document.documentElement.requestFullscreen();
+            toggleFullScreen();
         });
         //disable exitFullScreen
         $(document).on("keydown", function(ev) {
@@ -204,6 +220,41 @@
         load_user_details();
 
 
+        function toggleFullScreen() {
+            if (!document.fullscreenElement && // alternative standard method
+                !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { // current working methods
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        }
+
+        function fullScreenListener() {
+            document.addEventListener('fullscreenchange', (event) => {
+
+                if (document.fullscreenElement) {
+                    console.log(`Element: ${document.fullscreenElement.id} entered full-screen mode.`);
+                } else {
+                    console.log('Leaving full-screen mode.');
+                }
+            });
+        }
 
         function load_question(question_id = '') {
             $.ajax({
@@ -217,6 +268,7 @@
                     action: 'fetch'
                 },
                 success: function(data) {
+
                     var res = JSON.parse(data);
                     if (res.question_id != "") {
                         $('#single_question_area').html(res.question);
@@ -271,29 +323,7 @@
         }
 
         function countdown_timer() {
-            var countDownDate = new Date('<?php echo $exam_date; ?>').getTime();
-            var x = setInterval(function() {
-                // Get today's date and time
-                var now = new Date().getTime();
 
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                // if (distance >= 0)
-                document.getElementById("exam_countdown").innerHTML = "<h3>Exam will start after<br>" + days + " days : " + hours + " hours : " +
-                    minutes + " minutes : " + seconds + " seconds </h3>";
-
-                // If the count down is finished, write some text
-                if (distance < 0) {
-                    clearInterval(x);
-                    location.reload();
-                }
-            }, 1000);
         }
         countdown_timer();
         $(document).on('click', '.next', function() {

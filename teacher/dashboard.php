@@ -4,6 +4,7 @@
 
 
 <head>
+    <link rel="shortcut icon" href="<?php echo SITEURL ?>images/logo.jpg" />
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -189,12 +190,12 @@
                 </div>
             </div>
 
-            <div class="wrapper wrapper-content">
-                <div class="animated fadeInRightBig">
-                    <div id="courses_list" class="row">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <!-- <div class="animated fadeInRightBig"> -->
+                <div id="courses_list" class="row">
 
-                    </div>
                 </div>
+                <!-- </div> -->
             </div>
 
             <div class="footer">

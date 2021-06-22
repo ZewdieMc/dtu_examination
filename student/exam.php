@@ -225,13 +225,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                            <h1 class="modal-title"><i class="fa fa-check-circle fa-lg" style="color: green;"></i></h1>
+                            <h1 class="modal-title"><i class="fa fa-check-circle fa-2x" style="color: green;"></i></h1>
                         </div>
                         <div class="modal-body">
                             <h3>
                                 <div id="course_name" class="alert alert-info"></div><br>
                                 <div>
-                                    <canvas id="myChart" ></canvas>
+                                    <canvas id="myChart"></canvas>
                                 </div>
                             </h3>
                         </div>
@@ -345,7 +345,8 @@
                             data: data_chart
 
                         });
-                        $('#course_name').html( data.course+"<hr>You Scored "+data.score + " out of " + data.weight);
+                   
+                        $('#course_name').html(data.course + "<hr>You Scored " + data.score + " out of " + data.weight);
                         $('#detailed_result').data('exam-id-detail', exam_id);
 
                         $('#result_modal').modal('show');

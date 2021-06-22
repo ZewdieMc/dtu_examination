@@ -43,7 +43,7 @@
             </ul>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <a class = "text-white bg-primary"href="http://www.dtu.edu.et" target="blank">
+                    <a class="text-white bg-primary" href="http://www.dtu.edu.et" target="blank">
                         <i class="fa fa-sign-out active"></i> Univeristy website
                     </a>
                 </li>
@@ -74,58 +74,26 @@
 
             </div>
             <div class="col-md-6">
-                <center><img src="<?php echo SITEURL;?>images/logo.jpg" class="img-circle" height="100" width ="100"></center>
+                <center><img src="<?php echo SITEURL; ?>images/logo.jpg" class="img-circle" height="100" width="100"></center>
                 <div class="ibox-content">
-                    <form class="m-t" role="form" action="" method="POST">
+                    <span id="message"></span>
+                    <form class="m-t" role="form" id="department_login_form" method="POST">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="username" placeholder="Username" required="">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required="">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                         </div>
-                        <center><input type="submit" name="submit" value="Log In" class="btn btn-lg btn-primary btn-rounded btn-outline " /></center>
+                        <div class="form-group">
+                            <input type="hidden" name="page" value="department" />
+                            <input type="hidden" name="action" value="login" />
+                            <input type="submit" name="submit" value="Sign In" id="teacher_login" class="btn btn-lg btn-primary btn-rounded btn-outline " />
+                        </div>
                         <br>
-                        <a href="#">
+                        <a href="<?php echo SITEURL ?>department/index.php?page=forgot_password">
                             <small>Forgot password?</small>
                         </a>
-                        <!-- 
-                        <p class="text-muted text-center">
-                            <small>Do not have an account?</small>
-                        </p>
-                        <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a> -->
                     </form>
-                    <!-- <p class="m-t">
-                        <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small>
-                    </p> -->
-                    <?php
-                    if (isset($_POST['submit'])) {
-                        //echo "Clicked";
-                        $username = $obj->sanitize($conn, $_POST['username']);
-                        $password_db = md5($obj->sanitize($conn, $_POST['password']));
-                        // $password_db = $obj->sanitize($conn, $_POST['password']);
-
-                        if (($username == "") or ($password = "")) {
-                            $_SESSION['validation'] = "<div class='alert alert-danger'>Username or Password is Empty</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=login');
-                        }
-                        $tbl_name = "tbl_department_head";
-                        $where = "username='$username' AND password='$password_db'";
-                        $query = $obj->select_data($tbl_name, $where);
-                        $res = $obj->execute_query($conn, $query);
-                        $row = $obj->fetch_data($res);
-                        $count_rows = $obj->num_rows($res);
-                        if ($count_rows == 1) {
-                            $_SESSION['head'] = $username;
-                            $_SESSION['head_id'] = $row['id'];
-                            $_SESSION['dept_id'] = $row['department_id'];
-                            $_SESSION['success'] = "<div class='alert alert-success'>Login Successful. Welcome " . $username . " to dashboard.</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=dashboard');
-                        } else {
-                            $_SESSION['fail'] = "<div class='alert alert-danger'>Username or Password is invalid. Please try again.</div>";
-                            header('location:' . SITEURL . 'department/index.php?page=login');
-                        }
-                    }
-                    ?>
                 </div>
             </div>
         </div>
@@ -150,11 +118,47 @@
 <!-- Custom and plugin javascript -->
 <script src="<?php echo SITEURL ?>asset2/js/inspinia.js"></script>
 <script src="<?php echo SITEURL ?>asset2/js/plugins/pace/pace.min.js"></script>
-
-
+<script src="<?php echo SITEURL ?>asset2/js/plugins/validate/jquery.validate.min.js"></script>
 
 <script>
-    $(document).ready({});
+    $().ready(function() {
+        $("#department_login_form").validate({
+            rules: {
+                password: {
+                    required: true,
+                    minlength: 6
+                },
+                username: {
+                    required: true
+                }
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    url: "<?php echo SITEURL ?>department/ajax_department.php",
+                    method: "POST",
+                    data: $(form).serialize(),
+                    dataType: "json",
+                    beforeSend: function() {
+                        $('#teacher_login').attr('disabled', 'disabled');
+                        $('#teacher_login').val('Signing In...');
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            location.href = "<?php echo SITEURL ?>department/index.php?page=dashboard";
+                        } else {
+                            $('#message').html('<div class="alert alert-danger">' + data.error + '</div>');
+                        }
+                        $('#teacher_login').attr('disabled', false);
+                        $('#teacher_login').val('Sign In');
+                    },
+                    error: function(responseObj) {
+                        alert("Something went wrong while processing your request.\n\nError => " +
+                            responseObj.responseText);
+                    }
+                });
+            },
+        });
+    });
 </script>
 
 </html>

@@ -320,6 +320,21 @@ if ($_POST['action'] == 'delete') {
         }
         echo json_encode($response);
     }
+
+    if ($_POST['page'] == 'exam') {
+        $tbl_name = 'tbl_exam';
+        $where = 'exam_id = "' . $_POST['exam_id'] . '"';
+        $query = $obj->delete_data($tbl_name, $where);
+        $res = $obj->execute_query($conn, $query);
+        if ($res) {
+            $response['status'] = 'success';
+            $response['message'] = 'Exam deleted successfully';
+        } else {
+            $response['status'] = "error";
+            $response['message'] = "unable to delete the Exam";
+        }
+        echo json_encode($response);
+    }
 }
 
 // fetch
@@ -434,7 +449,8 @@ if ($_POST['action'] == 'fetch') {
             } else {
                 $sub_array[] .= '<button type="button" class="btn btn-danger  btn-circle view-question" data-toggle="tooltip" data-placement="top" title="Click to view Questions" id="' . $row['exam_id'] . '"><i class="fa fa-eye "> </i></button>';
             }
-            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." data-course-id ="' . $row['course_id'] . '" data-exam-id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>';
+            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." data-course-id ="' . $row['course_id'] . '" data-exam-id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>
+            &nbsp; <a type= "button" class="delete_exam" data-toggle="tooltip" data-placement="top" title="Click to delete the exam." data-exam-id="' . $row['exam_id'] . '"><i class = "fa fa-trash fa-lg" style = "color:red"  ></i> </a>';
 
             $data[] = $sub_array;
         }
@@ -630,39 +646,48 @@ if ($_POST['action'] == 'fetch') {
         echo $output;
     }
     if ($_POST['page'] == 'student_result') {
-        $tbl_name = 'tbl_result as re inner join tbl_exam as ex on re.exam_id = ex.exam_id 
-        inner join tbl_course as co on ex.course_id = co.course_id 
-        inner join tbl_student st on re.student_id = st.student_id
-        ';
-        $where = ' re.exam_id ="' . $_POST['exam_id'] . '" and re.right_answer = re.user_answer
-        AND ';
-        if (isset($_POST['search']['value'])) {
-            $where .= "(";
-            $where .= 'first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR re.student_id LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
-            // $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
-            $where .= ")";
-        }
+        // $tbl_name1 = '
+        //     TBL_RESULT AS RE 
+        //     INNER JOIN TBL_EXAM AS E ON RE.EXAM_ID = E.EXAM_ID
+        //     INNER JOIN TBL_COURSE  AS C ON E.COURSE_ID = C.COURSE_ID
+        //     INNER JOIN TBL_STUDENT AS S ON  RE.STUDENT_ID = S.STUDENT_ID
+        // ';
+        // $tbl_name2 = 'TBL_RESULT';
+        // $tbl_name3 = 'TBL_QUESTION';
+        // $where2 = ' re.exam_id ="' . $_POST['exam_id'] . '" GROUP BY STUDENT_ID';
+        // $where1 = ' re.exam_id ="' . $_POST['exam_id'] . '" and re.right_answer = re.user_answer
+        // AND ';
+        // if (isset($_POST['search']['value'])) {
+        //     $where1 .= "(";
+        //     $where1 .= 'first_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+        //     $where1 .= 'OR re.student_id LIKE "%' . $_POST["search"]["value"] . '%" ';
+        //     $where1 .= 'OR last_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+        //     // $where .= 'OR score LIKE "%' . $_POST["search"]["value"] . '%" ';
+        //     $where1 .= ")";
+        // }
 
-        $where .= ' GROUP BY re.student_id, re.exam_id ';
-        $other = '';
-        if ($_POST['length'] != -1) {
-            $other .= ' LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-        }
+        // $where .= ' GROUP BY re.student_id';
+        // $other = '';
+        // if ($_POST['length'] != -1) {
+        //     $other .= ' LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+        // }
 
-        $query = $obj->get_student_result($tbl_name, $where);
+        $query = $obj->get_student_result($_POST['exam_id']);
         $res = $obj->execute_query($conn, $query);
         $filtered_rows = $obj->num_rows($res);
         $data = array();
+        $course_name  = '';
         while ($row = $obj->fetch_data($res)) {
             $sub_array = array();
-            $sub_array[] .= $row['student_id'];
-            $sub_array[] .= $row['first_name'];
-            $sub_array[] .= $row['last_name'];
-            $sub_array[] .= $row['score'];
+            $sub_array[] .= $row['STUDENT_ID'];
+            $sub_array[] .= $row['FIRST_NAME'];
+            $sub_array[] .= $row['LAST_NAME'];
+            $sub_array[] .= $row['SCORE'] == '' ? '<font color =  "red"><b>0</b></font>' : $row['SCORE'];
+            $sub_array[] .= $row['WEIGHT'];
             $data[] = $sub_array;
+            $course_name = $row['COURSE_NAME'];
         }
+        $tbl_name  = 'tbl_result';
         $where = "";
         $query = $obj->select_data($tbl_name, $where);
         $res = $obj->execute_query($conn, $query);
@@ -671,7 +696,8 @@ if ($_POST['action'] == 'fetch') {
             "draw"                =>    intval($_POST["draw"]),
             "recordsTotal"        =>    $total_rows,
             "recordsFiltered"    =>    $filtered_rows,
-            "data"                =>    $data
+            "data"                =>    $data,
+            "course_name"       => $course_name
         );
         echo json_encode($output);
     }

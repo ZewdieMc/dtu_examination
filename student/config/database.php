@@ -27,8 +27,6 @@ class Database
     }
     public function select_sum_of_column($tbl_name1, $tbl_name2, $tbl_name3, $column, $where1, $where2, $where3)
     {
-        // $query = "SELECT course_name, SUM($column) as total, t.sum as score  FROM $tbl_name CROSS JOIN (select sum($column) as sum from $tbl_name WHERE $where1)t where $where2";
-        // return $query;
 
         $query = "SELECT C.COURSE_NAME AS course_name,Q.TOTAL AS ques_total, COUNT(R.MARKS) AS ques_attempted, Q.VAL AS exam_weight, 
         SUM(R.MARKS) AS attempted_weight, M.TOTAL AS your_score 
@@ -37,7 +35,11 @@ class Database
         CROSS JOIN (SELECT SUM($column) AS TOTAL FROM $tbl_name3 WHERE $where3)M WHERE $where1";
         return $query;
     }
-
+    public function get_exam_marks($exam_id)
+    {
+        $query = "select sum(marks) as weight from tbl_question where exam_id = $exam_id";
+        return $query;
+    }
     public function select_random_row($tbl_name, $where, $limit)
     {
         $query = "SELECT * FROM $tbl_name";

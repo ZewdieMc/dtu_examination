@@ -87,6 +87,20 @@ function if_question_is_answered($conn, $obj, $student_id, $exam_id, $question_i
     }
     return false;
 }
+function get_user_answer($conn, $obj, $student_id, $exam_id, $question_id)
+{
+    $tbl_name = "tbl_result";
+    $where = "
+    student_id = '" . $student_id . "'
+    AND exam_id = '" . $exam_id . "'
+    AND question_id = '" . $question_id . "'
+    ";
+    $query = $obj->select_data($tbl_name, $where);
+    $res = $obj->execute_query($conn, $query);
+    if ($res)
+        $row = $obj->fetch_data($res);
+    return $row['user_answer'];
+}
 
 // login
 if ($_POST['action'] == 'login') {
@@ -142,6 +156,32 @@ if ($_POST['action'] == "fetch") {
         $prev_next = '';
         $var = '';
         $class = '';
+        $user_answered = '';
+        $check_1 = '';
+        $check_2 = '';
+        $check_3 = '';
+        $check_4 = '';
+        $check_5 = '';
+        if (if_question_is_answered($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id'])) {
+            $user_answered = get_user_answer($conn, $obj, $_SESSION['student_id'], $_POST['exam_id'], $_POST['question_id']);
+            switch ($user_answered) {
+                case 1:
+                    $check_1 = 'checked';
+                    break;
+                case 2:
+                    $check_2 = 'checked';
+                    break;
+                case 3:
+                    $check_3 = 'checked';
+                    break;
+                case 4:
+                    $check_4 = 'checked';
+                    break;
+                case 5:
+                    $check_5 = 'checked';
+                default:
+            }
+        }
         while ($row = $obj->fetch_data($res)) {
             $output .= ' <h4>' . $row["question"] . '(<font color = "green">' . $row['marks'] . ' marks</font>)</h4>
 				<div class = "hr-line-solid"></div>
@@ -153,27 +193,27 @@ if ($_POST['action'] == "fetch") {
 
             $output .= '<div class="col-md-6" >
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" value ="1" class="answer_option" data-question_id="' . $row["question_id"] . '" required = "true"/>&nbsp;' . $row["first_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1"  value ="1" class="answer_option" data-question_id="' . $row["question_id"] . '" required = "true" ' . $check_1 . '/>&nbsp;' . $row["first_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" value ="2" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["second_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1"  value ="2" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true" ' . $check_2 . '/>&nbsp;' . $row["second_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" value ="3" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true" />&nbsp;' . $row["third_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1"  value ="3" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true" ' . $check_3 . '/>&nbsp;' . $row["third_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label><h4><input type="radio" name="option_1" value ="4" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true"/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
+                                <label><h4><input type="radio" name="option_1"  value ="4" class="answer_option" data-question_id="' . $row["question_id"] . '"required ="true"' . $check_4 . '/>&nbsp;' . $row["fourth_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<div class="col-md-6">
                             <div class="i-checks">
-                                <label ><h4><input type="radio" name="option_1" value ="5" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
+                                <label ><h4><input type="radio" name="option_1" value ="5" class="answer_option" data-question_id="' . $row["question_id"] . '" required ="true"' . $check_5 . '/>&nbsp;' . $row["fifth_answer"] . '</h4></label>
                             </div>
                         </div>';
             $output .= '<input type="hidden" name="right_answer" id = "right_answer" value="' . $row['answer'] . '" />';
@@ -382,9 +422,12 @@ if ($_POST['action'] == "fetch") {
         echo $result;
     }
     if ($_POST['page'] == 'exam_detail') {
-        $tbl_name = 'tbl_exam inner join tbl_course on tbl_exam.course_id = tbl_course.course_id';
+        $tbl_name = 'tbl_exam inner join tbl_course on tbl_exam.course_id = tbl_course.course_id
+        ';
         $where  = 'exam_id = ' . $_POST['exam_id'] . '';
         $query = $obj->select_data($tbl_name, $where);
+        $query1 = $obj->get_exam_marks($_POST['exam_id']);
+        $res1 = $obj->execute_query($conn, $query1);
         $res = $obj->execute_query($conn, $query);
         $output = '
 			<div class="card">
@@ -394,6 +437,7 @@ if ($_POST['action'] == "fetch") {
 			';
         if ($res) {
             $row = $obj->fetch_data($res);
+            $row1 = $obj->fetch_data($res1);
             $output .= '
 				<tr>
 					<td><b>Examination Name</b></td>
@@ -410,6 +454,10 @@ if ($_POST['action'] == "fetch") {
 				<tr>
 					<td><b>Exam Total Question</b></td>
 					<td>' . $row["qns_per_set"] . ' </td>
+				</tr>
+				<tr>
+					<td><b>Exam weight</b></td>
+					<td>' . $row1["weight"] . ' </td>
 				</tr>
 				
 				';

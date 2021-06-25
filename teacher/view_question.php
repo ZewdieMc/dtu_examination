@@ -313,6 +313,12 @@
             load_question(question_id);
         });
 
+        $(document).on('click', '.edit_question',function () {
+            var code = "<?php echo $_GET['exam_code']?>";
+            var question_id = $(this).attr('id');
+           location.href = "<?php echo SITEURL?>teacher/index.php?page=add_question&exam_code="+code+"&question_id="+question_id;
+        });
+
         function question_navigation() {
             $.ajax({
                 url: "<?php echo SITEURL; ?>teacher/ajax_teacher.php",

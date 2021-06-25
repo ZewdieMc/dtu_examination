@@ -295,7 +295,7 @@ if ($_POST['action'] == 'update') {
                     $class = 'btn-warning';
                 else
                     $class = 'btn-primary';
-                $output .= '<button class="btn btn-circle btn-outline btn-sm edit-question  ' . $class . ' " data-question_id = "' . $row['question_id'] . '">' . $counter . '</button>&nbsp;';
+                $output .= '<button class="btn btn-circle btn-outline btn-sm edit-question  ' . $class . ' " data-question_id = "' . $row['question_id'] . '" id = "question' . $row['question_id'] . '">' . $counter . '</button>&nbsp;';
             }
             $counter = 0;
         } else {
@@ -447,12 +447,14 @@ if ($_POST['action'] == 'fetch') {
                 # code...
                 $sub_array[] .= '<button type="button" class="btn btn-primary btn-outline btn-circle add-question" data-toggle="tooltip" data-placement="top" title="Click to add Question" id="' . $row['exam_id'] . '"><i class="fa fa-plus "> </i></button>';
             } else {
-                $sub_array[] .= '<button type="button" class="btn btn-danger  btn-circle view-question" data-toggle="tooltip" data-placement="top" title="Click to view Questions" id="' . $row['exam_id'] . '"><i class="fa fa-eye "> </i></button>';
+                $sub_array[] .= '<button type="button" class="btn btn-primary  btn-circle view-question" data-toggle="tooltip" data-placement="top" title="Click to view Questions" id="' . $row['exam_id'] . '"><i class="fa fa-eye "> </i></button>';
             }
-            $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." data-course-id ="' . $row['course_id'] . '" data-exam-id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>
+            if ($row['status'] != 'started')
+                $sub_array[] .= '<a type="button" class="edit_exam" data-toggle="tooltip" data-placement="top" title="Click to edit the exam." data-course-id ="' . $row['course_id'] . '" data-exam-id="' . $row['exam_id'] . '"><i class="fa fa-lg fa-pencil " style="color:#1AB394"> </i></a>
             &nbsp; <a type= "button" class="delete_exam" data-toggle="tooltip" data-placement="top" title="Click to delete the exam." data-exam-id="' . $row['exam_id'] . '"><i class = "fa fa-trash fa-lg" style = "color:red"  ></i> </a>';
-
-            $data[] = $sub_array;
+            else
+            $sub_array[] .= '';
+                $data[] = $sub_array;
         }
         $where = "";
         $query = $obj->select_data($tbl_name, $where);
@@ -483,7 +485,8 @@ if ($_POST['action'] == 'fetch') {
         $var = '';
         while ($row = $obj->fetch_data($res)) {
             $output .= ' <h4>' . $row["question"] . '(<font color = "green">' . $row['marks'] . ' marks</font>)
-            <a class="delete_question" id="' . $row['question_id'] . '"><i class="fa fa-trash fa-lg "data-toggle="tooltip" data-placement="top"  title="Click to delete the question" style="color:red"></i></a>
+            &nbsp;&nbsp;&nbsp;<a class="delete_question" id="' . $row['question_id'] . '"><i class="fa fa-trash fa-lg "data-toggle="tooltip" data-placement="top"  title="Click to delete the question" style="color:red"></i></a>
+            &nbsp;&nbsp;&nbsp;<a class="edit_question" data-exam-code = "'.$_POST['exam_id'].'" id="' . $row['question_id'] . '"><i class="fa fa-pencil fa-lg "data-toggle="tooltip" data-placement="top"  title="Click to edit the question" style="color:#1AB394"></i></a>
             </h4>
 				<hr />
 				<br />';

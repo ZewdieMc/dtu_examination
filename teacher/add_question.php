@@ -238,7 +238,7 @@
                                         $counter  = 0;
                                         while ($row = $obj->fetch_data($res)) {
                                             $counter++; ?>
-                                            <button class="btn btn-primary btn-circle btn-outline btn-sm edit-question" data-question_id="<?php echo $row['question_id'] ?>"> <?php echo $counter; ?></button>&nbsp;
+                                            <button class="btn btn-primary btn-circle btn-outline btn-sm edit-question" id='question-<?php echo $row['question_id'] ?>' data-question_id="<?php echo $row['question_id'] ?>"> <?php echo $counter; ?></button>&nbsp;
                                         <?php
                                         }
                                         $counter = 0;
@@ -398,6 +398,8 @@
 </style>
 <script>
     $(document).ready(function() {
+        $('#question-<?php echo $_GET['question_id'] ?>').addClass('active');
+        $('#question-<?php echo $_GET['question_id'] ?>').trigger('click');
         $("#choice_form").steps({
             bodyTag: "fieldset",
             onStepChanging: function(event, currentIndex, newIndex) {

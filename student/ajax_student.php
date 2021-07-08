@@ -457,7 +457,7 @@ if ($_POST['action'] == "fetch") {
 				</tr>
 				<tr>
 					<td><b>Exam weight</b></td>
-					<td>' . $row1["weight"] . ' </td>
+					<td>' . $row1["weight"] . ' marks</td>
 				</tr>
 				
 				';
@@ -466,7 +466,8 @@ if ($_POST['action'] == "fetch") {
 					<tr>
 						<td colspan="2" align="center">
 							<button type="button" name="enroll_button" class="alert alert-danger b-r-xl">Aleady Enrolled</button>
-						</td>
+						&nbsp;&nbsp;&nbsp;<a href = "' . SITEURL . 'student/index.php?page=Questions&exam_code=' . $row['exam_id'] . '" class="btn btn-primary  btn-rounded start_exam" data-toggle="tooltip" data-placement="top" title="Click to see Questions" >Start</a>
+                            </td>
 					</tr>
 					';
             } else {

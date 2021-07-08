@@ -333,7 +333,9 @@
                                                 <hr>
                                                 <div class="i-checks col-lg-6"><input type="radio" name="options" class=" radio">&nbsp;<span id="option5"></span></div>
                                                 <hr>
+                                                <hr>
                                             </div>
+                                                <span id="answer"></span>
 
                                             <h4>Answer Description</h4>
                                             <span id="desc"></span>
@@ -439,6 +441,7 @@
                     document.getElementById("option3").innerHTML = $('#third_answer').val();
                     document.getElementById("option4").innerHTML = $('#fourth_answer').val();
                     document.getElementById("option5").innerHTML = $('#fifth_answer').val();
+                    document.getElementById("answer").innerHTML = $('#right_answer').val();
                     document.getElementById("ques").innerHTML = CKEDITOR.instances['question'].getData();
                     document.getElementById("desc").innerHTML = CKEDITOR.instances['reason'].getData()
                 }

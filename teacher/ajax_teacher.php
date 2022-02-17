@@ -278,7 +278,7 @@ if ($_POST['action'] == 'update') {
                                     marks='$marks',
                                     is_active='yes',
                                     added_date='$added_date',
-                                    updated_date='',
+                                    updated_date='$added_date',
                                     image_name='$image_name'
                                     ";
         $where = ' exam_id = "' . $exam_code . '" and question_id = "' . $_POST['question_id'] . '"';
@@ -533,7 +533,7 @@ if ($_POST['action'] == 'fetch') {
 
             $previous_id = '';
             $next_id = '';
-            $previous_id = $previous_row['question_id'];
+            $previous_id = isset($previous_row['question_id'])?$previous_row['question_id']:0;
 
             $where = "
 				question_id > '" . $row['question_id'] . "' 
@@ -543,7 +543,7 @@ if ($_POST['action'] == 'fetch') {
             $ress = $obj->execute_query($conn, $query);
             $next_row = $obj->fetch_data($ress);
 
-            $next_id = $next_row['question_id'];
+            $next_id = isset($next_row['question_id'])?$next_row['question_id']:0;
 
             $if_previous_disable = '';
             $if_next_disable = '';

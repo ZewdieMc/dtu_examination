@@ -268,11 +268,15 @@
                     action: 'fetch'
                 },
                 success: function(data) {
-
                     var res = JSON.parse(data);
                     if (res.question_id != "") {
                         $('#single_question_area').html(res.question);
-                    } else {
+                    }
+                    else if(res.question_id==0){
+                        $('#single_question_area').html("<font color='red'><b>No more question in this direction.</b></font>");
+                 
+                    }
+                     else {
                         $('#single_question_area').html("<font color='red'><b>No Question exists for this examination.</b></font>");
                     }
                     $('#prev_next').html(res.nav);

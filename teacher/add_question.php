@@ -400,8 +400,14 @@
 </style>
 <script>
     $(document).ready(function() {
-        $('#question-<?php echo $_GET['question_id'] ?>').addClass('active');
-        $('#question-<?php echo $_GET['question_id'] ?>').trigger('click');
+        const queryString = window.location.search;
+        // console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        if(urlParams.has('question_id')){
+            $('#question-'+urlParams.get('question_id')).addClass('active');
+            $('#question-'+urlParams.get('question_id')).trigger('click');
+        }
+     
         $("#choice_form").steps({
             bodyTag: "fieldset",
             onStepChanging: function(event, currentIndex, newIndex) {

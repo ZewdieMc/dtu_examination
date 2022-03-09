@@ -177,7 +177,7 @@ if ($_POST['action'] == 'Add') {
                                     marks='$marks',
                                     is_active='yes',
                                     added_date='$added_date',
-                                    updated_date='',
+                                    updated_date='$added_date',
                                     image_name='$image_name'
                                     ";
         $query = $obj->insert_data($tbl_name, $data);
